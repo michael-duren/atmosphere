@@ -1,17 +1,17 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain;
+namespace Domain.Presets;
 
-public class KitPattern
+public class KitPatternPreset
 {
+    [ForeignKey("AppUser")] public string AppUserId { get; set; } = null!;
+    public AppUser AppUser { get; set; } = null!;
+    
     [Key] public int KitPatternId { get; set; }
+    public string PatternName { get; set; } = null!;
     public int[] BdSteps { get; set; } = null!;
     public int[] SdSteps { get; set; } = null!;
     public int[] ClSteps { get; set; } = null!;
     public int[] ChSteps { get; set; } = null!;
-
-
-    [ForeignKey("Song")] public int SongId { get; set; }
-    public Song Song { get; set; } = null!;
 }

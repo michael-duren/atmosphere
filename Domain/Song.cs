@@ -15,15 +15,15 @@ public class Song
     public int Bpm { get; set; }
 
     // effects
-    public Distortion Distortion { get; set; } = null!;
-    public Reverb Reverb { get; set; } = null!;
-    public Delay Delay { get; set; } = null!;
+    public virtual Distortion Distortion { get; set; } = null!;
+    public virtual Reverb Reverb { get; set; } = null!;
+    public virtual Delay Delay { get; set; } = null!;
 
     // synths
-    public BassSynth BassSynth { get; set; } = null!;
-    public MelodicSynth MelodicSynth { get; set; } = null!;
+    public virtual BassSynth BassSynth { get; set; } = null!;
+    public virtual MelodicSynth MelodicSynth { get; set; } = null!;
 
     // patterns
-    public MelodicPattern MelodicPattern { get; set; } = null!;
-    public KitPattern KitPattern { get; set; } = null!;
+    public virtual MelodicPattern MelodicPattern { get; set; } = null!;
+    public virtual KitPattern KitPattern { get; set; } = null!;
 }
