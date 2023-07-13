@@ -4,10 +4,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Persistence.Migrations
+namespace DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -159,10 +159,182 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BassSynthPreset",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AppUserId = table.Column<string>(type: "text", nullable: false),
+                    PresetName = table.Column<string>(type: "text", nullable: false),
+                    Attack = table.Column<double>(type: "double precision", nullable: false),
+                    Decay = table.Column<double>(type: "double precision", nullable: false),
+                    Waveform = table.Column<string>(type: "text", nullable: false),
+                    Filter = table.Column<double>(type: "double precision", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BassSynthPreset", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BassSynthPreset_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DelayPreset",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AppUserId = table.Column<string>(type: "text", nullable: false),
+                    PresetName = table.Column<string>(type: "text", nullable: false),
+                    Mix = table.Column<double>(type: "double precision", nullable: false),
+                    Time = table.Column<double>(type: "double precision", nullable: false),
+                    Feedback = table.Column<double>(type: "double precision", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DelayPreset", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DelayPreset_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DistortionPreset",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AppUserId = table.Column<string>(type: "text", nullable: false),
+                    PresetName = table.Column<string>(type: "text", nullable: false),
+                    Mix = table.Column<double>(type: "double precision", nullable: false),
+                    Amount = table.Column<double>(type: "double precision", nullable: false),
+                    Filter = table.Column<double>(type: "double precision", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DistortionPreset", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DistortionPreset_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "KitPatternPreset",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AppUserId = table.Column<string>(type: "text", nullable: false),
+                    PatternName = table.Column<string>(type: "text", nullable: false),
+                    BdSteps = table.Column<int[]>(type: "integer[]", nullable: false),
+                    SdSteps = table.Column<int[]>(type: "integer[]", nullable: false),
+                    ClSteps = table.Column<int[]>(type: "integer[]", nullable: false),
+                    ChSteps = table.Column<int[]>(type: "integer[]", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_KitPatternPreset", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_KitPatternPreset_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MelodicPatternPreset",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AppUserId = table.Column<string>(type: "text", nullable: false),
+                    PresetName = table.Column<string>(type: "text", nullable: false),
+                    Scale = table.Column<string>(type: "text", nullable: false),
+                    Sequence = table.Column<int[]>(type: "integer[]", nullable: false),
+                    PatternType = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MelodicPatternPreset", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MelodicPatternPreset_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MelodicSynthPreset",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AppUserId = table.Column<string>(type: "text", nullable: false),
+                    PresetName = table.Column<string>(type: "text", nullable: false),
+                    Waveform = table.Column<string>(type: "text", nullable: false),
+                    Attack = table.Column<double>(type: "double precision", nullable: false),
+                    Decay = table.Column<double>(type: "double precision", nullable: false),
+                    Sustain = table.Column<double>(type: "double precision", nullable: false),
+                    Release = table.Column<double>(type: "double precision", nullable: false),
+                    FilterFrequency = table.Column<double>(type: "double precision", nullable: false),
+                    FilterMod = table.Column<double>(type: "double precision", nullable: false),
+                    FilterType = table.Column<string>(type: "text", nullable: false),
+                    Metal = table.Column<double>(type: "double precision", nullable: false),
+                    Chorus = table.Column<double>(type: "double precision", nullable: false),
+                    LfoFrequency = table.Column<double>(type: "double precision", nullable: false),
+                    LfoShape = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MelodicSynthPreset", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MelodicSynthPreset_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReverbPreset",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AppUserId = table.Column<string>(type: "text", nullable: false),
+                    PresetName = table.Column<string>(type: "text", nullable: false),
+                    Mix = table.Column<double>(type: "double precision", nullable: false),
+                    Decay = table.Column<double>(type: "double precision", nullable: false),
+                    PreDelay = table.Column<double>(type: "double precision", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReverbPreset", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReverbPreset_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Songs",
                 columns: table => new
                 {
-                    SongId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     AppUserId = table.Column<string>(type: "text", nullable: false),
                     SongName = table.Column<string>(type: "text", nullable: false),
@@ -171,7 +343,7 @@ namespace Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Songs", x => x.SongId);
+                    table.PrimaryKey("PK_Songs", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Songs_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
@@ -184,7 +356,7 @@ namespace Persistence.Migrations
                 name: "BassSynths",
                 columns: table => new
                 {
-                    BassSynthId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Attack = table.Column<double>(type: "double precision", nullable: false),
                     Decay = table.Column<double>(type: "double precision", nullable: false),
@@ -194,12 +366,12 @@ namespace Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BassSynths", x => x.BassSynthId);
+                    table.PrimaryKey("PK_BassSynths", x => x.Id);
                     table.ForeignKey(
                         name: "FK_BassSynths_Songs_SongId",
                         column: x => x.SongId,
                         principalTable: "Songs",
-                        principalColumn: "SongId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -207,7 +379,7 @@ namespace Persistence.Migrations
                 name: "Delays",
                 columns: table => new
                 {
-                    DelayId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Mix = table.Column<double>(type: "double precision", nullable: false),
                     Time = table.Column<double>(type: "double precision", nullable: false),
@@ -216,12 +388,12 @@ namespace Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Delays", x => x.DelayId);
+                    table.PrimaryKey("PK_Delays", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Delays_Songs_SongId",
                         column: x => x.SongId,
                         principalTable: "Songs",
-                        principalColumn: "SongId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -229,7 +401,7 @@ namespace Persistence.Migrations
                 name: "Distortions",
                 columns: table => new
                 {
-                    DistortionId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Mix = table.Column<double>(type: "double precision", nullable: false),
                     Amount = table.Column<double>(type: "double precision", nullable: false),
@@ -238,12 +410,12 @@ namespace Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Distortions", x => x.DistortionId);
+                    table.PrimaryKey("PK_Distortions", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Distortions_Songs_SongId",
                         column: x => x.SongId,
                         principalTable: "Songs",
-                        principalColumn: "SongId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -251,20 +423,22 @@ namespace Persistence.Migrations
                 name: "KitPatterns",
                 columns: table => new
                 {
-                    KitPatternId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PatternName = table.Column<string>(type: "text", nullable: false),
-                    Steps = table.Column<int[]>(type: "integer[]", nullable: false),
+                    BdSteps = table.Column<bool[]>(type: "boolean[]", nullable: false),
+                    SdSteps = table.Column<bool[]>(type: "boolean[]", nullable: false),
+                    ClSteps = table.Column<bool[]>(type: "boolean[]", nullable: false),
+                    ChSteps = table.Column<bool[]>(type: "boolean[]", nullable: false),
                     SongId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_KitPatterns", x => x.KitPatternId);
+                    table.PrimaryKey("PK_KitPatterns", x => x.Id);
                     table.ForeignKey(
                         name: "FK_KitPatterns_Songs_SongId",
                         column: x => x.SongId,
                         principalTable: "Songs",
-                        principalColumn: "SongId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -272,9 +446,8 @@ namespace Persistence.Migrations
                 name: "MelodicPatterns",
                 columns: table => new
                 {
-                    MelodicPatternId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
                     Scale = table.Column<string>(type: "text", nullable: false),
                     Sequence = table.Column<int[]>(type: "integer[]", nullable: false),
                     PatternType = table.Column<string>(type: "text", nullable: false),
@@ -282,12 +455,12 @@ namespace Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MelodicPatterns", x => x.MelodicPatternId);
+                    table.PrimaryKey("PK_MelodicPatterns", x => x.Id);
                     table.ForeignKey(
                         name: "FK_MelodicPatterns_Songs_SongId",
                         column: x => x.SongId,
                         principalTable: "Songs",
-                        principalColumn: "SongId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -295,7 +468,7 @@ namespace Persistence.Migrations
                 name: "MelodicSynths",
                 columns: table => new
                 {
-                    MelodicSynthId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Waveform = table.Column<string>(type: "text", nullable: false),
                     Attack = table.Column<double>(type: "double precision", nullable: false),
@@ -313,12 +486,12 @@ namespace Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MelodicSynths", x => x.MelodicSynthId);
+                    table.PrimaryKey("PK_MelodicSynths", x => x.Id);
                     table.ForeignKey(
                         name: "FK_MelodicSynths_Songs_SongId",
                         column: x => x.SongId,
                         principalTable: "Songs",
-                        principalColumn: "SongId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -326,7 +499,7 @@ namespace Persistence.Migrations
                 name: "Reverbs",
                 columns: table => new
                 {
-                    ReverbId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Mix = table.Column<double>(type: "double precision", nullable: false),
                     Decay = table.Column<double>(type: "double precision", nullable: false),
@@ -335,12 +508,12 @@ namespace Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reverbs", x => x.ReverbId);
+                    table.PrimaryKey("PK_Reverbs", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Reverbs_Songs_SongId",
                         column: x => x.SongId,
                         principalTable: "Songs",
-                        principalColumn: "SongId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -382,10 +555,20 @@ namespace Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_BassSynthPreset_AppUserId",
+                table: "BassSynthPreset",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BassSynths_SongId",
                 table: "BassSynths",
                 column: "SongId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DelayPreset_AppUserId",
+                table: "DelayPreset",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Delays_SongId",
@@ -394,10 +577,20 @@ namespace Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_DistortionPreset_AppUserId",
+                table: "DistortionPreset",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Distortions_SongId",
                 table: "Distortions",
                 column: "SongId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_KitPatternPreset_AppUserId",
+                table: "KitPatternPreset",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_KitPatterns_SongId",
@@ -406,16 +599,31 @@ namespace Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_MelodicPatternPreset_AppUserId",
+                table: "MelodicPatternPreset",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MelodicPatterns_SongId",
                 table: "MelodicPatterns",
                 column: "SongId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_MelodicSynthPreset_AppUserId",
+                table: "MelodicSynthPreset",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MelodicSynths_SongId",
                 table: "MelodicSynths",
                 column: "SongId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReverbPreset_AppUserId",
+                table: "ReverbPreset",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reverbs_SongId",
@@ -448,22 +656,43 @@ namespace Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BassSynthPreset");
+
+            migrationBuilder.DropTable(
                 name: "BassSynths");
+
+            migrationBuilder.DropTable(
+                name: "DelayPreset");
 
             migrationBuilder.DropTable(
                 name: "Delays");
 
             migrationBuilder.DropTable(
+                name: "DistortionPreset");
+
+            migrationBuilder.DropTable(
                 name: "Distortions");
+
+            migrationBuilder.DropTable(
+                name: "KitPatternPreset");
 
             migrationBuilder.DropTable(
                 name: "KitPatterns");
 
             migrationBuilder.DropTable(
+                name: "MelodicPatternPreset");
+
+            migrationBuilder.DropTable(
                 name: "MelodicPatterns");
 
             migrationBuilder.DropTable(
+                name: "MelodicSynthPreset");
+
+            migrationBuilder.DropTable(
                 name: "MelodicSynths");
+
+            migrationBuilder.DropTable(
+                name: "ReverbPreset");
 
             migrationBuilder.DropTable(
                 name: "Reverbs");

@@ -6,10 +6,10 @@ namespace Domain;
 public class KitPattern
 {
     [Key] public int Id { get; set; }
-    public int[] BdSteps { get; set; } = null!;
-    public int[] SdSteps { get; set; } = null!;
-    public int[] ClSteps { get; set; } = null!;
-    public int[] ChSteps { get; set; } = null!;
+    public bool[] BdSteps { get; set; } = null!;
+    public bool[] SdSteps { get; set; } = null!;
+    public bool[] ClSteps { get; set; } = null!;
+    public bool[] ChSteps { get; set; } = null!;
 
 
     [ForeignKey("Song")] public int SongId { get; set; }

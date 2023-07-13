@@ -1,6 +1,6 @@
 using Domain;
 
-namespace Persistence.Repositories.IRepository;
+namespace DataAccess.Repositories.IRepository;
 
 public interface ISongRepository
 {

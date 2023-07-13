@@ -1,6 +1,6 @@
 using Domain;
 using Microsoft.EntityFrameworkCore;
-using Persistence;
+using DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 

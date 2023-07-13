@@ -1,8 +1,8 @@
+using DataAccess.Repositories.IRepository;
 using Domain;
 using Microsoft.EntityFrameworkCore;
-using Persistence.Repositories.IRepository;
 
-namespace Persistence.Repositories;
+namespace DataAccess.Repositories;
 
 public class SongRepository : ISongRepository
 {

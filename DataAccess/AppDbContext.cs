@@ -2,7 +2,7 @@ using Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Persistence;
+namespace DataAccess;
 
 public class AppDbContext : IdentityDbContext<AppUser>
 {
