@@ -2,22 +2,14 @@ using Domain;
 using Microsoft.EntityFrameworkCore;
 using DataAccess;
 using Microsoft.AspNetCore.Identity;
+using API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.AddApplicationServices(builder.Configuration);
+builder.AddIdentityServiceExtensions();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var connection = builder.Configuration.GetConnectionString("DefaultConnection");
-
-builder.Services.AddDbContext<AppDbContext>(o => { o.UseNpgsql(connection); });
-
-builder.Services.AddIdentityCore<AppUser>()
-    .AddEntityFrameworkStores<AppDbContext>();
 
 var app = builder.Build();
 
