@@ -36,6 +36,10 @@ namespace DataAccess
                         Bpm = 120,
                     }
                 };
+                
+                // create song
+                await context.Songs.AddRangeAsync(songs);
+                await context.SaveChangesAsync();
 
                 var distortions = new List<Distortion>
                 {
@@ -70,7 +74,7 @@ namespace DataAccess
 
                 var bassSynths = new List<BassSynth>
                 {
-                    new BassSynth()
+                    new BassSynth
                     {
                         SongId = songs[0].Id,
                         Waveform = "Sine",
@@ -140,9 +144,8 @@ namespace DataAccess
                 };
 
 
-                // seed data
+                // seed the rest
 
-                await context.Songs.AddRangeAsync(songs);
                 await context.Distortions.AddRangeAsync(distortions);
                 await context.Reverbs.AddRangeAsync(reverbs);
                 await context.Delays.AddRangeAsync(delays);
