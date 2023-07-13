@@ -20,7 +20,7 @@ public class SongRepository : ISongRepository
 
     public async Task<Song> GetSongById(int songId)
     {
-        return await _context.Songs.FirstAsync(s => s.SongId == songId);
+        return await _context.Songs.FirstAsync(s => s.Id == songId);
     }
 
     public async Task<Song> CreateSong(Song newSong)

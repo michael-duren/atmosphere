@@ -5,7 +5,7 @@ namespace Domain;
 
 public class KitPattern
 {
-    [Key] public int KitPatternId { get; set; }
+    [Key] public int Id { get; set; }
     public int[] BdSteps { get; set; } = null!;
     public int[] SdSteps { get; set; } = null!;
     public int[] ClSteps { get; set; } = null!;

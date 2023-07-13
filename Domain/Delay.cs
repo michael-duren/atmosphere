@@ -5,7 +5,7 @@ namespace Domain;
 
 public class Delay
 {
-    [Key] public int DelayId { get; set; }
+    [Key] public int Id { get; set; }
     public double Mix { get; set; }
     public double Time { get; set; }
     public double Feedback { get; set; }

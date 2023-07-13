@@ -5,7 +5,7 @@ namespace Domain;
 
 public class MelodicSynth
 {
-    [Key] public int MelodicSynthId { get; set; }
+    [Key] public int Id { get; set; }
     public string Waveform { get; set; } = null!;
     public double Attack { get; set; }
     public double Decay { get; set; }

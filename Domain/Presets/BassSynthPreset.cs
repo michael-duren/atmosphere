@@ -8,7 +8,7 @@ public class BassSynthPreset
     [ForeignKey("AppUser")] public string AppUserId { get; set; } = null!;
     public AppUser AppUser { get; set; } = null!;
     
-    [Key] public int BassSynthId { get; set; }
+    [Key] public int Id { get; set; }
     public string PresetName { get; set; } = null!;
     public double Attack { get; set; }
     public double Decay { get; set; }

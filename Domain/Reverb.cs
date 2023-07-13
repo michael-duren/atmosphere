@@ -5,7 +5,7 @@ namespace Domain;
 
 public class Reverb
 {
-    [Key] public int ReverbId { get; set; }
+    [Key] public int Id { get; set; }
     public double Mix { get; set; }
     public double Decay { get; set; }
     public double PreDelay { get; set; }

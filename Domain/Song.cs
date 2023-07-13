@@ -9,7 +9,7 @@ public class Song
     public AppUser AppUser { get; set; } = null!;
 
     // main song details
-    [Key] public int SongId { get; set; }
+    [Key] public int Id { get; set; }
     public string SongName { get; set; } = null!;
     public double MasterVolume { get; set; }
     public int Bpm { get; set; }

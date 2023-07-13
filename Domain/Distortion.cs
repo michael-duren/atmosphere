@@ -5,7 +5,7 @@ namespace Domain;
 
 public class Distortion
 {
-    [Key] public int DistortionId { get; set; }
+    [Key] public int Id { get; set; }
     public double Mix { get; set; }
     public double Amount { get; set; }
     public double Filter { get; set; }

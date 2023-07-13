@@ -5,7 +5,7 @@ namespace Domain;
 
 public class BassSynth
 {
-    [Key] public int BassSynthId { get; set; }
+    [Key] public int Id { get; set; }
     public double Attack { get; set; }
     public double Decay { get; set; }
     public string Waveform { get; set; } = null!;
