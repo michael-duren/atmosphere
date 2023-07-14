@@ -36,7 +36,7 @@ public class GetAllSongs
                 .Include(s => s.Reverb)
                 .Include(s => s.Delay)
                 .ProjectTo<SongQueryDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
     }
 }

@@ -1,6 +1,8 @@
 using Application.Songs.DTOs;
+using Application.Songs.Validators;
 using DataAccess;
 using Domain;
+using FluentValidation;
 using MediatR;
 
 namespace Application.Songs.Commands;
@@ -11,7 +13,15 @@ public class CreateSong
     {
         public Song Song { get; set; }
     }
-    
+
+    public class CommandValidator : AbstractValidator<Command>
+    {
+        public CommandValidator()
+        {
+            RuleFor(x => x.Song).SetValidator(new SongValidator());
+        }
+    }
+
     public class Handler : IRequestHandler<Command, Unit>
     {
         private readonly AppDbContext _context;
