@@ -20,5 +20,4 @@ public class MelodicSynth
     public string LfoShape { get; set; } = null!;
     
     [ForeignKey("Song")] public int SongId { get; set; }
-    public Song Song { get; set; } = null!;
 }

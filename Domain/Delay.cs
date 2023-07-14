@@ -11,5 +11,4 @@ public class Delay
     public double Feedback { get; set; }
 
     [ForeignKey("Song")] public int SongId { get; set; }
-    public Song Song { get; set; } = null!;
 }

@@ -10,5 +10,4 @@ public class MelodicPattern
     public int[] Sequence { get; set; } = null!;
     public string PatternType { get; set; } = null!;
     [ForeignKey("Song")] public int SongId { get; set; }
-    public Song Song { get; set; } = null!;
 }
