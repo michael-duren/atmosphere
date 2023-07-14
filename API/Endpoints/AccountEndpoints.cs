@@ -19,7 +19,7 @@ public class AccountEndpoints : IEndpointDefinition
         accounts.MapPost("/register", Register);
     }
 
-    private async Task<IResult> Login(IMediator mediator, [FromBody] LoginDto loginDto)
+    private static async Task<IResult> Login(IMediator mediator, [FromBody] LoginDto loginDto)
     {
         var login = new Login.Command
         {
@@ -34,8 +34,18 @@ public class AccountEndpoints : IEndpointDefinition
         return TypedResults.Ok(result);
     }
 
-    private async Task<IResult> Register()
+    private static async Task<IResult> Register(IMediator mediator, RegisterDto registerDto)
     {
-        throw new NotImplementedException();
+        var register = new Register.Command
+        {
+            RegisterDto = registerDto
+        };
+
+        var result = await mediator.Send(register);
+
+        if (!result.IsSuccess)
+            return TypedResults.BadRequest(result);
+
+        return TypedResults.Ok(result);
     }
 }
