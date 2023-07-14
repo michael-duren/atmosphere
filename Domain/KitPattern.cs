@@ -13,5 +13,4 @@ public class KitPattern
 
 
     [ForeignKey("Song")] public int SongId { get; set; }
-    public Song Song { get; set; } = null!;
 }

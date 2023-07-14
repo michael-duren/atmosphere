@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess;
 using Microsoft.AspNetCore.Identity;
 using API.Extensions;
+using Application.Songs.Queries;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,19 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapGet("/api/songs", async (IMediator mediator, CancellationToken cancellationToken) =>
+{
+    var getAllSongs = new GetAllSongs.Query();
+    var songs = await mediator.Send(getAllSongs, cancellationToken);
+    return songs;
+});
+app.MapGet("/api/songs/{id}", async (IMediator mediator, CancellationToken cancellationToken, int id) =>
+{
+    var getSongById = new GetSongById.Query { Id = id };
+    var songs = await mediator.Send(getSongById, cancellationToken);
+    return songs;
+});
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

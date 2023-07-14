@@ -1,15 +1,13 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Domain;
 
-namespace Domain;
+namespace Application.Songs.DTOs;
 
-public class Song
+public class SongQueryDto
 {
-    [ForeignKey("AppUser")] public string AppUserId { get; set; } = null!;
-    public AppUser AppUser { get; set; } = null!;
+    
 
     // main song details
-    [Key] public int Id { get; set; }
+    public int Id { get; set; }
     public string SongName { get; set; } = null!;
     public double MasterVolume { get; set; }
     public int Bpm { get; set; }
