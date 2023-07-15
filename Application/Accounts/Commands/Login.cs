@@ -32,17 +32,17 @@ public class Login
         {
             var validationResult = await _validator.ValidateAsync(request.LoginDto, cancellationToken);
             if (!validationResult.IsValid)
-                return Result<UserDto>.Failure(ParseErrorList.ToErrorList(validationResult.Errors));
+                return Result<UserDto>.Failure(new ErrorMessage(ParseErrorList.ToErrorList(validationResult.Errors)));
 
             var user = await _userManager.FindByEmailAsync(request.LoginDto.Email);
-            if (user == null)
-                return Result<UserDto>.Failure(new List<string> { "User not found" });
+            if (user is null)
+                return Result<UserDto>.Failure(new ErrorMessage(new List<string> { "User not found" }));
 
             var result = await _userManager.CheckPasswordAsync(user, request.LoginDto.Password);
 
             return result
                 ? Result<UserDto>.Success(CreateUserObject(user))
-                : Result<UserDto>.Failure(new List<string> { "Invalid password" });
+                : Result<UserDto>.Failure(new ErrorMessage(new List<string> { "Invalid password" }));
         }
 
         private UserDto CreateUserObject(AppUser user)

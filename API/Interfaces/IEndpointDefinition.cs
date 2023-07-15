@@ -1,4 +1,4 @@
-namespace API.Abstractions;
+namespace API.Interfaces;
 
 public interface IEndpointDefinition
 {

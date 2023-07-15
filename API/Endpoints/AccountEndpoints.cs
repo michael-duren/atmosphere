@@ -1,11 +1,9 @@
-using API.Abstractions;
-using Application.Accounts;
+using API.Interfaces;
 using Application.Accounts.Commands;
 using Application.Accounts.DTOs;
 using Application.Core;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace API.Endpoints;
 
@@ -19,44 +17,35 @@ public class AccountEndpoints : IEndpointDefinition
             .AllowAnonymous()
             .WithName("Login")
             .Accepts<LoginDto>("application/json")
-            .Produces<Result<UserDto>>(200, "application/json")
-            .Produces<Result<UserDto>>(400, "application/json");
+            .Produces<UserDto>(200, "application/json")
+            .Produces<ErrorMessage>(400, "application/json");
 
         accounts.MapPost("/register", Register)
             .AllowAnonymous()
             .WithName("Register")
             .Accepts<RegisterDto>("application/json")
-            .Produces<Result<UserDto>>(200, "application/json")
-            .Produces<Result<UserDto>>(400, "application/json");
+            .Produces<UserDto>(200, "application/json")
+            .Produces<ErrorMessage>(400, "application/json");
     }
 
-    private static async Task<IResult> Login(IMediator mediator, [FromBody] LoginDto loginDto)
+    private static async Task<IResult> Login(IMediator mediator, IHandleResult handleResult,
+        LoginDto loginDto)
     {
         var login = new Login.Command
         {
             LoginDto = loginDto
         };
 
-        var result = await mediator.Send(login);
-
-        if (!result.IsSuccess)
-            return TypedResults.BadRequest(result);
-
-        return TypedResults.Ok(result);
+        return handleResult.Handle(await mediator.Send(login));
     }
 
-    private static async Task<IResult> Register(IMediator mediator, RegisterDto registerDto)
+    private static async Task<IResult> Register(IMediator mediator, IHandleResult handleResult, RegisterDto registerDto)
     {
         var register = new Register.Command
         {
             RegisterDto = registerDto
         };
 
-        var result = await mediator.Send(register);
-
-        if (!result.IsSuccess)
-            return TypedResults.BadRequest(result);
-
-        return TypedResults.Ok(result);
+        return handleResult.Handle(await mediator.Send(register));
     }
 }

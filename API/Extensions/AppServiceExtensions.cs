@@ -1,4 +1,5 @@
-using API.Abstractions;
+using API.Endpoints.Utility;
+using API.Interfaces;
 using Application.Accounts.Commands;
 using Application.Core;
 using Application.Interfaces;
@@ -18,30 +19,33 @@ public static class AppServiceExtensions
     {
         // connect db 
         var connection = config.GetConnectionString("DefaultConnection");
-        
+
         builder.Services.AddDbContext<AppDbContext>(options =>
         {
             options
                 .UseNpgsql(connection);
         });
-        
+
         // swagger
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        
+
         // mediatr
         builder.Services.AddMediatR(typeof(CreateSong.Command));
         builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
-        
+
         // validators
         builder.Services.AddFluentValidationAutoValidation();
         builder.Services.AddValidatorsFromAssemblyContaining<CreateSong>();
         builder.Services.AddValidatorsFromAssemblyContaining<Login>();
-        
+
         // http context access
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddScoped<IUserAccessor, UserAccessor>();
+
+        // handle result
+        builder.Services.AddScoped<IHandleResult, HandleResult>();
     }
 
     public static void RegisterEndpointDefinitions(this WebApplication app)
@@ -51,7 +55,7 @@ public static class AppServiceExtensions
          * only get types that are not abstract and not interfaces
          * we cast it to IEndpointDefinition because we know it implements it 
          */
-        
+
         var endpointDefinitions = typeof(Program).Assembly
             .GetTypes()
             .Where(t => t.IsAssignableTo(typeof(IEndpointDefinition)) && !t.IsAbstract && !t.IsInterface)
@@ -61,5 +65,4 @@ public static class AppServiceExtensions
         // register all the endpoints
         foreach (var endpointDef in endpointDefinitions) endpointDef.RegisterEndpoints(app);
     }
-    
 }

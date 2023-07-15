@@ -1,3 +1,4 @@
+using Application.Core;
 using Application.Interfaces;
 using Application.Songs.DTOs;
 using AutoMapper;
@@ -10,11 +11,11 @@ namespace Application.Songs.Queries;
 
 public class GetAllSongs
 {
-    public class Query : IRequest<ICollection<SongQueryDto>>
+    public class Query : IRequest<Result<ICollection<SongQueryDto>>>
     {
     }
 
-    public class Handler : IRequestHandler<Query, ICollection<SongQueryDto>>
+    public class Handler : IRequestHandler<Query, Result<ICollection<SongQueryDto>>>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -28,13 +29,17 @@ public class GetAllSongs
             _userAccessor = userAccessor;
         }
 
-        public async Task<ICollection<SongQueryDto>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<ICollection<SongQueryDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == _userAccessor.GetUsername(),
                 cancellationToken: cancellationToken);
 
-            return await _context.Songs
-                .Where(s => user != null && s.AppUserId == user.Id)
+            if (user is null)
+                return Result<ICollection<SongQueryDto>>.Failure(
+                    new ErrorMessage(new List<string> { "User not found" }));
+
+            var songs = await _context.Songs
+                .Where(s => s.AppUserId == user.Id)
                 .Include(s => s.BassSynth)
                 .Include(s => s.MelodicSynth)
                 .Include(s => s.MelodicPattern)
@@ -44,6 +49,8 @@ public class GetAllSongs
                 .Include(s => s.Delay)
                 .ProjectTo<SongQueryDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
+
+            return Result<ICollection<SongQueryDto>>.Success(songs);
         }
     }
 }

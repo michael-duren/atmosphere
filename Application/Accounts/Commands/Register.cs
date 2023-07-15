@@ -33,7 +33,7 @@ public class Register
             var validationResult = await _validator.ValidateAsync(request.RegisterDto, cancellationToken);
 
             if (!validationResult.IsValid)
-                return Result<UserDto>.Failure(ParseErrorList.ToErrorList(validationResult.Errors));
+                return Result<UserDto>.Failure(new ErrorMessage(ParseErrorList.ToErrorList(validationResult.Errors)));
 
             var user = new AppUser
             {
@@ -44,7 +44,7 @@ public class Register
             var result = await _userManager.CreateAsync(user, request.RegisterDto.Password);
 
             return !result.Succeeded
-                ? Result<UserDto>.Failure(new List<string> { "User creation failed" })
+                ? Result<UserDto>.Failure(new ErrorMessage(new List<string> { "User creation failed" }))
                 : Result<UserDto>.Success(CreateUserObject.CreateUserDto(user, _tokenService));
         }
     }
