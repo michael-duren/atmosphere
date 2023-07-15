@@ -3,6 +3,7 @@ using Application.Core;
 using Application.Songs.Commands;
 using Application.Songs.DTOs;
 using Application.Songs.Queries;
+using Domain;
 using MediatR;
 
 namespace API.Endpoints;
@@ -28,7 +29,17 @@ public class SongEndpoints : IEndpointDefinition
             .Accepts<SongCreateDto>("application/json")
             .Produces(200)
             .Produces<ErrorMessage>(400, "application/json");
+
+        songs.MapPut("/{id}", UpdateSong)
+            .WithName("UpdateSong")
+            .Accepts<SongCreateDto>("application/json")
+            .Produces(200)
+            .Produces<ErrorMessage>(400, "application/json");
+
+        songs.MapDelete("/{id}", DeleteSong)
+            .WithName("DeleteSong");
     }
+
 
     private static async Task<IResult> GetAllSongs(IMediator mediator, IHandleResult handleResult,
         CancellationToken cancellationToken)
@@ -49,5 +60,19 @@ public class SongEndpoints : IEndpointDefinition
     {
         var createSong = new CreateSong.Command { Song = songCreateDto };
         return handleResult.Handle(await mediator.Send(createSong, cancellationToken));
+    }
+
+    private static async Task<IResult> UpdateSong(IMediator mediator, IHandleResult handleResult, int id,
+        Song song, CancellationToken cancellationToken)
+    {
+        var updateSong = new UpdateSong.Command { Song = song, Id = id };
+        return handleResult.Handle(await mediator.Send(updateSong, cancellationToken));
+    }
+
+    private static async Task<IResult> DeleteSong(IMediator mediator, IHandleResult handleResult, int id,
+        CancellationToken cancellationToken)
+    {
+        var deleteSong = new DeleteSong.Command { Id = id };
+        return handleResult.Handle(await mediator.Send(deleteSong, cancellationToken));
     }
 }

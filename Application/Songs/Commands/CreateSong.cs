@@ -15,7 +15,7 @@ public class CreateSong
 {
     public class Command : IRequest<Result<Unit>>
     {
-        public SongCreateDto Song { get; set; }
+        public SongCreateDto Song { get; set; } = null!;
     }
 
     public class CommandValidator : AbstractValidator<Command>
@@ -54,8 +54,10 @@ public class CreateSong
 
             _context.Songs.Add(song);
             user.Songs.Add(song);
-            await _context.SaveChangesAsync(cancellationToken);
-            return Result<Unit>.Success(Unit.Value);
+            bool result = await _context.SaveChangesAsync(cancellationToken) > 0;
+            return result
+                ? Result<Unit>.Success(Unit.Value)
+                : Result<Unit>.Failure(new ErrorMessage(new List<string> { "Failed to create song" }));
         }
     }
 }
