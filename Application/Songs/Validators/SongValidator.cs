@@ -1,9 +1,9 @@
-using Domain;
+using Application.Songs.DTOs;
 using FluentValidation;
 
 namespace Application.Songs.Validators;
 
-public class SongValidator : AbstractValidator<Song>
+public class SongValidator : AbstractValidator<SongCreateDto>
 {
     public SongValidator()
     {

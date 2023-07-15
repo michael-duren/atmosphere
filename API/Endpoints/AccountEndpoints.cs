@@ -3,7 +3,6 @@ using Application.Accounts.Commands;
 using Application.Accounts.DTOs;
 using Application.Core;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace API.Endpoints;
 

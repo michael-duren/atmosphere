@@ -1,5 +1,6 @@
 using API.Interfaces;
 using Application.Core;
+using Application.Songs.Commands;
 using Application.Songs.DTOs;
 using Application.Songs.Queries;
 using MediatR;
@@ -21,6 +22,12 @@ public class SongEndpoints : IEndpointDefinition
             .WithName("GetSongById")
             .Produces<SongQueryDto>(200, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
+
+        songs.MapPost("/", CreateSong)
+            .WithName("CreateSong")
+            .Accepts<SongCreateDto>("application/json")
+            .Produces(200)
+            .Produces<ErrorMessage>(400, "application/json");
     }
 
     private static async Task<IResult> GetAllSongs(IMediator mediator, IHandleResult handleResult,
@@ -35,5 +42,12 @@ public class SongEndpoints : IEndpointDefinition
     {
         var getSong = new GetSongById.Query { Id = id };
         return handleResult.Handle(await mediator.Send(getSong, cancellationToken));
+    }
+
+    private static async Task<IResult> CreateSong(IMediator mediator, IHandleResult handleResult,
+        SongCreateDto songCreateDto, CancellationToken cancellationToken)
+    {
+        var createSong = new CreateSong.Command { Song = songCreateDto };
+        return handleResult.Handle(await mediator.Send(createSong, cancellationToken));
     }
 }
