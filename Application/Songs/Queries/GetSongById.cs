@@ -34,8 +34,12 @@ public class GetSongById
             var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == _userAccessor.GetUsername(),
                 cancellationToken: cancellationToken);
 
+            if (user is null)
+                return Result<SongQueryDto>.Failure(
+                    new ErrorMessage(new List<string> { "User not found" }));
+
             var song = await _context.Songs
-                .Where(s => user != null && s.AppUserId == user.Id)
+                .Where(s => s.AppUserId == user.Id)
                 .Include(s => s.BassSynth)
                 .Include(s => s.MelodicSynth)
                 .Include(s => s.MelodicPattern)
