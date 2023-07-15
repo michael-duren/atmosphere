@@ -1,6 +1,8 @@
 using API.Abstractions;
 using Application.Accounts.Commands;
 using Application.Core;
+using Application.Interfaces;
+using Application.Security;
 using Application.Songs.Commands;
 using DataAccess;
 using FluentValidation;
@@ -14,6 +16,7 @@ public static class AppServiceExtensions
 {
     public static void RegisterAppServices(this WebApplicationBuilder builder, IConfiguration config)
     {
+        // connect db 
         var connection = config.GetConnectionString("DefaultConnection");
         
         builder.Services.AddDbContext<AppDbContext>(options =>
@@ -22,15 +25,23 @@ public static class AppServiceExtensions
                 .UseNpgsql(connection);
         });
         
+        // swagger
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        
+        // mediatr
         builder.Services.AddMediatR(typeof(CreateSong.Command));
         builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+        
+        // validators
         builder.Services.AddFluentValidationAutoValidation();
         builder.Services.AddValidatorsFromAssemblyContaining<CreateSong>();
         builder.Services.AddValidatorsFromAssemblyContaining<Login>();
-        builder.Services.AddProblemDetails();
+        
+        // http context access
+        builder.Services.AddHttpContextAccessor();
+        builder.Services.AddScoped<IUserAccessor, UserAccessor>();
     }
 
     public static void RegisterEndpointDefinitions(this WebApplication app)

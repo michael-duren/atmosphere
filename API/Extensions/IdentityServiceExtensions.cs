@@ -3,6 +3,7 @@ using API.Services;
 using DataAccess;
 using Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.Extensions;
@@ -25,6 +26,14 @@ public static class IdentityServiceExtensions
                 ValidateIssuer = false,
                 ValidateAudience = false
             };
+        });
+
+        builder.Services.AddAuthorization(opt =>
+        {
+            opt.FallbackPolicy = new AuthorizationPolicyBuilder()
+                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                .RequireAuthenticatedUser()
+                .Build();
         });
 
         builder.Services.AddScoped<TokenService>();
