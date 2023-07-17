@@ -3,10 +3,12 @@ import { User } from '../../models/user.ts';
 
 export interface UserState {
   user: User | null;
+  isLoading: boolean;
 }
 
 const initialUserState: UserState = {
   user: null,
+  isLoading: false,
 };
 
 const userSlice = createSlice({
@@ -16,11 +18,14 @@ const userSlice = createSlice({
     setUser: (state, action: { payload: User | null; type: string }) => {
       state.user = action.payload;
     },
+    setIsUserLoading: (state, action: { payload: boolean; type: string }) => {
+      state.isLoading = action.payload;
+    },
   },
 });
 
 export const selectUser = (state: UserState) => state.user;
 
-export const { setUser } = userSlice.actions;
+export const { setUser, setIsUserLoading } = userSlice.actions;
 
 export default userSlice.reducer;

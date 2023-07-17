@@ -1,15 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
+import { Outlet } from 'react-router-dom';
 
 function App() {
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path="/" index element={<Home />} />
-        </Routes>
-      </Router>
-
+      <Outlet />
     </>
   );
 }
