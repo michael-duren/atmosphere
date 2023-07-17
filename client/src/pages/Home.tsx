@@ -1,4 +1,6 @@
 import HomeLayout from '../components/Layouts/HomeLayout';
+import DarkModal from '../components/Ui/Modals/DarkModal';
+import LoginForm from '../components/Features/Authentication/LoginForm';
 import { useState } from 'react';
 
 export default function Home() {
@@ -6,6 +8,7 @@ export default function Home() {
   const [loginAnimationEnd, setLoginAnimationEnd] = useState(false);
   const [registerAnimationEnd, setRegisterAnimationEnd] = useState(false);
   const [hOneAnimationEnd, setHOneAnimationEnd] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   const handleLoginAnimationEnd = () => {
     setLoginAnimationEnd(true);
@@ -20,58 +23,64 @@ export default function Home() {
   };
 
   return (
-    <HomeLayout>
-      <div
-        className={`${
-          loginAnimationEnd &&
-          registerAnimationEnd &&
-          hOneAnimationEnd &&
-          'animate-pulse'
-        }`}
-      >
-        <h1
-          onAnimationEnd={handleH1AnimationEnd}
-          className="text-white font-title text-9xl animation-up"
+    <>
+      <HomeLayout>
+        <div
+          className={`${
+            loginAnimationEnd &&
+            registerAnimationEnd &&
+            hOneAnimationEnd &&
+            'animate-pulse'
+          }`}
         >
-          {h1Text.split('').map((char, i) => {
-            return (
-              <span
-                style={{
-                  animation: hOneAnimationEnd
-                    ? 'none'
-                    : `fade-in-stunted 5s ${i / 10}s forwards`,
-                  opacity: hOneAnimationEnd ? 0.75 : 0,
-                }}
-                key={i}
-              >
-                {char}
-              </span>
-            );
-          })}
-        </h1>
-        <div className="flex justify-between">
-          <button
-            onAnimationEnd={handleLoginAnimationEnd}
-            className={`uppercase ${
-              loginAnimationEnd
-                ? 'hover:opacity-100 opacity-75'
-                : 'opacity-0 animation-login-buttons'
-            } font-caps text-5xl `}
+          <h1
+            onAnimationEnd={handleH1AnimationEnd}
+            className="text-white font-title text-9xl animation-up"
           >
-            Login
-          </button>
-          <button
-            onAnimationEnd={handleRegisterAnimationEnd}
-            className={`uppercase ${
-              registerAnimationEnd
-                ? 'opacity-75 hover:opacity-100'
-                : 'opacity-0 animation-login-buttons'
-            } font-caps text-5xl`}
-          >
-            Register
-          </button>
+            {h1Text.split('').map((char, i) => {
+              return (
+                <span
+                  style={{
+                    animation: hOneAnimationEnd
+                      ? 'none'
+                      : `fade-in-stunted 5s ${i / 10}s forwards`,
+                    opacity: hOneAnimationEnd ? 0.75 : 0,
+                  }}
+                  key={i}
+                >
+                  {char}
+                </span>
+              );
+            })}
+          </h1>
+          <div className="flex justify-between">
+            <button
+              onClick={() => setShowLoginModal(!showLoginModal)}
+              onAnimationEnd={handleLoginAnimationEnd}
+              className={`uppercase ${
+                loginAnimationEnd
+                  ? 'hover:opacity-100 opacity-75'
+                  : 'opacity-0 animation-login-buttons'
+              } font-caps text-5xl `}
+            >
+              Login
+            </button>
+            <button
+              onAnimationEnd={handleRegisterAnimationEnd}
+              className={`uppercase ${
+                registerAnimationEnd
+                  ? 'opacity-75 hover:opacity-100'
+                  : 'opacity-0 animation-login-buttons'
+              } font-caps text-5xl`}
+            >
+              Register
+            </button>
+          </div>
         </div>
-      </div>
-    </HomeLayout>
+      </HomeLayout>
+      <DarkModal setIsOpen={setShowLoginModal} isOpen={showLoginModal}>
+        <LoginForm setIsOpen={setShowLoginModal} />
+      </DarkModal>
+    </>
   );
 }
