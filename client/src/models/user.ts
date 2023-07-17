@@ -4,8 +4,13 @@ export interface User {
   image?: string;
 }
 
-export interface UserFormValues {
+export interface UserLogin {
   email: string;
   password: string;
-  username?: string;
+}
+
+export interface UserRegister {
+  email: string;
+  password: string;
+  username: string;
 }

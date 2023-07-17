@@ -7,12 +7,15 @@ import {
 import { setIsUserLoading, setUser } from '../slices/userSlice.ts';
 import { User } from '../../models/user.ts';
 import { call, put, takeEvery } from 'typed-redux-saga';
+import { router } from '../../route/Routes.tsx';
 
 export function* login({ payload }: LoginAsync) {
   yield put(setIsUserLoading(true));
   const user: User = yield* call(agent.Account.login, payload);
   if (user) {
     yield put(setUser(user));
+    yield put(setIsUserLoading(false));
+    yield call(router.navigate, '/app');
   }
   yield put(setIsUserLoading(false));
 }

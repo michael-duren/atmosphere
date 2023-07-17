@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { User, UserFormValues } from '../models/user.ts';
+import { User, UserLogin, UserRegister } from '../models/user.ts';
 
 axios.defaults.baseURL = 'https://localhost:7190';
 
@@ -15,8 +15,8 @@ const requests = {
 
 const Account = {
   current: () => requests.get<User>('account'),
-  login: (user: UserFormValues) => requests.post<User>('/account/login', user),
-  register: (user: UserFormValues) =>
+  login: (user: UserLogin) => requests.post<User>('/account/login', user),
+  register: (user: UserRegister) =>
     requests.post<User>('/account/register', user),
 };
 

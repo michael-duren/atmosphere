@@ -23,7 +23,8 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.2.3",
     "three": "^0.154.0",
-    "typed-redux-saga": "^1.5.0"
+    "typed-redux-saga": "^1.5.0",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.14",

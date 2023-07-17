@@ -1,11 +1,19 @@
 import { darkInput } from '../../Ui/Styles/input.ts';
 import { SetStateAction } from 'react';
+// import {useAppDispatch} from "../../../store/hooks/useAppDispatch.ts";
 
 interface Props {
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
 }
 
 export default function LoginForm({ setIsOpen }: Props) {
+  // const dispatch = useAppDispatch();
+  //
+  // const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   dispatch()
+  // }
+
   return (
     <div>
       <div className="flex items-center justify-between">
