@@ -18,7 +18,7 @@ const commonSlice = createSlice({
   name: 'common',
   initialState: initialCommonState,
   reducers: {
-    setToken: (state, action: { payload: string; type: string }) => {
+    setToken: (state, action: { payload: string | null; type: string }) => {
       state.token = action.payload;
     },
     setError: (state, action: { payload: ServerError; type: string }) => {

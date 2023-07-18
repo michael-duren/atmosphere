@@ -14,7 +14,6 @@ function App() {
       dispatch({ type: USER_ACTIONS.GET_LOGGED_IN_USER_ASYNC });
     }
   }, [token]);
-  console.log(localStorage);
 
   return (
     <>
