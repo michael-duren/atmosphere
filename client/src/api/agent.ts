@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { User, UserLogin, UserRegister } from '../models/user.ts';
 
-axios.defaults.baseURL = 'https://localhost:7190';
+axios.defaults.baseURL = 'http://localhost:5000/api';
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
@@ -14,7 +14,7 @@ const requests = {
 };
 
 const Account = {
-  current: () => requests.get<User>('account'),
+  getCurrentUser: () => requests.get<User>('account'),
   login: (user: UserLogin) => requests.post<User>('/account/login', user),
   register: (user: UserRegister) =>
     requests.post<User>('/account/register', user),

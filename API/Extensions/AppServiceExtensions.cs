@@ -31,6 +31,13 @@ public static class AppServiceExtensions
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        // cors policy for development
+        builder.Services.AddCors(opt =>
+        {
+            opt.AddPolicy("CorsPolicy",
+                policy => { policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:5173"); });
+        });
+
         // mediatr
         builder.Services.AddMediatR(typeof(CreateSong.Command));
         builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);

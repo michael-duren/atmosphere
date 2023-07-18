@@ -11,13 +11,15 @@ import { router } from '../../route/Routes.tsx';
 
 export function* login({ payload }: LoginAsync) {
   yield put(setIsUserLoading(true));
-  const user: User = yield* call(agent.Account.login, payload);
-  if (user) {
+  try {
+    const user: User = yield call(agent.Account.login, payload);
     yield put(setUser(user));
     yield put(setIsUserLoading(false));
     yield call(router.navigate, '/app');
+  } catch (error) {
+    yield put(setIsUserLoading(false));
+    throw error;
   }
-  yield put(setIsUserLoading(false));
 }
 
 export function* register({ payload }: RegisterAsync) {

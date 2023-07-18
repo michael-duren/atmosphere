@@ -1,15 +1,20 @@
-import { UserFormValues } from '../../models/user.ts';
+import { UserLogin, UserRegister } from '../../models/user.ts';
 
 export const USER_ACTIONS = {
   LOGIN_ASYNC: 'LOGIN_ASYNC',
   REGISTER_ASYNC: 'REGISTER_ASYNC',
+  LOGOUT_ASYNC: 'LOGOUT_ASYNC',
 };
 
 export interface LoginAsync {
   type: typeof USER_ACTIONS.LOGIN_ASYNC;
-  payload: UserFormValues;
+  payload: UserLogin;
 }
 export interface RegisterAsync {
   type: typeof USER_ACTIONS.LOGIN_ASYNC;
-  payload: UserFormValues;
+  payload: UserRegister;
+}
+
+export interface LogoutAsync {
+  type: typeof USER_ACTIONS.LOGOUT_ASYNC;
 }
