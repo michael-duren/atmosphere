@@ -1,6 +1,6 @@
-using API.Services;
 using Application.Accounts.DTOs;
 using Application.Core;
+using Application.Services;
 using Domain;
 using FluentValidation;
 using MediatR;

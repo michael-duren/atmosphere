@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
-namespace API.Services;
+namespace Application.Services;
 
 public class TokenService
 {
@@ -21,8 +21,8 @@ public class TokenService
     {
         var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName!)
+            new(JwtRegisteredClaimNames.NameId, user.Id),
+            new(JwtRegisteredClaimNames.UniqueName, user.UserName!)
         };
         
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"]!));

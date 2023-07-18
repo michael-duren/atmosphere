@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { User } from '../../models/user.ts';
+import { AppState } from '../store.ts';
 
 export interface UserState {
   user: User | null;
@@ -24,7 +25,7 @@ const userSlice = createSlice({
   },
 });
 
-export const selectUser = (state: UserState) => state.user;
+export const selectUser = (state: AppState) => state.user;
 
 export const { setUser, setIsUserLoading } = userSlice.actions;
 

@@ -1,7 +1,7 @@
-using API.Services;
 using Application.Accounts.DTOs;
 using Application.Core;
 using Application.Interfaces;
+using Application.Services;
 using AutoMapper;
 using DataAccess;
 using MediatR;
