@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import { loginFormSchema } from '../../../models/schemas/loginFormSchema.ts';
 import { USER_ACTIONS } from '../../../store/actions/userActions.ts';
 import { useAppDispatch } from '../../../store/hooks/useAppDispatch.ts';
-// import {useAppDispatch} from "../../../store/hooks/useAppDispatch.ts";
 
 interface Props {
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
@@ -55,7 +54,6 @@ export default function LoginForm({ setIsOpen }: Props) {
           <input
             onChange={formik.handleChange}
             value={formik.values.email}
-            id="email"
             name="email"
             className={darkInput}
             type="email"
@@ -68,7 +66,6 @@ export default function LoginForm({ setIsOpen }: Props) {
             Password
           </label>
           <input
-            id="password"
             onChange={formik.handleChange}
             value={formik.values.password}
             name="password"

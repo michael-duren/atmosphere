@@ -2,6 +2,7 @@ import HomeLayout from '../components/Layouts/HomeLayout';
 import DarkModal from '../components/Ui/Modals/DarkModal';
 import LoginForm from '../components/Features/Authentication/LoginForm';
 import { useState } from 'react';
+import RegisterForm from '../components/Features/Authentication/RegisterForm.tsx';
 
 export default function Home() {
   const h1Text = 'ATMOSPHERE';
@@ -9,6 +10,7 @@ export default function Home() {
   const [registerAnimationEnd, setRegisterAnimationEnd] = useState(false);
   const [hOneAnimationEnd, setHOneAnimationEnd] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
 
   const handleLoginAnimationEnd = () => {
     setLoginAnimationEnd(true);
@@ -66,6 +68,7 @@ export default function Home() {
               Login
             </button>
             <button
+              onClick={() => setShowRegisterModal(!showRegisterModal)}
               onAnimationEnd={handleRegisterAnimationEnd}
               className={`uppercase ${
                 registerAnimationEnd
@@ -80,6 +83,9 @@ export default function Home() {
       </HomeLayout>
       <DarkModal setIsOpen={setShowLoginModal} isOpen={showLoginModal}>
         <LoginForm setIsOpen={setShowLoginModal} />
+      </DarkModal>
+      <DarkModal setIsOpen={setShowRegisterModal} isOpen={showRegisterModal}>
+        <RegisterForm setIsOpen={setShowRegisterModal} />
       </DarkModal>
     </>
   );
