@@ -30,7 +30,8 @@ export default function RegisterForm({ setIsOpen }: Props) {
           payload: { username, email, password },
         });
       } catch (e: any) {
-        formik.setErrors({ errors: e });
+        console.log(e);
+        formik.setErrors({ errors: e.message });
       }
     },
   });

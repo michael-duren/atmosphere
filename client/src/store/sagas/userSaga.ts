@@ -4,7 +4,12 @@ import {
   RegisterAsync,
   USER_ACTIONS,
 } from '../actions/userActions.ts';
-import { setIsUserLoading, setUser } from '../slices/userSlice.ts';
+import {
+  resetUserError,
+  setIsUserLoading,
+  setUser,
+  setUserError,
+} from '../slices/userSlice.ts';
 import { User } from '../../models/user.ts';
 import { call, put, takeEvery } from 'typed-redux-saga';
 import { router } from '../../route/Routes.tsx';
@@ -14,15 +19,16 @@ export function* login({ payload }: LoginAsync) {
   yield put(setIsUserLoading(true));
   try {
     const user: User = yield call(agent.Account.login, payload);
+    yield put(resetUserError());
     yield put(setUser(user));
     yield put(setToken(user.token));
-    // passed in as an array to call setItem in the correct context
     yield call([localStorage, 'setItem'], 'jwt', user.token);
     yield put(setIsUserLoading(false));
     yield call(router.navigate, '/app');
-  } catch (e) {
+  } catch (e: any) {
+    console.log(e);
     yield put(setIsUserLoading(false));
-    throw e;
+    yield put(setUserError(e));
   }
 }
 
@@ -37,14 +43,15 @@ export function* register({ payload }: RegisterAsync) {
   yield put(setIsUserLoading(true));
   try {
     const user: User = yield* call(agent.Account.register, payload);
+    yield put(resetUserError());
     yield put(setUser(user));
     yield put(setToken(user.token));
     yield call([localStorage, 'setItem'], 'jwt', user.token);
     yield put(setIsUserLoading(false));
     yield call(router.navigate, '/app');
-  } catch (e) {
+  } catch (e: any) {
     yield put(setIsUserLoading(false));
-    throw e;
+    yield put(setUserError(e));
   }
 }
 

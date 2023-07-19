@@ -1,9 +1,12 @@
 import { darkInput } from '../../Ui/Styles/input.ts';
-import { SetStateAction } from 'react';
+import { Fragment, SetStateAction } from 'react';
 import { useFormik } from 'formik';
 import { loginFormSchema } from '../../../models/schemas/loginFormSchema.ts';
 import { USER_ACTIONS } from '../../../store/actions/userActions.ts';
 import { useAppDispatch } from '../../../store/hooks/useAppDispatch.ts';
+import { useAppSelector } from '../../../store/hooks/useAppSelector.ts';
+import { selectUser } from '../../../store/slices/userSlice.ts';
+import FormWarning from '../../Ui/Warnings/FormWarning.tsx';
 
 interface Props {
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
@@ -11,6 +14,7 @@ interface Props {
 
 export default function LoginForm({ setIsOpen }: Props) {
   const dispatch = useAppDispatch();
+  const loginError = useAppSelector(selectUser).error;
 
   const formik = useFormik({
     initialValues: {
@@ -61,6 +65,21 @@ export default function LoginForm({ setIsOpen }: Props) {
             required
           />
         </div>
+        <div className="">
+          {loginError &&
+            loginError.map((error, i) => {
+              if (error.toLowerCase().includes('user')) {
+                return (
+                  <Fragment key={i}>
+                    <FormWarning touched={true} warning={error} />
+                  </Fragment>
+                );
+              }
+            })}
+          {formik.errors.errors && (
+            <FormWarning touched={true} warning={formik.errors.errors} />
+          )}
+        </div>
         <div className="flex flex-col gap-2">
           <label className="font-caps uppercase" htmlFor="email">
             Password
@@ -73,6 +92,21 @@ export default function LoginForm({ setIsOpen }: Props) {
             type="password"
             placeholder="••••••••••"
           />
+        </div>
+        <div className="m-0">
+          {loginError &&
+            loginError.map((error, i) => {
+              if (error.toLowerCase().includes('password')) {
+                return (
+                  <Fragment key={i}>
+                    <FormWarning touched={true} warning={error} />
+                  </Fragment>
+                );
+              }
+            })}
+          {formik.errors.errors && (
+            <FormWarning touched={true} warning={formik.errors.errors} />
+          )}
         </div>
         <button
           type="submit"

@@ -1,3 +1,4 @@
+using API.Endpoints.Utility;
 using API.Interfaces;
 using Application.Accounts.Commands;
 using Application.Accounts.DTOs;
@@ -48,7 +49,8 @@ public class AccountEndpoints : IEndpointDefinition
             LoginDto = loginDto
         };
 
-        return handleResult.Handle(await mediator.Send(login));
+        var result = await mediator.Send(login);
+        return !result.IsSuccess ? new Unauthorized(result.Error) : handleResult.Handle(result);
     }
 
     private static async Task<IResult> Register(IMediator mediator, IHandleResult handleResult, RegisterDto registerDto)

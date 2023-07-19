@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { User, UserLogin, UserRegister } from '../models/user.ts';
 import { store } from '../store/store.ts';
 
@@ -14,6 +14,27 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
+// intercept the response
+axios.interceptors.response.use(
+  (response) => response,
+  (e: AxiosError) => {
+    const { data, status } = e.response as AxiosResponse;
+    switch (status) {
+      case 400:
+        if (data.error) {
+          console.log(data.error);
+          throw data.error;
+        }
+        break;
+      case 401:
+        if (data.error) {
+          console.log(data.error);
+        }
+    }
+
+    return Promise.reject(data.error);
+  }
+);
 const requests = {
   get: <T>(url: string) => axios.get<T>(url).then(responseBody),
   post: <T>(url: string, body: {}) =>

@@ -30,9 +30,9 @@ public class Login
 
         public async Task<Result<UserDto>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var validationResult = await _validator.ValidateAsync(request.LoginDto, cancellationToken);
-            if (!validationResult.IsValid)
-                return Result<UserDto>.Failure(new ErrorMessage(ParseErrorList.ToErrorList(validationResult.Errors)));
+            // var validationResult = await _validator.ValidateAsync(request.LoginDto, cancellationToken);
+            // if (!validationResult.IsValid)
+            //     return Result<UserDto>.Failure(new ErrorMessage(ParseErrorList.ToErrorList(validationResult.Errors)));
 
             var user = await _userManager.FindByEmailAsync(request.LoginDto.Email);
             if (user is null)

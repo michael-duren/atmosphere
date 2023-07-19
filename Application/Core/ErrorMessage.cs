@@ -4,10 +4,10 @@ namespace Application.Core;
 
 public class ErrorMessage
 {
-    public List<string> Messages { get; set; }
+    public List<string> Error { get; set; }
 
     public ErrorMessage(List<string> errorMessage)
     {
-        Messages = errorMessage;
+        Error = errorMessage;
     }
 }
