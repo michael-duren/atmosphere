@@ -1,10 +1,12 @@
 import { darkInput } from '../../Ui/Styles/input.ts';
-import { SetStateAction } from 'react';
+import { Fragment, SetStateAction } from 'react';
 import { useFormik } from 'formik';
 import { USER_ACTIONS } from '../../../store/actions/userActions.ts';
 import { useAppDispatch } from '../../../store/hooks/useAppDispatch.ts';
 import { registerFormSchema } from '../../../models/schemas/registerFormSchema.ts';
 import FormWarning from '../../Ui/Warnings/FormWarning.tsx';
+import { useAppSelector } from '../../../store/hooks/useAppSelector.ts';
+import { selectUser } from '../../../store/slices/userSlice.ts';
 
 interface Props {
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
@@ -12,6 +14,7 @@ interface Props {
 
 export default function RegisterForm({ setIsOpen }: Props) {
   const dispatch = useAppDispatch();
+  const registerError = useAppSelector(selectUser).error;
 
   const formik = useFormik({
     initialValues: {
@@ -30,7 +33,6 @@ export default function RegisterForm({ setIsOpen }: Props) {
           payload: { username, email, password },
         });
       } catch (e: any) {
-        console.log(e);
         formik.setErrors({ errors: e.message });
       }
     },
@@ -67,6 +69,18 @@ export default function RegisterForm({ setIsOpen }: Props) {
             placeholder="example@example.com"
             required
           />
+        </div>
+        <div>
+          {registerError &&
+            registerError.map((error, i) => {
+              if (error.toLowerCase().includes('email')) {
+                return (
+                  <Fragment key={i}>
+                    <FormWarning warning={error} touched={true} />
+                  </Fragment>
+                );
+              }
+            })}
           <FormWarning
             warning={formik.errors.email}
             touched={formik.touched.email}
@@ -88,10 +102,22 @@ export default function RegisterForm({ setIsOpen }: Props) {
             required
           />
         </div>
-        <FormWarning
-          warning={formik.errors.username}
-          touched={formik.touched.username}
-        />
+        <div>
+          {registerError &&
+            registerError.map((error, i) => {
+              if (error.toLowerCase().includes('username')) {
+                return (
+                  <Fragment key={i}>
+                    <FormWarning warning={error} touched={true} />
+                  </Fragment>
+                );
+              }
+            })}
+          <FormWarning
+            warning={formik.errors.username}
+            touched={formik.touched.username}
+          />
+        </div>
         <div className="flex flex-col gap-2">
           <label className="font-caps uppercase" htmlFor="email">
             Password
