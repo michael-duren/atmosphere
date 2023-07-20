@@ -1,6 +1,6 @@
 import { useAppSelector } from '../store/hooks/useAppSelector.ts';
 import { selectUser } from '../store/slices/userSlice.ts';
-import { router } from '../route/Routes.tsx';
+import { router } from '../router/Routes.tsx';
 import { useAppDispatch } from '../store/hooks/useAppDispatch.ts';
 import { USER_ACTIONS } from '../store/actions/userActions.ts';
 

@@ -12,7 +12,7 @@ import {
 } from '../slices/userSlice.ts';
 import { User } from '../../models/user.ts';
 import { call, put, takeEvery } from 'typed-redux-saga';
-import { router } from '../../route/Routes.tsx';
+import { router } from '../../router/Routes.tsx';
 import { setToken } from '../slices/commonSlice.ts';
 
 export function* login({ payload }: LoginAsync) {
