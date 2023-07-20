@@ -1,9 +1,27 @@
 import { useAppSelector } from '../../store/hooks/useAppSelector.ts';
 import { selectUser } from '../../store/slices/userSlice.ts';
 import { splitCamelCase, toTitleCase } from '../../utils/string.ts';
+import { HiLogout } from 'react-icons/hi';
+import { DropdownItem } from '../Ui/Dropdowns/DropdownMenu.tsx';
+import { useAppDispatch } from '../../store/hooks/useAppDispatch.ts';
+import { USER_ACTIONS } from '../../store/actions/userActions.ts';
+import DropdownMenu from '../Ui/Dropdowns/DropdownMenu.tsx';
 
 export default function DawHeader() {
   const { user } = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+
+  const dropDownItems: DropdownItem[] = [
+    {
+      ItemIcon: HiLogout,
+      itemTitle: 'Logout',
+      onClick: () => dispatch({ type: USER_ACTIONS.LOGOUT_ASYNC }),
+    },
+  ];
+
+  if (!user) {
+    return;
+  }
 
   return (
     <header className="flex items-center justify-between">
@@ -16,9 +34,12 @@ export default function DawHeader() {
         </h2>
       </div>
       <div>
-        <h1 className="border-2 border-white bg-black bg-opacity-90 p-2 font-title text-xl text-white shadow-xl">
-          Atmosphere
-        </h1>
+        <DropdownMenu
+          title="Atmosphere"
+          titleStyles="border-2 border-white bg-black bg-opacity-90 p-2 font-title text-xl text-white shadow-xl"
+          dropDownArray={dropDownItems}
+          position="right-0"
+        />
       </div>
     </header>
   );
