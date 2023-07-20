@@ -8,7 +8,9 @@ export default function DawLayout({ children }: Props) {
   return (
     <div className="p-6">
       <DawHeader />
-      <main className="grid lg:grid-cols-12 gap-4 text-white">{children}</main>
+      <main className="grid lg:grid-cols-12 gap-4 text-white mt-8">
+        {children}
+      </main>
     </div>
   );
 }
