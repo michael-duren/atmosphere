@@ -10,7 +10,7 @@ function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (token) {
+    if (!token && localStorage.getItem('jwt')) {
       dispatch({ type: USER_ACTIONS.GET_LOGGED_IN_USER_ASYNC });
     }
   }, [token]);
