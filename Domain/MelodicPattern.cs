@@ -6,8 +6,10 @@ namespace Domain;
 public class MelodicPattern
 {
     [Key] public int Id { get; set; }
+    [Column(TypeName = "varchar(50)")]
     public string Scale { get; set; } = null!;
     public int[] Sequence { get; set; } = null!;
+    [Column(TypeName = "varchar(50)")]
     public string PatternType { get; set; } = null!;
     [ForeignKey("Song")] public int SongId { get; set; }
 }

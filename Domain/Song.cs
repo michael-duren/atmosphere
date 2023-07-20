@@ -10,6 +10,7 @@ public class Song
 
     // main song details
     [Key] public int Id { get; set; }
+    [Column(TypeName = "varchar(50)")]
     public string SongName { get; set; } = null!;
     public double MasterVolume { get; set; }
     public int Bpm { get; set; }
