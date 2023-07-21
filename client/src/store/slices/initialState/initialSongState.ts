@@ -2,6 +2,7 @@ import { SongState } from '../songSlice.ts';
 
 const initialSongState: SongState = {
   error: null,
+  songList: [],
   currentSong: {
     songName: '',
     masterVolume: 1,
@@ -38,6 +39,8 @@ const initialSongState: SongState = {
       filterType: 'lowpass',
       metal: 0,
       chorus: 0,
+      lfoFrequency: 0.5,
+      lfoShape: 'sine',
     },
     melodicPattern: {
       scale: 'C4 minor',
@@ -45,6 +48,7 @@ const initialSongState: SongState = {
       patternType: 'up',
     },
     kitPattern: {
+      patternLength: 16,
       bdSteps: new Array(16).fill(false) as boolean[],
       sdSteps: new Array(16).fill(false) as boolean[],
       clSteps: new Array(16).fill(false) as boolean[],

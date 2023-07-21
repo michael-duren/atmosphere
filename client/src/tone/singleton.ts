@@ -1,5 +1,6 @@
 import * as Tone from 'tone';
 import MelodicSynth from './classes/MelodicSynth.ts';
+import DrumKit from './classes/DrumKit.ts';
 
 const distortion = new Tone.Distortion(0);
 const distortionGain = new Tone.Gain(1);
@@ -20,4 +21,22 @@ melodySynth.filterTwo.chain(
   Tone.Destination
 );
 
-export { distortion, distortionGain, reverb, delay, volume };
+const drumKit = new DrumKit();
+drumKit.output.chain(
+  distortion,
+  distortionGain,
+  reverb,
+  delay,
+  volume,
+  Tone.Destination
+);
+
+export {
+  distortion,
+  distortionGain,
+  reverb,
+  delay,
+  volume,
+  melodySynth,
+  drumKit,
+};

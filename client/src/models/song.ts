@@ -75,6 +75,7 @@ export interface MelodicPattern {
 
 export interface KitPattern {
   id?: number;
+  patternLength: number;
   bdSteps: boolean[];
   sdSteps: boolean[];
   clSteps: boolean[];

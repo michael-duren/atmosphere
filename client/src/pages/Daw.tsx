@@ -7,6 +7,9 @@ import { useEffect } from 'react';
 import { useAppDispatch } from '../store/hooks/useAppDispatch.ts';
 import { SONG_ACTIONS } from '../store/actions/songActions.ts';
 import { selectSong } from '../store/slices/songSlice.ts';
+import MelodicPattern from '../components/Features/Daw/MelodicPattern.tsx';
+import Mixer from '../components/Features/Daw/Mixer.tsx';
+import DrumSequencer from '../components/Features/Daw/DrumSequencer.tsx';
 
 export default function Daw() {
   const user = useAppSelector(selectUser);
@@ -28,12 +31,14 @@ export default function Daw() {
 
   return (
     <DawLayout>
-      <aside className="col-span-4 grid grid-rows-2 h-full rounded-xl bg-dark-transparent">
-        <div className="flex p-8 flex-col  gap-4">
-          <Collections />
-        </div>
+      <aside className="col-span-4 grid grid-rows-2 rounded-xl bg-dark-transparent">
+        <Collections />
+        <MelodicPattern />
       </aside>
-      <div className="col-span-8">Main</div>
+      <main className="grid grid-rows-2 rounded-xl bg-dark-transparent col-span-8 ">
+        <Mixer />
+        <DrumSequencer />
+      </main>
     </DawLayout>
   );
 }

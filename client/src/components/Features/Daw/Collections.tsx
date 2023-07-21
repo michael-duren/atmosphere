@@ -13,7 +13,7 @@ export default function Collections() {
   const [isEffectsOpen, setIsEffectsOpen] = useState(false);
 
   return (
-    <>
+    <div className="flex flex-grow p-8 flex-col gap-4">
       <h2 className="text-2xl flex gap-2 font-caps">
         <FiHardDrive />
         Collections
@@ -67,6 +67,6 @@ export default function Collections() {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }
