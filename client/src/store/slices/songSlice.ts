@@ -24,6 +24,9 @@ const songSlice = createSlice({
     setSongList: (state, action: { payload: SongList; type: string }) => {
       state.songList = action.payload;
     },
+    setBpm: (state, action: { payload: number; type: string }) => {
+      state.currentSong.bpm = action.payload;
+    },
     toggleDrumStep: (
       state,
       action: {
@@ -40,7 +43,7 @@ const songSlice = createSlice({
 
 export const selectSong = (state: AppState) => state.song;
 
-export const { setError, setCurrentSong, toggleDrumStep, setSongList } =
+export const { setError, setCurrentSong, toggleDrumStep, setSongList, setBpm } =
   songSlice.actions;
 
 export default songSlice.reducer;
