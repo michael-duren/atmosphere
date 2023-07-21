@@ -1,0 +1,3 @@
+export const SONG_ACTIONS = {
+  GET_SONG_LIST_ASYNC: 'GET_SONG_LIST_ASYNC',
+};
