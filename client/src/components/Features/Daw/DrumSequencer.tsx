@@ -1,37 +1,35 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import * as Tone from 'tone';
 import { useAppSelector } from '../../../store/hooks/useAppSelector.ts';
 import { selectSong } from '../../../store/slices/songSlice.ts';
 import { drumKit } from '../../../tone/singleton.ts';
-
-type Track = {
-  id: number;
-  sampler: Tone.Sampler;
-};
+import { GiAbstract016 } from 'react-icons/gi';
+import Transport from './Transport.tsx';
+import DrumTrack from './DrumTrack.tsx';
 
 export default function DrumSequencer() {
-  const { patternLength } = useAppSelector(selectSong).currentSong.kitPattern;
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const trackRefs = useRef<Track[]>([]);
-  const stepRefs = useRef<HTMLInputElement[][]>([[]]);
+  const { currentSong } = useAppSelector(selectSong);
   const lampRefs = useRef<HTMLInputElement[]>([]);
   const seqRef = useRef<Tone.Sequence | null>(null);
-  const stepIds = [...Array(patternLength).keys()];
+  const stepIds = [...Array(currentSong.kitPattern.patternLength).keys()];
+  const bdRef = useRef<HTMLInputElement[]>([]);
+  const sdRef = useRef<HTMLInputElement[]>([]);
+  const clRef = useRef<HTMLInputElement[]>([]);
+  const chRef = useRef<HTMLInputElement[]>([]);
 
   useEffect(() => {
     seqRef.current = new Tone.Sequence(
       (time, step) => {
-        if (stepRef.current[drumKit.bd.id].step.checked) {
+        if (bdRef.current![step].checked) {
           drumKit.bd.sampler.triggerAttackRelease(drumKit.note, '8n', time);
         }
-        if (stepRef.current[drumKit.bd.id].step.checked) {
+        if (sdRef.current![step].checked) {
           drumKit.sd.sampler.triggerAttackRelease(drumKit.note, '8n', time);
         }
-        if (stepRef.current[drumKit.bd.id].step.checked) {
+        if (clRef.current![step].checked) {
           drumKit.cl.sampler.triggerAttackRelease(drumKit.note, '8n', time);
         }
-        if (stepRef.current[drumKit.bd.id].step.checked) {
+        if (chRef.current![step].checked) {
           drumKit.ch.sampler.triggerAttackRelease(drumKit.note, '8n', time);
         }
         lampRefs.current[step].checked = true;
@@ -39,11 +37,68 @@ export default function DrumSequencer() {
       [...stepIds],
       '16n'
     ).start(0);
-  }, [patternLength]);
+  }, []);
 
   return (
-    <div>
-      <h2>Drum Sequencer</h2>
+    <div className="flex w-full  items-center flex-col rounded-xl p-8  bg-dark-transparent  gap-4 justify-center">
+      <div className="flex w-full justify-between">
+        <Transport />
+        <h2 className="font-caps flex gap-4 items-center text-2xl">
+          SEQUENCER{' '}
+          <span>
+            <GiAbstract016 />
+          </span>
+        </h2>
+      </div>
+      <div className="grid grid-rows-4 gap-5">
+        <div className="flex gap-x-4">
+          <div className="w-10"></div>
+          {stepIds.map((step) => {
+            const isDivisibleByFour = (step + 1) % 4 === 0 || step + 1 === 16;
+            return (
+              <label
+                className={`flex max-w-[2.5rem]  w-10 h-10 items-center ${
+                  isDivisibleByFour && 'mr-4'
+                } justify-center`}
+                key={step}
+              >
+                <input
+                  type="radio"
+                  name="lamp"
+                  id={`lamp-${step}`}
+                  disabled
+                  ref={(elm) => {
+                    if (!elm) return;
+                    lampRefs.current[step] = elm;
+                  }}
+                  className={`whitespace-nowrap peer p-0 m-[-1px] h-[1px] w-[1px] absolute `}
+                />
+                <div className="w-6 my-0 mx-2 peer-checked:bg-blue-500  h-6 bg-gray-transparent peer-checked:bg-opacity-70  rounded-full"></div>
+              </label>
+            );
+          })}
+        </div>
+        <DrumTrack
+          drumRef={bdRef}
+          instrument={{ ...drumKit.bd, drumTrackSteps: 'bdSteps' }}
+          drumPattern={currentSong.kitPattern.bdSteps}
+        />
+        <DrumTrack
+          drumRef={sdRef}
+          instrument={{ ...drumKit.sd, drumTrackSteps: 'sdSteps' }}
+          drumPattern={currentSong.kitPattern.sdSteps}
+        />
+        <DrumTrack
+          drumRef={clRef}
+          instrument={{ ...drumKit.cl, drumTrackSteps: 'clSteps' }}
+          drumPattern={currentSong.kitPattern.clSteps}
+        />
+        <DrumTrack
+          drumRef={chRef}
+          instrument={{ ...drumKit.ch, drumTrackSteps: 'chSteps' }}
+          drumPattern={currentSong.kitPattern.chSteps}
+        />
+      </div>
     </div>
   );
 }

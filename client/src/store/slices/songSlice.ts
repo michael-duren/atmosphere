@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ServerError } from '../../models/serverError.ts';
-import { Song } from '../../models/song.ts';
+import { DrumTrackSteps, Song } from '../../models/song.ts';
 import { SongList } from '../../models/songList.ts';
 import initialSongState from './initialState/initialSongState.ts';
 import { AppState } from '../store.ts';
@@ -24,11 +24,23 @@ const songSlice = createSlice({
     setSongList: (state, action: { payload: SongList; type: string }) => {
       state.songList = action.payload;
     },
+    toggleDrumStep: (
+      state,
+      action: {
+        payload: { drumName: DrumTrackSteps; step: number };
+        type: string;
+      }
+    ) => {
+      const { drumName, step } = action.payload;
+      state.currentSong.kitPattern[drumName][step] =
+        !state.currentSong.kitPattern[drumName][step];
+    },
   },
 });
 
 export const selectSong = (state: AppState) => state.song;
 
-export const { setError, setCurrentSong, setSongList } = songSlice.actions;
+export const { setError, setCurrentSong, toggleDrumStep, setSongList } =
+  songSlice.actions;
 
 export default songSlice.reducer;

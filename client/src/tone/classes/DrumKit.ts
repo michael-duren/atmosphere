@@ -1,12 +1,13 @@
 import * as Tone from 'tone';
 import { Gain, Sampler } from 'tone';
+import { DrumNames } from '../../models/song.ts';
 
 class DrumKit {
   private readonly _note: string;
-  private _bd: { name: string; id: number; sampler: Sampler };
-  private _sd: { name: string; id: number; sampler: Sampler };
-  private _cl: { name: string; id: number; sampler: Sampler };
-  private _ch: { name: string; id: number; sampler: Sampler };
+  private _bd: { name: DrumNames; id: number; sampler: Sampler };
+  private _sd: { name: DrumNames; id: number; sampler: Sampler };
+  private _cl: { name: DrumNames; id: number; sampler: Sampler };
+  private _ch: { name: DrumNames; id: number; sampler: Sampler };
   private _output: Tone.Gain;
 
   constructor() {
@@ -63,28 +64,28 @@ class DrumKit {
   set output(value: Gain) {
     this._output = value;
   }
-  get ch(): { name: string; id: number; sampler: Sampler } {
+  get ch(): { name: DrumNames; id: number; sampler: Sampler } {
     return this._ch;
   }
-  set ch(value: { name: string; id: number; sampler: Sampler }) {
+  set ch(value: { name: DrumNames; id: number; sampler: Sampler }) {
     this._ch = value;
   }
-  get cl(): { name: string; id: number; sampler: Sampler } {
+  get cl(): { name: DrumNames; id: number; sampler: Sampler } {
     return this._cl;
   }
-  set cl(value: { name: string; id: number; sampler: Sampler }) {
+  set cl(value: { name: DrumNames; id: number; sampler: Sampler }) {
     this._cl = value;
   }
-  get sd(): { name: string; id: number; sampler: Sampler } {
+  get sd(): { name: DrumNames; id: number; sampler: Sampler } {
     return this._sd;
   }
-  set sd(value: { name: string; id: number; sampler: Sampler }) {
+  set sd(value: { name: DrumNames; id: number; sampler: Sampler }) {
     this._sd = value;
   }
-  get bd(): { name: string; id: number; sampler: Sampler } {
+  get bd(): { name: DrumNames; id: number; sampler: Sampler } {
     return this._bd;
   }
-  set bd(value: { name: string; id: number; sampler: Sampler }) {
+  set bd(value: { name: DrumNames; id: number; sampler: Sampler }) {
     this._bd = value;
   }
   get note(): string {

@@ -1,5 +1,6 @@
 import { OmniOscillatorType } from 'tone/build/esm/source/oscillator/OscillatorInterface';
 import { PatternName } from 'tone/build/esm/event/PatternGenerator';
+import { Sampler } from 'tone';
 
 export interface Song {
   id?: number;
@@ -82,3 +83,14 @@ export interface KitPattern {
   chSteps: boolean[];
   songId?: number;
 }
+
+export interface Drum {
+  name: DrumNames;
+  drumTrackSteps: DrumTrackSteps;
+  id: number;
+  sampler: Sampler;
+}
+
+export type DrumNames = 'BD' | 'SD' | 'CL' | 'CH';
+
+export type DrumTrackSteps = 'bdSteps' | 'sdSteps' | 'clSteps' | 'chSteps';
