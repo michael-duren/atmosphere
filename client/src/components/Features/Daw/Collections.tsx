@@ -1,8 +1,8 @@
 import { FiHardDrive } from 'react-icons/fi';
-import FolderButton from '../../../Ui/Buttons/FolderButton.tsx';
+import FolderButton from '../../Ui/Buttons/FolderButton.tsx';
 import { useState } from 'react';
-import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
-import { selectSong } from '../../../../store/slices/songSlice.ts';
+import { useAppSelector } from '../../../store/hooks/useAppSelector.ts';
+import { selectSong } from '../../../store/slices/songSlice.ts';
 import { BsFileEarmarkMusic } from 'react-icons/bs';
 
 export default function Collections() {

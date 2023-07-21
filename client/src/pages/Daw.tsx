@@ -2,7 +2,7 @@ import DawLayout from '../components/Layouts/DawLayout.tsx';
 import AbstractSpinner from '../components/Ui/Spinners/AbstractSpinner.tsx';
 import { useAppSelector } from '../store/hooks/useAppSelector.ts';
 import { selectUser } from '../store/slices/userSlice.ts';
-import Collections from '../components/Features/Daw/Collections/Collections.tsx';
+import Collections from '../components/Features/Daw/Collections.tsx';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../store/hooks/useAppDispatch.ts';
 import { SONG_ACTIONS } from '../store/actions/songActions.ts';
