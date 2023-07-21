@@ -37,10 +37,14 @@ export default function DrumSequencer() {
       [...stepIds],
       '16n'
     ).start(0);
-  }, []);
+
+    return () => {
+      seqRef.current?.dispose();
+    };
+  }, [stepIds]);
 
   return (
-    <div className="flex w-full  items-center flex-col rounded-xl p-8  bg-dark-transparent  gap-4 justify-center">
+    <div className="flex w-full  items-center flex-col rounded-xl p-8    gap-4 justify-center">
       <div className="flex w-full justify-between">
         <Transport />
         <h2 className="font-caps flex gap-4 items-center text-2xl">

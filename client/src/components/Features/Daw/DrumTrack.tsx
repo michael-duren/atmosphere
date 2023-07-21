@@ -1,6 +1,7 @@
 import { useAppDispatch } from '../../../store/hooks/useAppDispatch.ts';
-import { toggleDrumStep } from '../../../store/slices/songSlice.ts';
+import { selectSong, toggleDrumStep } from '../../../store/slices/songSlice.ts';
 import { Drum } from '../../../models/song.ts';
+import { useAppSelector } from '../../../store/hooks/useAppSelector.ts';
 
 interface Props {
   instrument: Drum;
@@ -10,14 +11,19 @@ interface Props {
 
 export default function Track({ instrument, drumPattern, drumRef }: Props) {
   const dispatch = useAppDispatch();
+  const { currentSong } = useAppSelector(selectSong);
+  const {
+    kitPattern: { patternLength },
+  } = currentSong;
 
   return (
     <div className="flex gap-4 items-center">
       <div className="w-10">{instrument.name}</div>
       <div className="flex gap-x-4">
         {
-          // drumPattern is a boolean array of the tracks steps
-          drumPattern.map((step, index) => {
+          // the length of the array is defined by the patternLength which is set by the user
+          // and lives in the songSlice > currentSong > kitPattern > patternLength
+          Array.from({ length: patternLength }, (_, index) => {
             const isDivisibleByFour = (index + 1) % 4 === 0;
             return (
               <label
@@ -33,7 +39,7 @@ export default function Track({ instrument, drumPattern, drumRef }: Props) {
                     drumRef.current![index] = elm;
                   }}
                   type="checkbox"
-                  checked={step}
+                  checked={drumPattern[index]}
                   onChange={() =>
                     dispatch(
                       toggleDrumStep({

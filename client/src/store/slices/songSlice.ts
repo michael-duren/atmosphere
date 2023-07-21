@@ -27,6 +27,9 @@ const songSlice = createSlice({
     setBpm: (state, action: { payload: number; type: string }) => {
       state.currentSong.bpm = action.payload;
     },
+    setKitPatternLength: (state, action: { payload: number; type: string }) => {
+      state.currentSong.kitPattern.patternLength = action.payload;
+    },
     toggleDrumStep: (
       state,
       action: {
@@ -43,7 +46,13 @@ const songSlice = createSlice({
 
 export const selectSong = (state: AppState) => state.song;
 
-export const { setError, setCurrentSong, toggleDrumStep, setSongList, setBpm } =
-  songSlice.actions;
+export const {
+  setError,
+  setCurrentSong,
+  toggleDrumStep,
+  setKitPatternLength,
+  setSongList,
+  setBpm,
+} = songSlice.actions;
 
 export default songSlice.reducer;
