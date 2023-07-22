@@ -6,6 +6,9 @@ const initialSongState: SongState = {
   currentSong: {
     songName: '',
     masterVolume: 1,
+    drumVolume: 1,
+    bassVolume: 1,
+    melodicVolume: 1,
     bpm: 120,
     distortion: {
       mix: 0,

@@ -6,6 +6,9 @@ export interface Song {
   id?: number;
   songName: string;
   masterVolume: number;
+  drumVolume: number;
+  bassVolume: number;
+  melodicVolume: number;
   bpm: number;
   distortion: Distortion;
   reverb: Reverb;

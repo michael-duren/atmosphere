@@ -30,6 +30,18 @@ const songSlice = createSlice({
     setKitPatternLength: (state, action: { payload: number; type: string }) => {
       state.currentSong.kitPattern.patternLength = action.payload;
     },
+    setMasterVolume: (state, action: { payload: number; type: string }) => {
+      state.currentSong.masterVolume = action.payload;
+    },
+    setDrumVolume: (state, action: { payload: number; type: string }) => {
+      state.currentSong.drumVolume = action.payload;
+    },
+    setBassVolume: (state, action: { payload: number; type: string }) => {
+      state.currentSong.bassVolume = action.payload;
+    },
+    setMelodicVolume: (state, action: { payload: number; type: string }) => {
+      state.currentSong.melodicVolume = action.payload;
+    },
     toggleDrumStep: (
       state,
       action: {
@@ -53,6 +65,10 @@ export const {
   setKitPatternLength,
   setSongList,
   setBpm,
+  setMasterVolume,
+  setMelodicVolume,
+  setBassVolume,
+  setDrumVolume,
 } = songSlice.actions;
 
 export default songSlice.reducer;

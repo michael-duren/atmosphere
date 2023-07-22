@@ -13,6 +13,7 @@ class BassSynth {
     this._filter = new Tone.Filter();
     this._modFilter = new Tone.Filter();
     this._filterEnvelope = new Tone.Envelope();
+    this._synth.chain(this._filter, this._modFilter);
   }
 
   get synth(): Synth {
