@@ -83,14 +83,9 @@ export default function DrumSequencer() {
           })}
         </div>
         <DrumTrack
-          drumRef={bdRef}
-          instrument={{ ...drumKit.bd, drumTrackSteps: 'bdSteps' }}
-          drumPattern={currentSong.kitPattern.bdSteps}
-        />
-        <DrumTrack
-          drumRef={sdRef}
-          instrument={{ ...drumKit.sd, drumTrackSteps: 'sdSteps' }}
-          drumPattern={currentSong.kitPattern.sdSteps}
+          drumRef={chRef}
+          instrument={{ ...drumKit.ch, drumTrackSteps: 'chSteps' }}
+          drumPattern={currentSong.kitPattern.chSteps}
         />
         <DrumTrack
           drumRef={clRef}
@@ -98,9 +93,14 @@ export default function DrumSequencer() {
           drumPattern={currentSong.kitPattern.clSteps}
         />
         <DrumTrack
-          drumRef={chRef}
-          instrument={{ ...drumKit.ch, drumTrackSteps: 'chSteps' }}
-          drumPattern={currentSong.kitPattern.chSteps}
+          drumRef={sdRef}
+          instrument={{ ...drumKit.sd, drumTrackSteps: 'sdSteps' }}
+          drumPattern={currentSong.kitPattern.sdSteps}
+        />
+        <DrumTrack
+          drumRef={bdRef}
+          instrument={{ ...drumKit.bd, drumTrackSteps: 'bdSteps' }}
+          drumPattern={currentSong.kitPattern.bdSteps}
         />
       </div>
     </div>
