@@ -14,8 +14,8 @@ const initialSongState: SongState = {
     },
     reverb: {
       mix: 0,
-      decay: 0,
-      preDelay: 0,
+      decay: 0.5,
+      preDelay: 0.2,
     },
     delay: {
       mix: 0,

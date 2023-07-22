@@ -15,10 +15,11 @@ import {
   selectTransport,
   setIsToneLoaded,
 } from '../store/slices/transportSlice.ts';
+import { setToneParamsOnLoad } from '../components/Features/Daw/utils/setToneParamsOnLoad.ts';
 
 export default function Daw() {
   const user = useAppSelector(selectUser);
-  const { songList } = useAppSelector(selectSong);
+  const { songList, currentSong } = useAppSelector(selectSong);
   const { isToneLoaded } = useAppSelector(selectTransport);
   const dispatch = useAppDispatch();
 
@@ -30,6 +31,7 @@ export default function Daw() {
   useEffect(() => {
     Tone.loaded().then(() => {
       dispatch(setIsToneLoaded(true));
+      setToneParamsOnLoad(currentSong);
     });
   }, []);
 
