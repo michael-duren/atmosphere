@@ -1,18 +1,18 @@
 import * as Tone from 'tone';
-import { useAppSelector } from '../../../store/hooks/useAppSelector.ts';
-import { useAppDispatch } from '../../../store/hooks/useAppDispatch.ts';
+import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
+import { useAppDispatch } from '../../../../store/hooks/useAppDispatch.ts';
 import {
   selectTransport,
   setIsPlaying,
-} from '../../../store/slices/transportSlice.ts';
+} from '../../../../store/slices/transportSlice.ts';
 import { BsFillPlayFill, BsPauseFill } from 'react-icons/bs';
 import {
   selectSong,
   setKitPatternLength,
-} from '../../../store/slices/songSlice.ts';
+} from '../../../../store/slices/songSlice.ts';
 import { useRef, useState } from 'react';
-import { CURRENT_SONG_ACTIONS } from '../../../store/actions/currentSongActions.ts';
-import { darkInput } from '../../Ui/Styles/input.ts';
+import { CURRENT_SONG_ACTIONS } from '../../../../store/actions/currentSongActions.ts';
+import { darkInput } from '../../../Ui/Styles/input.ts';
 
 export default function Transport() {
   const { isPlaying } = useAppSelector(selectTransport);

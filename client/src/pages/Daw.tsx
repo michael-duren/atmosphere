@@ -9,8 +9,8 @@ import { useAppDispatch } from '../store/hooks/useAppDispatch.ts';
 import { SONG_ACTIONS } from '../store/actions/songActions.ts';
 import { selectSong } from '../store/slices/songSlice.ts';
 import MelodicPattern from '../components/Features/Daw/MelodicPattern.tsx';
-import Mixer from '../components/Features/Daw/Mixer.tsx';
-import DrumSequencer from '../components/Features/Daw/DrumSequencer.tsx';
+import Mixer from '../components/Features/Daw/Mixer/Mixer.tsx';
+import DrumSequencer from '../components/Features/Daw/DrumSequencer/DrumSequencer.tsx';
 import {
   selectTransport,
   setIsToneLoaded,

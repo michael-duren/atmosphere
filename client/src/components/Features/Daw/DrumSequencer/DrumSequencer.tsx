@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import * as Tone from 'tone';
-import { useAppSelector } from '../../../store/hooks/useAppSelector.ts';
-import { selectSong } from '../../../store/slices/songSlice.ts';
-import { drumKit } from '../../../tone/singleton.ts';
+import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
+import { selectSong } from '../../../../store/slices/songSlice.ts';
+import { drumKit } from '../../../../tone/singleton.ts';
 import { GiAbstract016 } from 'react-icons/gi';
 import Transport from './Transport.tsx';
 import DrumTrack from './DrumTrack.tsx';

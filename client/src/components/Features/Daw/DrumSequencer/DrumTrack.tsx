@@ -1,7 +1,10 @@
-import { useAppDispatch } from '../../../store/hooks/useAppDispatch.ts';
-import { selectSong, toggleDrumStep } from '../../../store/slices/songSlice.ts';
-import { Drum } from '../../../models/song.ts';
-import { useAppSelector } from '../../../store/hooks/useAppSelector.ts';
+import { useAppDispatch } from '../../../../store/hooks/useAppDispatch.ts';
+import {
+  selectSong,
+  toggleDrumStep,
+} from '../../../../store/slices/songSlice.ts';
+import { Drum } from '../../../../models/song.ts';
+import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
 
 interface Props {
   instrument: Drum;
