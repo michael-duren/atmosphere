@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { drawFader } from './drawFader.ts';
 import { AnyAction } from '@reduxjs/toolkit';
 import { useAppDispatch } from '../../../store/hooks/useAppDispatch.ts';
+import * as Tone from 'tone';
 
 interface Props {
   volume: number;
@@ -67,18 +68,21 @@ export default function MainFader({
   };
 
   return (
-    <div>
+    <div className="w-10 flex flex-col items-center">
       <canvas
         className={`${backgroundColor} bg-opacity-90 rounded-lg`}
         ref={canvasRef}
-        width={20} // Adjust width to your desired size
-        height={250} // Adjust height to your desired size
+        width={20}
+        height={250}
         onMouseDown={handleVolumeFaderDragStart}
         onMouseMove={handleVolumeFaderDrag}
         onMouseUp={handleVolumeFaderDragEnd}
         onMouseLeave={handleVolumeFaderDragEnd}
       />
-      <div className="text-center text-sm">{Math.floor(volumeValue * 100)}</div>
+      <div className="text-center my-2 text-xs">
+        {Math.floor(Tone.gainToDb(volumeValue))}
+        <span className="ml-0.5">db</span>
+      </div>
     </div>
   );
 }
