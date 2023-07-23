@@ -5,18 +5,22 @@ import { NoteName } from 'tonal';
 import { modulo, random } from '../utils/utilities.ts';
 import MelodicSynth from './MelodicSynth.ts';
 import { PatternName } from 'tone/build/esm/event/PatternGenerator';
+import BassSynth from './BassSynth.ts';
 
 class MelodicPattern {
   private _transpose: number;
   private _noteDuration: string;
   private _timeInterval: string;
   private _patternType: PatternName;
-  private _pattern: Pattern<number>;
+  private _melodyPattern: Pattern<number>;
+  private _bassPattern: Pattern<number>;
   private _sequence: number[];
   private _notes: NoteName[];
   private _melodySynth: MelodicSynth;
+  private _bassSynth: BassSynth;
   constructor(
     melodySynth: MelodicSynth,
+    bassSynth: BassSynth,
     transpose = 0,
     noteDuration = '8n',
     timeInterval = '8n',
@@ -27,11 +31,12 @@ class MelodicPattern {
     this._timeInterval = timeInterval;
     this._patternType = patternType;
     this._melodySynth = melodySynth;
+    this._bassSynth = bassSynth;
 
     this._sequence = this.generateRandomSequence();
     this._notes = Tonal.Scale.get('C4 minor').notes;
 
-    this._pattern = new Tone.Pattern(
+    this._melodyPattern = new Tone.Pattern(
       (time: number, noteNumber: number) => {
         const note = this.mapNotes(noteNumber + this._transpose, this._notes);
         this._melodySynth.synth.triggerAttackRelease(
@@ -43,7 +48,18 @@ class MelodicPattern {
       this._sequence,
       this._patternType
     );
-    this._pattern.interval = this._timeInterval;
+    this._melodyPattern.interval = this._timeInterval;
+
+    this._bassPattern = new Tone.Pattern(
+      (time: number, noteNumber: number) => {
+        const note = this.mapNotes(noteNumber + -21, this._notes);
+        console.log(note);
+        this._bassSynth.synth.triggerAttackRelease(note, '1n', time);
+      },
+      this._sequence,
+      this._patternType
+    );
+    this._bassPattern.interval = '1n';
   }
 
   mapNotes(noteNumber: number, notes: string[]): Tonal.NoteName {
@@ -87,11 +103,19 @@ class MelodicPattern {
   set sequence(value: number[]) {
     this._sequence = value;
   }
-  get pattern(): Pattern<number> {
-    return this._pattern;
+  get melodyPattern(): Pattern<number> {
+    return this._melodyPattern;
   }
-  set pattern(value: Pattern<number>) {
-    this._pattern = value;
+  set melodyPattern(value: Pattern<number>) {
+    this._melodyPattern = value;
+  }
+
+  get bassPattern(): Pattern<number> {
+    return this._bassPattern;
+  }
+
+  set bassPattern(value: Pattern<number>) {
+    this._bassPattern = value;
   }
   get patternType(): PatternName {
     return this._patternType;

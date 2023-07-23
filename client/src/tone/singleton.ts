@@ -33,8 +33,9 @@ drumKit.output.chain(distortion, distortionFilter, reverb, delay, volume);
  * Patterns
  */
 
-const melodicPattern = new MelodicPattern(melodicSynth);
-melodicPattern.pattern.start(0);
+const melodicPattern = new MelodicPattern(melodicSynth, bassSynth);
+melodicPattern.melodyPattern.start(0);
+melodicPattern.bassPattern.start(0);
 
 volume.toDestination();
 

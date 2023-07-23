@@ -7,7 +7,7 @@ class BassSynth {
   private _filter: Filter;
   private _modFilter: Filter;
   private _filterEnvelope: Envelope;
-  constructor(oscillatorType: OmniOscillatorType = 'fatsine2') {
+  constructor(oscillatorType: OmniOscillatorType = 'fatsawtooth') {
     this._synth = new Tone.Synth();
     this._synth.oscillator.type = oscillatorType;
     this._filter = new Tone.Filter();
