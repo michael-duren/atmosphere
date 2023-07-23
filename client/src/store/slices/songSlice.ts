@@ -152,7 +152,7 @@ const songSlice = createSlice({
     ) => {
       state.currentSong.melodicSynth.filterMod = action.payload;
     },
-    setToneMelodicSynthWaveform: (
+    setMelodicSynthLfoWaveform: (
       state,
       action: { payload: KnobWaveType; type: string }
     ) => {
@@ -211,7 +211,7 @@ export const {
   setMelodicSynthMetal,
   setMelodicSynthLfoFreq,
   setMelodicSynthFilterMod,
-  setToneMelodicSynthWaveform,
+  setMelodicSynthLfoWaveform,
 } = songSlice.actions;
 
 export default songSlice.reducer;
