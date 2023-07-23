@@ -32,6 +32,6 @@ export const inputToSimpleToneWaveform = (
     case 'square':
       return 'square2';
     default:
-      return 'sine';
+      return 'sine2';
   }
 };
