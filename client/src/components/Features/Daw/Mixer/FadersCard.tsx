@@ -39,7 +39,6 @@ export default function FadersCard() {
       <div className="flex flex-col items-center">
         <MainFader
           volume={currentSong.masterVolume}
-          handleColor="#fff"
           backgroundColor="bg-blue-500"
           setTone={handleMasterVolume}
           setStore={setMasterVolume}
@@ -50,7 +49,6 @@ export default function FadersCard() {
       <div className="flex flex-col items-center">
         <MainFader
           volume={currentSong.bassVolume}
-          handleColor="#fff"
           backgroundColor="bg-green-500"
           setTone={handleBassVolume}
           setStore={setBassVolume}
@@ -61,7 +59,6 @@ export default function FadersCard() {
       <div className="flex flex-col items-center">
         <MainFader
           volume={currentSong.melodicVolume}
-          handleColor="#fff"
           backgroundColor="bg-violet-500"
           setTone={handleMelodicVolume}
           setStore={setMelodicVolume}
@@ -72,7 +69,6 @@ export default function FadersCard() {
       <div className="flex flex-col items-center">
         <MainFader
           volume={currentSong.drumVolume}
-          handleColor="#fff"
           backgroundColor="bg-red-500"
           setTone={handleDrumVolume}
           setStore={setDrumVolume}

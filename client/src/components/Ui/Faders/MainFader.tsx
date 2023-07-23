@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { drawFader } from './drawFader.ts';
 import { AnyAction } from '@reduxjs/toolkit';
 import { useAppDispatch } from '../../../store/hooks/useAppDispatch.ts';
 import * as Tone from 'tone';
+import { BsInfinity } from 'react-icons/bs';
 
 interface Props {
   volume: number;
-  handleColor: string;
   backgroundColor: string;
   setTone: (num: number) => void;
   setStore: (num: number) => AnyAction;
@@ -14,7 +14,6 @@ interface Props {
 
 export default function MainFader({
   volume,
-  handleColor,
   backgroundColor,
   setTone,
   setStore,
@@ -31,14 +30,7 @@ export default function MainFader({
     if (!ctx) return;
 
     // Draw the initial volume fader
-    drawFader(
-      ctx,
-      canvas.width,
-      canvas.height,
-      volumeValue * 100,
-      handleColor,
-      'black'
-    );
+    drawFader(ctx, canvas.width, canvas.height, volumeValue * 100, 'black');
   }, [volumeValue]);
 
   const handleVolumeFaderDragStart = () => {
@@ -67,6 +59,8 @@ export default function MainFader({
     dispatch(setStore(volumeValue));
   };
 
+  const volumeToDb = Math.floor(Tone.gainToDb(volumeValue));
+
   return (
     <div className="w-10 flex flex-col items-center">
       <canvas
@@ -80,8 +74,17 @@ export default function MainFader({
         onMouseLeave={handleVolumeFaderDragEnd}
       />
       <div className="text-center my-2 text-xs">
-        {Math.floor(Tone.gainToDb(volumeValue))}
-        <span className="ml-0.5">db</span>
+        {volumeToDb === -Infinity ? (
+          <span className="flex items-center gap-1">
+            -<BsInfinity className="mt-1" size={12} />
+            db
+          </span>
+        ) : (
+          <>
+            {volumeToDb}
+            <span className="ml-0.5">db</span>
+          </>
+        )}
       </div>
     </div>
   );
