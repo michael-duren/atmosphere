@@ -5,6 +5,8 @@ import BassSynth from './classes/BassSynth.ts';
 
 const distortion = new Tone.Distortion(0);
 const distortionFilter = new Tone.Filter(20_000, 'lowpass');
+console.log(distortionFilter.frequency.minValue);
+console.log(distortionFilter.frequency.maxValue);
 
 const reverb = new Tone.Reverb(0.5);
 

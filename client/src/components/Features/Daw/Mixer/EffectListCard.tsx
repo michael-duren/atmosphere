@@ -38,18 +38,21 @@ export default function EffectListCard() {
             name: 'mix',
             storeSetter: handleDistortionMixChange,
             toneSetter: setToneDistortionMix,
+            type: 'main',
           },
           {
             level: currentSong.distortion.amount,
             name: 'amount',
             storeSetter: handleDistortionAmountChange,
             toneSetter: setToneDistortionAmount,
+            type: 'main',
           },
           {
             level: currentSong.distortion.filter,
             name: 'filter',
             storeSetter: handleDistortionFilterChange,
             toneSetter: setToneDistortionFilter,
+            type: 'freq',
           },
         ]}
         color="#DC2626"
@@ -63,18 +66,21 @@ export default function EffectListCard() {
             name: 'mix',
             storeSetter: handleReverbMixChange,
             toneSetter: setToneReverbMix,
+            type: 'main',
           },
           {
             level: currentSong.reverb.decay,
             name: 'decay',
             storeSetter: handleReverbDecayChange,
             toneSetter: setToneReverbDecay,
+            type: 'main',
           },
           {
             level: currentSong.reverb.preDelay,
             name: 'pre delay',
             storeSetter: handleReverbPreDelayChange,
             toneSetter: setToneReverbPreDelay,
+            type: 'main',
           },
         ]}
         color="#16A34A"
@@ -88,18 +94,21 @@ export default function EffectListCard() {
             name: 'mix',
             storeSetter: handleDelayMixChange,
             toneSetter: setToneDelayMix,
+            type: 'main',
           },
           {
             level: currentSong.delay.time,
             name: 'time',
             storeSetter: handleDelayTimeChange,
             toneSetter: setToneDelayTime,
+            type: 'main',
           },
           {
             level: currentSong.delay.feedback,
             name: 'feedback',
             storeSetter: handleDelayFeedbackChange,
             toneSetter: setToneDelayFeedback,
+            type: 'main',
           },
         ]}
         color="#2563EB"
