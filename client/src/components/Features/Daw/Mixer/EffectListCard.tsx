@@ -1,15 +1,10 @@
 import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
 import { selectSong } from '../../../../store/slices/songSlice.ts';
 import EffectCard from './EffectCard.tsx';
-import { GiAbstract053, GiAbstract098 } from 'react-icons/gi';
-import { IconType } from 'react-icons';
+import { GiAbstract053, GiAbstract098, GiAbstract024 } from 'react-icons/gi';
 import useMixChange from '../../../../hooks/useMixChange.ts';
 
-interface EffectListCardProps {
-  GiAbstract024: IconType;
-}
-
-export default function EffectListCard({ GiAbstract024 }: EffectListCardProps) {
+export default function EffectListCard() {
   const { currentSong } = useAppSelector(selectSong);
   const {
     handleDistortionMixChange,

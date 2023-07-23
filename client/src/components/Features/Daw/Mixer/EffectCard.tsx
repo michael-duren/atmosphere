@@ -27,7 +27,7 @@ export default function EffectCard({
       className="  bg p-2  justify-evenly flex flex-col
   items-center rounded-xl "
     >
-      <h3 className={`${size} flex flex-col items-center font-caps`}>
+      <h3 className={`${size} flex mb-2 flex-col items-center font-caps`}>
         {/* {title} */}
         {EffectIcon && <EffectIcon size={16} />}
       </h3>
