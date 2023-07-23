@@ -22,24 +22,25 @@ interface Props {
 export default function EffectCard({
   state,
   color,
-  size = 'text-2xl',
+  size = 'text-lg',
   EffectIcon,
+  title,
 }: Props) {
   return (
     <div
       className="p-2 justify-evenly flex flex-col
   items-center rounded-xl "
     >
-      <h3 className={`${size} flex mb-2 flex-col items-center font-caps`}>
-        {/* {title} */}
+      <h3 className={`${size} w-full items-center gap-1 flex mb-2  font-caps`}>
         {EffectIcon && <EffectIcon size={16} />}
+        <span>{toTitleCase(splitCamelCase(title))}</span>
       </h3>
-      <div className="flex w-full items-center  gap-8">
+      <div className="flex w-full items-center gap-8">
         {state.map((param) => {
-          const title = toTitleCase(splitCamelCase(param.name));
+          const paramTitle = toTitleCase(splitCamelCase(param.name));
           return (
-            <div key={param.name} className="flex  flex-col items-center gap-2">
-              <div className="text-xs font-caps">{title}</div>
+            <div key={param.name} className="flex flex-col items-center gap-2">
+              <div className="text-xs font-caps">{paramTitle}</div>
               <div className="relative">
                 {param.type === 'main' ? (
                   <MainKnob

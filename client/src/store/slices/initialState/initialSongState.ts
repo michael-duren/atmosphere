@@ -12,8 +12,8 @@ const initialSongState: SongState = {
     bpm: 120,
     distortion: {
       mix: 0,
-      amount: 0,
-      filter: 0,
+      amount: 0.5,
+      filter: 1,
     },
     reverb: {
       mix: 0,
@@ -22,8 +22,8 @@ const initialSongState: SongState = {
     },
     delay: {
       mix: 0,
-      time: 0,
-      feedback: 0,
+      time: 0.5,
+      feedback: 0.25,
     },
     bassSynth: {
       attack: 0,
