@@ -39,45 +39,41 @@ export default function FadersCard() {
   return (
     <div className=" flex justify-between gap-8 border-red-600">
       {/*Drum Volume*/}
-      <div className="flex flex-col items-center">
-        <MainFader
-          volume={currentSong.drumVolume}
-          backgroundColor="bg-blue-500"
-          setTone={handleDrumVolume}
-          setStore={setDrumVolume}
-        />
-        <div className="text-xs font-caps">DRUMS</div>
-      </div>
+      <MainFader
+        volume={currentSong.drumVolume}
+        backgroundColor="bg-blue-500"
+        setTone={handleDrumVolume}
+        setStore={setDrumVolume}
+        title={'Drums'}
+        shadowColor={'shadow-blue-500'}
+      />
       {/*Bass Volume*/}
-      <div className="flex flex-col items-center">
-        <MainFader
-          volume={currentSong.bassVolume}
-          backgroundColor="bg-green-500"
-          setTone={handleBassVolume}
-          setStore={setBassVolume}
-        />
-        <div className="text-xs font-caps">BASS</div>
-      </div>
+      <MainFader
+        volume={currentSong.bassVolume}
+        backgroundColor="bg-green-500"
+        setTone={handleBassVolume}
+        setStore={setBassVolume}
+        title={'Bass'}
+        shadowColor={'shadow-green-500'}
+      />
       {/*Melodic Volume*/}
-      <div className="flex flex-col items-center">
-        <MainFader
-          volume={currentSong.melodicVolume}
-          backgroundColor="bg-violet-500"
-          setTone={handleMelodicVolume}
-          setStore={setMelodicVolume}
-        />
-        <div className="text-xs font-caps">MELODY</div>
-      </div>
+      <MainFader
+        volume={currentSong.melodicVolume}
+        backgroundColor="bg-violet-500"
+        setTone={handleMelodicVolume}
+        setStore={setMelodicVolume}
+        title={'Melody'}
+        shadowColor={'shadow-violet-500'}
+      />
       {/*Master Volume*/}
-      <div className="flex flex-col items-center">
-        <MainFader
-          volume={currentSong.masterVolume}
-          backgroundColor="bg-red-500"
-          setTone={handleMasterVolume}
-          setStore={setMasterVolume}
-        />
-        <div className="text-xs font-caps">MAIN</div>
-      </div>
+      <MainFader
+        volume={currentSong.masterVolume}
+        backgroundColor="bg-red-500"
+        setTone={handleMasterVolume}
+        setStore={setMasterVolume}
+        title={'Master'}
+        shadowColor={'shadow-red-500'}
+      />
     </div>
   );
 }

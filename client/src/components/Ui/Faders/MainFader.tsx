@@ -10,6 +10,8 @@ interface Props {
   backgroundColor: string;
   setTone: (num: number) => void;
   setStore: (num: number) => AnyAction;
+  title: string;
+  shadowColor: string;
 }
 
 export default function MainFader({
@@ -17,6 +19,8 @@ export default function MainFader({
   backgroundColor,
   setTone,
   setStore,
+  title,
+  shadowColor,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -62,7 +66,9 @@ export default function MainFader({
   const volumeToDb = Math.floor(Tone.gainToDb(volumeValue));
 
   return (
-    <div className="w-10 flex flex-col items-center">
+    <div
+      className={`w-10 shadow-xl pb-1 ${shadowColor}  rounded-lg flex flex-col items-center`}
+    >
       <canvas
         className={`${backgroundColor} bg-opacity-90 rounded-lg`}
         ref={canvasRef}
@@ -86,6 +92,7 @@ export default function MainFader({
           </>
         )}
       </div>
+      <div className="text-xs uppercase font-caps">{title}</div>
     </div>
   );
 }
