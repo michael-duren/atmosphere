@@ -4,7 +4,7 @@ import DrumKit from './classes/DrumKit.ts';
 import BassSynth from './classes/BassSynth.ts';
 
 const distortion = new Tone.Distortion(0);
-const distortionGain = new Tone.Gain(1);
+const distortionFilter = new Tone.Filter(20_000, 'lowpass');
 
 const reverb = new Tone.Reverb(0.5);
 
@@ -15,7 +15,7 @@ const volume = new Tone.Volume(Tone.dbToGain(1));
 const bassSynth = new BassSynth();
 bassSynth.modFilter.chain(
   distortion,
-  distortionGain,
+  distortionFilter,
   reverb,
   volume,
   Tone.Destination
@@ -24,7 +24,7 @@ bassSynth.modFilter.chain(
 const melodicSynth = new MelodicSynth();
 melodicSynth.filterTwo.chain(
   distortion,
-  distortionGain,
+  distortionFilter,
   reverb,
   delay,
   volume,
@@ -34,7 +34,7 @@ melodicSynth.filterTwo.chain(
 const drumKit = new DrumKit();
 drumKit.output.chain(
   distortion,
-  distortionGain,
+  distortionFilter,
   reverb,
   delay,
   volume,
@@ -43,7 +43,7 @@ drumKit.output.chain(
 
 export {
   distortion,
-  distortionGain,
+  distortionFilter,
   reverb,
   delay,
   volume,

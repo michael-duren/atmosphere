@@ -14,7 +14,7 @@ import {
   bassSynth,
   melodicSynth,
 } from '../../../../tone/singleton.ts';
-import { bottomRange } from './helpers.ts';
+import { bottomRange } from '../../../../utils/number.ts';
 
 export default function FadersCard() {
   const { currentSong } = useAppSelector(selectSong);

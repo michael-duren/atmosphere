@@ -1,11 +1,12 @@
 import { splitCamelCase, toTitleCase } from '../../../../utils/string.ts';
-import AnimatedKnob from '../../../Ui/Knobs/MainKnob.tsx';
+import MainKnob from '../../../Ui/Knobs/MainKnob.tsx';
 import { IconType } from 'react-icons';
 
 interface Parameter {
   level: number;
   name: string;
-  setter: (num: number) => void;
+  storeSetter: (num: number) => void;
+  toneSetter: (num: number) => void;
 }
 
 interface Props {
@@ -38,9 +39,10 @@ export default function EffectCard({
             <div key={param.name} className="flex  flex-col items-center gap-2">
               <div className="text-xs font-caps">{title}</div>
               <div className="relative">
-                <AnimatedKnob
+                <MainKnob
                   level={param.level}
-                  setter={param.setter}
+                  storeSetter={param.storeSetter}
+                  toneSetter={param.toneSetter}
                   color={color}
                 />
               </div>

@@ -1,5 +1,5 @@
-import { Song } from '../../../../models/song.ts';
-import { delay, distortion, reverb } from '../../../../tone/singleton.ts';
+import { Song } from '../../models/song.ts';
+import { delay, distortion, reverb } from '../singleton.ts';
 
 export const setToneParamsOnLoad = (currentSong: Song) => {
   distortion.wet.value = currentSong.distortion.mix;

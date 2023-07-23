@@ -10,18 +10,29 @@ import { useState } from 'react';
 interface Props {
   color: string;
   level: number;
-  setter: (num: number) => void;
+  storeSetter: (num: number) => void;
+  toneSetter: (num: number) => void;
   display?: string;
   displaySize?: string;
 }
 
 const AnimatedCircleInput = animated(CircularInput);
 
-export default function AnimatedKnob({ color, level, setter }: Props) {
+export default function MainKnob({
+  color,
+  level,
+  storeSetter,
+  toneSetter,
+}: Props) {
   const [localLevel, setLocalLevel] = useState<number>(level);
 
   const setStoreLevel = () => {
-    setter(+localLevel.toFixed(2));
+    storeSetter(+localLevel.toFixed(2));
+  };
+
+  const setLocalAndToneLevel = (v: number) => {
+    setLocalLevel(v);
+    toneSetter(+v.toFixed(2));
   };
 
   return (
@@ -31,9 +42,7 @@ export default function AnimatedKnob({ color, level, setter }: Props) {
           <AnimatedCircleInput
             radius={24}
             value={props.localLevel}
-            onChange={(v) => {
-              setLocalLevel(v);
-            }}
+            onChange={setLocalAndToneLevel}
             onMouseUp={setStoreLevel}
           >
             <CircularTrack stroke={`${color}50`} strokeWidth={'10px'} />
