@@ -15,6 +15,12 @@ export default function EffectListCard({ GiAbstract024 }: EffectListCardProps) {
     handleDistortionMixChange,
     handleDistortionAmountChange,
     handleDistortionFilterChange,
+    handleReverbMixChange,
+    handleReverbDecayChange,
+    handleReverbPreDelayChange,
+    handleDelayMixChange,
+    handleDelayTimeChange,
+    handleDelayFeedbackChange,
   } = useMixChange();
 
   return (
@@ -44,19 +50,19 @@ export default function EffectListCard({ GiAbstract024 }: EffectListCardProps) {
       <EffectCard
         state={[
           {
-            level: currentSong.distortion.mix,
+            level: currentSong.reverb.mix,
             name: 'mix',
-            setter: handleDistortionMixChange,
+            setter: handleReverbMixChange,
           },
           {
-            level: currentSong.distortion.amount,
-            name: 'amount',
-            setter: handleDistortionAmountChange,
+            level: currentSong.reverb.decay,
+            name: 'decay',
+            setter: handleReverbDecayChange,
           },
           {
-            level: currentSong.distortion.filter,
-            name: 'filter',
-            setter: handleDistortionFilterChange,
+            level: currentSong.reverb.preDelay,
+            name: 'pre delay',
+            setter: handleReverbPreDelayChange,
           },
         ]}
         color="#16A34A"
@@ -66,19 +72,19 @@ export default function EffectListCard({ GiAbstract024 }: EffectListCardProps) {
       <EffectCard
         state={[
           {
-            level: currentSong.distortion.mix,
+            level: currentSong.delay.mix,
             name: 'mix',
-            setter: handleDistortionMixChange,
+            setter: handleDelayMixChange,
           },
           {
-            level: currentSong.distortion.amount,
-            name: 'amount',
-            setter: handleDistortionAmountChange,
+            level: currentSong.delay.time,
+            name: 'time',
+            setter: handleDelayTimeChange,
           },
           {
-            level: currentSong.distortion.filter,
-            name: 'filter',
-            setter: handleDistortionFilterChange,
+            level: currentSong.delay.feedback,
+            name: 'feedback',
+            setter: handleDelayFeedbackChange,
           },
         ]}
         color="#2563EB"

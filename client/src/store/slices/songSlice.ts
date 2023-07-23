@@ -51,6 +51,24 @@ const songSlice = createSlice({
     setDistortionFilter: (state, action: { payload: number; type: string }) => {
       state.currentSong.distortion.filter = action.payload;
     },
+    setReverbMix: (state, action: { payload: number; type: string }) => {
+      state.currentSong.reverb.mix = action.payload;
+    },
+    setReverbDecay: (state, action: { payload: number; type: string }) => {
+      state.currentSong.reverb.decay = action.payload;
+    },
+    setReverbPreDelay: (state, action: { payload: number; type: string }) => {
+      state.currentSong.reverb.preDelay = action.payload;
+    },
+    setDelayMix: (state, action: { payload: number; type: string }) => {
+      state.currentSong.delay.mix = action.payload;
+    },
+    setDelayTime: (state, action: { payload: number; type: string }) => {
+      state.currentSong.delay.time = action.payload;
+    },
+    setDelayFeedback: (state, action: { payload: number; type: string }) => {
+      state.currentSong.delay.feedback = action.payload;
+    },
     toggleDrumStep: (
       state,
       action: {
@@ -81,6 +99,12 @@ export const {
   setDistortionMix,
   setDistortionAmount,
   setDistortionFilter,
+  setReverbMix,
+  setReverbDecay,
+  setReverbPreDelay,
+  setDelayMix,
+  setDelayTime,
+  setDelayFeedback,
 } = songSlice.actions;
 
 export default songSlice.reducer;

@@ -25,7 +25,7 @@ export default function AnimatedKnob({ color, level, setter }: Props) {
   };
 
   return (
-    <div>
+    <div className="relative">
       <Spring to={{ localLevel }}>
         {(props: { localLevel: SpringValue<number> }) => (
           <AnimatedCircleInput
@@ -46,6 +46,9 @@ export default function AnimatedKnob({ color, level, setter }: Props) {
           </AnimatedCircleInput>
         )}
       </Spring>
+      <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 text-xs">
+        {Math.round(localLevel * 100)}
+      </div>
     </div>
   );
 }
