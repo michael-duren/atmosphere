@@ -10,9 +10,9 @@ import {
 import * as Tone from 'tone';
 import {
   volume,
-  drumKit,
   bassSynth,
   melodicSynth,
+  drumKit,
 } from '../../../../tone/singleton.ts';
 import { bottomRange } from '../../../../utils/number.ts';
 
@@ -23,7 +23,10 @@ export default function FadersCard() {
     volume.volume.value = Tone.gainToDb(bottomRange(num));
   };
   const handleDrumVolume = (num: number) => {
-    drumKit.output.gain.setValueAtTime(num, 0);
+    drumKit.bd.sampler.volume.value = Tone.gainToDb(bottomRange(num));
+    drumKit.sd.sampler.volume.value = Tone.gainToDb(bottomRange(num));
+    drumKit.cl.sampler.volume.value = Tone.gainToDb(bottomRange(num));
+    drumKit.ch.sampler.volume.value = Tone.gainToDb(bottomRange(num));
   };
   const handleBassVolume = (num: number) => {
     bassSynth.synth.volume.value = Tone.gainToDb(bottomRange(num));
@@ -38,10 +41,10 @@ export default function FadersCard() {
       {/*Drum Volume*/}
       <div className="flex flex-col items-center">
         <MainFader
-          volume={currentSong.masterVolume}
+          volume={currentSong.drumVolume}
           backgroundColor="bg-blue-500"
-          setTone={handleMasterVolume}
-          setStore={setMasterVolume}
+          setTone={handleDrumVolume}
+          setStore={setDrumVolume}
         />
         <div className="text-xs font-caps">DRUMS</div>
       </div>
@@ -68,10 +71,10 @@ export default function FadersCard() {
       {/*Master Volume*/}
       <div className="flex flex-col items-center">
         <MainFader
-          volume={currentSong.drumVolume}
+          volume={currentSong.masterVolume}
           backgroundColor="bg-red-500"
-          setTone={handleDrumVolume}
-          setStore={setDrumVolume}
+          setTone={handleMasterVolume}
+          setStore={setMasterVolume}
         />
         <div className="text-xs font-caps">MAIN</div>
       </div>

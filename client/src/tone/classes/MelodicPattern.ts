@@ -16,11 +16,11 @@ class MelodicPattern {
   private _notes: NoteName[];
   private _melodySynth: MelodicSynth;
   constructor(
+    melodySynth: MelodicSynth,
     transpose = 0,
     noteDuration = '8n',
     timeInterval = '8n',
-    patternType: PatternName = 'upDown',
-    melodySynth: MelodicSynth
+    patternType: PatternName = 'upDown'
   ) {
     this._transpose = transpose;
     this._noteDuration = noteDuration;
