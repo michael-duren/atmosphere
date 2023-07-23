@@ -32,7 +32,7 @@ const initialSongState: SongState = {
       filter: 1,
     },
     melodicSynth: {
-      waveform: 'fatsine2',
+      waveform: 'fatsine1',
       attack: 0,
       decay: 0.5,
       sustain: 1,
@@ -42,7 +42,7 @@ const initialSongState: SongState = {
       filterType: 'lowpass',
       metal: 0,
       chorus: 0,
-      lfoFrequency: 0.5,
+      lfoFrequency: '8n',
       lfoShape: 'sine',
     },
     melodicPattern: {

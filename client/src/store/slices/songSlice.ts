@@ -4,6 +4,12 @@ import { DrumTrackSteps, Song } from '../../models/song.ts';
 import { SongList } from '../../models/songList.ts';
 import initialSongState from './initialState/initialSongState.ts';
 import { AppState } from '../store.ts';
+import { KnobWaveType } from '../../models/types/waveTypes.ts';
+import {
+  inputToSimpleToneWaveform,
+  inputToToneWaveform,
+} from '../../tone/utils/transformToToneValues.ts';
+import { NoteType } from '../../models/types/noteType.ts';
 
 export interface SongState {
   error: ServerError | null;
@@ -15,6 +21,9 @@ const songSlice = createSlice({
   name: 'song',
   initialState: initialSongState,
   reducers: {
+    /*
+     * Top Level reducers
+     */
     setError: (state, action: { payload: ServerError; type: string }) => {
       state.error = action.payload;
     },
@@ -42,6 +51,9 @@ const songSlice = createSlice({
     setMelodicVolume: (state, action: { payload: number; type: string }) => {
       state.currentSong.melodicVolume = action.payload;
     },
+    /*
+     * mix reducers
+     */
     setDistortionMix: (state, action: { payload: number; type: string }) => {
       state.currentSong.distortion.mix = action.payload;
     },
@@ -69,6 +81,89 @@ const songSlice = createSlice({
     setDelayFeedback: (state, action: { payload: number; type: string }) => {
       state.currentSong.delay.feedback = action.payload;
     },
+    /*
+     * Melodic Synth Reducers
+     */
+    setMelodicSynthAttack: (
+      state,
+      action: { payload: number; type: string }
+    ) => {
+      state.currentSong.melodicSynth.attack = action.payload;
+    },
+    setMelodicSynthDecay: (
+      state,
+      action: { payload: number; type: string }
+    ) => {
+      state.currentSong.melodicSynth.decay = action.payload;
+    },
+    setMelodicSynthSustain: (
+      state,
+      action: { payload: number; type: string }
+    ) => {
+      state.currentSong.melodicSynth.sustain = action.payload;
+    },
+    setMelodicSynthRelease: (
+      state,
+      action: { payload: number; type: string }
+    ) => {
+      state.currentSong.melodicSynth.release = action.payload;
+    },
+    setMelodicSynthWaveform: (
+      state,
+      action: { payload: KnobWaveType; type: string }
+    ) => {
+      state.currentSong.melodicSynth.waveform = inputToToneWaveform(
+        action.payload
+      );
+    },
+    setMelodicSynthChorus: (
+      state,
+      action: { payload: number; type: string }
+    ) => {
+      state.currentSong.melodicSynth.chorus = action.payload;
+    },
+    setMelodicSynthFilterFrequency: (
+      state,
+      action: { payload: number; type: string }
+    ) => {
+      state.currentSong.melodicSynth.filterFrequency = action.payload;
+    },
+    setMelodicSynthFilterType: (
+      state,
+      action: { payload: BiquadFilterType; type: string }
+    ) => {
+      state.currentSong.melodicSynth.filterType = action.payload;
+    },
+    setMelodicSynthMetal: (
+      state,
+      action: { payload: number; type: string }
+    ) => {
+      state.currentSong.melodicSynth.metal = action.payload;
+    },
+    setMelodicSynthLfoFreq: (
+      state,
+      action: { payload: NoteType; type: string }
+    ) => {
+      state.currentSong.melodicSynth.lfoFrequency = action.payload;
+    },
+    setMelodicSynthFilterMod: (
+      state,
+      action: { payload: number; type: string }
+    ) => {
+      state.currentSong.melodicSynth.filterMod = action.payload;
+    },
+    setToneMelodicSynthWaveform: (
+      state,
+      action: { payload: KnobWaveType; type: string }
+    ) => {
+      state.currentSong.melodicSynth.lfoShape = inputToSimpleToneWaveform(
+        action.payload
+      );
+    },
+
+    /*
+     * Pattern Reducers
+     */
     toggleDrumStep: (
       state,
       action: {
@@ -105,6 +200,18 @@ export const {
   setDelayMix,
   setDelayTime,
   setDelayFeedback,
+  setMelodicSynthAttack,
+  setMelodicSynthDecay,
+  setMelodicSynthSustain,
+  setMelodicSynthRelease,
+  setMelodicSynthWaveform,
+  setMelodicSynthChorus,
+  setMelodicSynthFilterFrequency,
+  setMelodicSynthFilterType,
+  setMelodicSynthMetal,
+  setMelodicSynthLfoFreq,
+  setMelodicSynthFilterMod,
+  setToneMelodicSynthWaveform,
 } = songSlice.actions;
 
 export default songSlice.reducer;

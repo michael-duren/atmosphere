@@ -1,6 +1,8 @@
 import { OmniOscillatorType } from 'tone/build/esm/source/oscillator/OscillatorInterface';
 import { PatternName } from 'tone/build/esm/event/PatternGenerator';
 import { Sampler } from 'tone';
+import { SimpleWaveType, WaveType } from './types/waveTypes.ts';
+import { NoteType } from './types/noteType.ts';
 
 export interface Song {
   id?: number;
@@ -54,7 +56,7 @@ export interface BassSynth {
 
 export interface MelodicSynth {
   id?: number;
-  waveform: string;
+  waveform: WaveType;
   attack: number;
   decay: number;
   sustain: number;
@@ -64,8 +66,8 @@ export interface MelodicSynth {
   filterType: BiquadFilterType;
   metal: number;
   chorus: number;
-  lfoFrequency: number;
-  lfoShape: string;
+  lfoFrequency: NoteType;
+  lfoShape: SimpleWaveType;
   songId?: number;
 }
 
