@@ -1,5 +1,19 @@
-import { delay, distortion, distortionFilter, reverb } from '../singleton.ts';
+import {
+  bassSynth,
+  delay,
+  distortion,
+  distortionFilter,
+  drumKit,
+  melodicSynth,
+  reverb,
+  volume,
+} from '../singleton.ts';
+import * as Tone from 'tone';
+import { bottomRange } from '../../utils/number.ts';
 
+/*
+ * Effects
+ */
 export const setToneDistortionMix = (val: number) => {
   distortion.wet.value = val;
 };
@@ -34,4 +48,25 @@ export const setToneDelayTime = (val: number) => {
 
 export const setToneDelayFeedback = (val: number) => {
   delay.feedback.value = val;
+};
+
+/*
+ * Volume
+ */
+
+export const setToneMasterVolume = (num: number) => {
+  volume.volume.value = Tone.gainToDb(bottomRange(num));
+};
+export const setToneDrumVolume = (num: number) => {
+  drumKit.bd.sampler.volume.value = Tone.gainToDb(bottomRange(num));
+  drumKit.sd.sampler.volume.value = Tone.gainToDb(bottomRange(num));
+  drumKit.cl.sampler.volume.value = Tone.gainToDb(bottomRange(num));
+  drumKit.ch.sampler.volume.value = Tone.gainToDb(bottomRange(num));
+};
+export const setToneBassVolume = (num: number) => {
+  bassSynth.synth.volume.value = Tone.gainToDb(bottomRange(num));
+};
+
+export const setToneMelodyVolume = (num: number) => {
+  melodicSynth.synth.volume.value = Tone.gainToDb(bottomRange(num));
 };
