@@ -42,6 +42,15 @@ const songSlice = createSlice({
     setMelodicVolume: (state, action: { payload: number; type: string }) => {
       state.currentSong.melodicVolume = action.payload;
     },
+    setDistortionMix: (state, action: { payload: number; type: string }) => {
+      state.currentSong.distortion.mix = action.payload;
+    },
+    setDistortionAmount: (state, action: { payload: number; type: string }) => {
+      state.currentSong.distortion.amount = action.payload;
+    },
+    setDistortionFilter: (state, action: { payload: number; type: string }) => {
+      state.currentSong.distortion.filter = action.payload;
+    },
     toggleDrumStep: (
       state,
       action: {
@@ -69,6 +78,9 @@ export const {
   setMelodicVolume,
   setBassVolume,
   setDrumVolume,
+  setDistortionMix,
+  setDistortionAmount,
+  setDistortionFilter,
 } = songSlice.actions;
 
 export default songSlice.reducer;
