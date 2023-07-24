@@ -2,6 +2,7 @@ import { splitCamelCase, toTitleCase } from '../../../../utils/string.ts';
 import MainKnob from '../../../Ui/Knobs/MainKnob.tsx';
 import { IconType } from 'react-icons';
 import FrequencyKnob from '../../../Ui/Knobs/FrequencyKnob.tsx';
+import Knob from '../../../Ui/Knobs/Knob.tsx';
 
 interface Parameter {
   level: number;
@@ -40,8 +41,7 @@ export default function EffectCard({
           const paramTitle = toTitleCase(splitCamelCase(param.name));
           return (
             <div key={param.name} className="flex flex-col items-center gap-2">
-              <div className="text-xs font-caps">{paramTitle}</div>
-              <div className="relative">
+              <Knob title={paramTitle}>
                 {param.type === 'main' ? (
                   <MainKnob
                     level={param.level}
@@ -64,7 +64,7 @@ export default function EffectCard({
                     color={color}
                   />
                 )}
-              </div>
+              </Knob>
             </div>
           );
         })}
