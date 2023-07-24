@@ -17,6 +17,7 @@ import {
   setToneMelodicSynthRelease,
   setToneMelodicSynthSustain,
   setToneMelodicSynthWaveform,
+  setToneMelodicSynthDecay,
 } from '../../../../tone/setters/setToneMelodicSynthParams.ts';
 import { useMelodicSynthChange } from '../../../../hooks/useMelodicSynthChange.ts';
 import MainKnob from '../../../Ui/Knobs/MainKnob.tsx';
@@ -24,13 +25,7 @@ import FrequencyKnob from '../../../Ui/Knobs/FrequencyKnob.tsx';
 import FilterKnob from '../../../Ui/Knobs/FilterKnob.tsx';
 import NoteFrequencyKnob from '../../../Ui/Knobs/NoteFrequencyKnob.tsx';
 
-interface MelodicSynthCardProps {
-  setToneMelodicSynthDecay: (num: number) => void;
-}
-
-export default function MelodicSynthCard({
-  setToneMelodicSynthDecay,
-}: MelodicSynthCardProps) {
+export default function MelodicSynthCard() {
   const { currentSong } = useAppSelector(selectSong);
   const {
     setStoreMelodicSynthWaveformChange,
