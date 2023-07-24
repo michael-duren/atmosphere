@@ -3,6 +3,7 @@ import {
   SimpleWaveType,
   WaveType,
 } from '../../models/types/waveTypes.ts';
+import { FilterType } from '../../models/types/filterType.ts';
 
 export const inputToToneWaveform = (input: KnobWaveType): WaveType => {
   switch (input) {
@@ -34,4 +35,18 @@ export const inputToSimpleToneWaveform = (
     default:
       return 'sine2';
   }
+};
+
+export const inputToFilterType = (input: number): FilterType => {
+  if (input <= 0 && input > 0.2) return 'lowpass';
+
+  if (input >= 0.2 && input < 0.4) return 'highpass';
+
+  if (input >= 0.4 && input < 0.6) return 'bandpass';
+
+  if (input >= 0.6 && input < 0.8) return 'peaking';
+
+  if (input >= 0.8 && input < 1) return 'notch';
+
+  return 'lowpass';
 };

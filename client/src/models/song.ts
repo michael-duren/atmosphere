@@ -3,6 +3,7 @@ import { PatternName } from 'tone/build/esm/event/PatternGenerator';
 import { Sampler } from 'tone';
 import { SimpleWaveType, WaveType } from './types/waveTypes.ts';
 import { NoteType } from './types/noteType.ts';
+import { FilterType } from './types/filterType.ts';
 
 export interface Song {
   id?: number;
@@ -63,7 +64,7 @@ export interface MelodicSynth {
   release: number;
   filterFrequency: number;
   filterMod: number;
-  filterType: BiquadFilterType;
+  filterType: FilterType;
   metal: number;
   chorus: number;
   lfoFrequency: NoteType;

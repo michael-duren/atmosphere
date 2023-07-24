@@ -24,7 +24,13 @@ const bassSynth = new BassSynth();
 bassSynth.modFilter.chain(distortion, distortionFilter, reverb, volume);
 
 const melodicSynth = new MelodicSynth();
-melodicSynth.synth.chain(distortion, distortionFilter, reverb, delay, volume);
+melodicSynth.filterTwo.chain(
+  distortion,
+  distortionFilter,
+  reverb,
+  delay,
+  volume
+);
 
 const drumKit = new DrumKit();
 drumKit.output.chain(distortion, distortionFilter, reverb, delay, volume);
