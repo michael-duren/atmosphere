@@ -1,5 +1,5 @@
 // MelodicSynthCard.tsx
-import React from 'react';
+import { ReactComponent as MelodicSynthSvg } from '../../../../assets/icons/MelodicSynth.svg';
 import Knob from '../../../Ui/Knobs/Knob.tsx';
 import WaveformKnob from '../../../Ui/Knobs/WaveformKnob.tsx';
 import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
@@ -46,8 +46,12 @@ const MelodicSynthCard: React.FC = () => {
   } = useMelodicSynthChange();
 
   return (
-    <div className="flex items-center rounded-2xl justify-center p-10">
-      <div className="grid grid-cols-4 grid-rows-3 gap-x-4 gap-y-4">
+    <div className="flex flex-col items-center rounded-2xl justify-center p-10">
+      <div className="w-full items-end gap-2 font-caps flex mb-4">
+        <MelodicSynthSvg className="h-8 w-8  fill-white stroke-2 stroke-white" />
+        <h2 className="text-xl">Melodic Synth</h2>
+      </div>
+      <div className="grid grid-cols-4 grid-rows-3 gap-x-4 gap-y-8">
         {/* Row One */}
         <Knob title="Waveform">
           <WaveformKnob

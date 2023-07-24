@@ -13,7 +13,7 @@ const initialSongState: SongState = {
     distortion: {
       mix: 0,
       amount: 0.5,
-      filter: 1,
+      filter: 22_000,
     },
     reverb: {
       mix: 0,
@@ -32,10 +32,10 @@ const initialSongState: SongState = {
       filter: 1,
     },
     melodicSynth: {
-      waveform: 'fatsine1',
+      waveform: 'fatsawtooth',
       attack: 0,
-      decay: 0.5,
-      sustain: 1,
+      decay: 0.25,
+      sustain: 0.25,
       release: 0.5,
       filterFrequency: 22_000,
       filterMod: 0,
