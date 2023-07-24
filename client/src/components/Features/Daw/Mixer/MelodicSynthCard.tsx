@@ -22,6 +22,7 @@ import { useMelodicSynthChange } from '../../../../hooks/useMelodicSynthChange.t
 import MainKnob from '../../../Ui/Knobs/MainKnob.tsx';
 import FrequencyKnob from '../../../Ui/Knobs/FrequencyKnob.tsx';
 import FilterKnob from '../../../Ui/Knobs/FilterKnob.tsx';
+import NoteFrequencyKnob from '../../../Ui/Knobs/NoteFrequencyKnob.tsx';
 
 interface MelodicSynthCardProps {
   setToneMelodicSynthDecay: (num: number) => void;
@@ -108,7 +109,7 @@ export default function MelodicSynthCard({
         </div>
         <div className="flex flex-col items-center gap-2">
           <div className="text-xs font-caps">Lfo Freq</div>
-          <MainKnob
+          <NoteFrequencyKnob
             color={'#7C3AED'}
             level={currentSong.melodicSynth.lfoFrequency}
             storeSetter={setStoreMelodicSynthLfoFreqChange}
