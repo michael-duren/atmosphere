@@ -10,6 +10,7 @@ import {
   inputToToneWaveform,
 } from '../../tone/utils/transformToToneValues.ts';
 import { NoteType } from '../../models/types/noteType.ts';
+import { FilterType } from '../../models/types/filterType.ts';
 
 export interface SongState {
   error: ServerError | null;
@@ -130,7 +131,7 @@ const songSlice = createSlice({
     },
     setMelodicSynthFilterType: (
       state,
-      action: { payload: BiquadFilterType; type: string }
+      action: { payload: FilterType; type: string }
     ) => {
       state.currentSong.melodicSynth.filterType = action.payload;
     },

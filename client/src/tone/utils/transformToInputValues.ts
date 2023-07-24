@@ -17,6 +17,10 @@ export const toneWaveFormToInput = (toneWaveform: WaveType): number => {
   }
 };
 
+export const frequencyToInput = (frequency: number): number => {
+  return frequency / 22_000;
+};
+
 export const simpleToneWaveFormToInput = (
   simpleToneWaveform: SimpleWaveType
 ): number => {

@@ -1,6 +1,3 @@
-// convert from 0-1 to 0-22000
-export const toFrequency = (num: number) => Math.round(num * 22000);
-
 // expects num to be in frequency range
 export const formatFrequency = (num: number): string => {
   if (num > 1000) {

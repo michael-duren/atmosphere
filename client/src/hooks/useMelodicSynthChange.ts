@@ -15,6 +15,7 @@ import {
 } from '../store/slices/songSlice.ts';
 import { KnobWaveType } from '../models/types/waveTypes.ts';
 import { NoteType } from '../models/types/noteType.ts';
+import { FilterType } from '../models/types/filterType.ts';
 
 export const useMelodicSynthChange = () => {
   const dispatch = useAppDispatch();
@@ -47,9 +48,7 @@ export const useMelodicSynthChange = () => {
     dispatch(setMelodicSynthFilterFrequency(filterFrequency));
   };
 
-  const setStoreMelodicSynthFilterTypeChange = (
-    filterType: BiquadFilterType
-  ) => {
+  const setStoreMelodicSynthFilterTypeChange = (filterType: FilterType) => {
     dispatch(setMelodicSynthFilterType(filterType));
   };
 

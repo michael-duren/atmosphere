@@ -6,6 +6,9 @@ import {
 import { FilterType } from '../../models/types/filterType.ts';
 import { NoteType } from '../../models/types/noteType.ts';
 
+// convert from 0-1 to 0-22000
+export const toFrequency = (num: number) => Math.round(num * 22000);
+
 export const inputToToneWaveform = (input: KnobWaveType): WaveType => {
   switch (input) {
     case 'sine':
