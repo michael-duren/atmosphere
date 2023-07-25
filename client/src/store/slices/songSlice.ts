@@ -163,6 +163,30 @@ const songSlice = createSlice({
     },
 
     /*
+     * Bass Synth Reducers
+     */
+    setBassSynthWaveform: (
+      state,
+      action: { payload: KnobWaveType; type: string }
+    ) => {
+      state.currentSong.bassSynth.waveform = inputToToneWaveform(
+        action.payload
+      );
+    },
+    setBassSynthFilterFrequency: (
+      state,
+      action: { payload: number; type: string }
+    ) => {
+      state.currentSong.bassSynth.filterFrequency = action.payload;
+    },
+    setBassSynthAttack: (state, action: { payload: number; type: string }) => {
+      state.currentSong.bassSynth.attack = action.payload;
+    },
+    setBassSynthDecay: (state, action: { payload: number; type: string }) => {
+      state.currentSong.bassSynth.decay = action.payload;
+    },
+
+    /*
      * Pattern Reducers
      */
     toggleDrumStep: (
@@ -213,6 +237,10 @@ export const {
   setMelodicSynthLfoFreq,
   setMelodicSynthFilterMod,
   setMelodicSynthLfoWaveform,
+  setBassSynthWaveform,
+  setBassSynthFilterFrequency,
+  setBassSynthAttack,
+  setBassSynthDecay,
 } = songSlice.actions;
 
 export default songSlice.reducer;

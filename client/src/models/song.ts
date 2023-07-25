@@ -1,4 +1,3 @@
-import { OmniOscillatorType } from 'tone/build/esm/source/oscillator/OscillatorInterface';
 import { PatternName } from 'tone/build/esm/event/PatternGenerator';
 import { Sampler } from 'tone';
 import { SimpleWaveType, WaveType } from './types/waveTypes.ts';
@@ -50,8 +49,8 @@ export interface BassSynth {
   id?: number;
   attack: number;
   decay: number;
-  waveform: OmniOscillatorType;
-  filter: number;
+  waveform: WaveType;
+  filterFrequency: number;
   songId?: number;
 }
 

@@ -27,9 +27,9 @@ const initialSongState: SongState = {
     },
     bassSynth: {
       attack: 0,
-      decay: 0,
-      waveform: 'fatsine2',
-      filter: 1,
+      decay: 1,
+      waveform: 'fatsine1',
+      filterFrequency: 22_000,
     },
     melodicSynth: {
       waveform: 'fatsawtooth',

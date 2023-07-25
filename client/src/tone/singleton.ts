@@ -21,6 +21,7 @@ const volume = new Tone.Volume(Tone.dbToGain(1));
  */
 
 const bassSynth = new BassSynth();
+bassSynth.synth.envelope.sustain = 0.5;
 bassSynth.modFilter.chain(distortion, distortionFilter, reverb, volume);
 
 const melodicSynth = new MelodicSynth();

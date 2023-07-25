@@ -54,7 +54,7 @@ class MelodicPattern {
       (time: number, noteNumber: number) => {
         const note = this.mapNotes(noteNumber + -21, this._notes);
         console.log(note);
-        this._bassSynth.synth.triggerAttackRelease(note, '1n', time);
+        this._bassSynth.synth.triggerAttackRelease(note, '2n', time);
       },
       this._sequence,
       this._patternType

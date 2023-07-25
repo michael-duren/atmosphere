@@ -46,7 +46,7 @@ const MelodicSynthCard: React.FC = () => {
   } = useMelodicSynthChange();
 
   return (
-    <div className="flex flex-col items-center rounded-2xl justify-center p-10">
+    <div className="flex flex-col items-center rounded-2xl justify-center pl-4">
       <div className="w-full items-end gap-2 font-caps flex mb-4">
         <MelodicSynthSvg className="h-8 w-8  fill-white stroke-2 stroke-white" />
         <h2 className="text-xl">Melodic Synth</h2>
