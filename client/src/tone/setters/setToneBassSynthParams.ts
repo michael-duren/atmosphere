@@ -13,3 +13,9 @@ export const setToneBassSynthAttack = (attack: number) =>
 
 export const setToneBassSynthDecay = (decay: number) =>
   (bassSynth.synth.envelope.decay = decay);
+
+export const setToneBassSynthSustain = (sustain: number) =>
+  (bassSynth.synth.envelope.sustain = sustain);
+
+export const setToneBassSynthRelease = (release: number) =>
+  (bassSynth.synth.envelope.release = release);

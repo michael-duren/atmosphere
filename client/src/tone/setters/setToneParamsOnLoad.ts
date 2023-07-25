@@ -1,38 +1,69 @@
+import * as Tone from 'tone';
 import { Song } from '../../models/song.ts';
 import {
   bassSynth,
   delay,
   distortion,
+  distortionFilter,
+  drumKit,
   melodicSynth,
   reverb,
+  volume,
 } from '../singleton.ts';
 
-export const setToneParamsOnLoad = (currentSong: Song) => {
-  distortion.wet.value = currentSong.distortion.mix;
-  distortion.distortion = currentSong.distortion.amount;
+export const setToneParamsOnLoad = (songToLoad: Song) => {
+  /*
+   * Top Level Params
+   */
+  Tone.Transport.bpm.value = songToLoad.bpm;
 
-  reverb.wet.value = currentSong.reverb.mix;
-  reverb.decay = currentSong.reverb.decay;
-  reverb.preDelay = currentSong.reverb.preDelay;
+  volume.volume.value = songToLoad.masterVolume; // master volume
 
-  delay.wet.value = currentSong.delay.mix;
-  delay.delayTime.value = currentSong.delay.time;
-  delay.feedback.value = currentSong.delay.feedback;
+  // drum volume
+  drumKit.bd.sampler.volume.value = songToLoad.drumVolume;
+  drumKit.sd.sampler.volume.value = songToLoad.drumVolume;
+  drumKit.cl.sampler.volume.value = songToLoad.drumVolume;
+  drumKit.ch.sampler.volume.value = songToLoad.drumVolume;
 
-  melodicSynth.synth.envelope.attack = currentSong.melodicSynth.attack;
-  melodicSynth.synth.envelope.decay = currentSong.melodicSynth.decay;
-  melodicSynth.synth.envelope.sustain = currentSong.melodicSynth.sustain;
-  melodicSynth.synth.envelope.release = currentSong.melodicSynth.release;
-  melodicSynth.synth.oscillator.type = currentSong.melodicSynth.waveform;
-  melodicSynth.chorus.wet.value = currentSong.melodicSynth.chorus;
-  melodicSynth.filter.frequency.value =
-    currentSong.melodicSynth.filterFrequency;
-  melodicSynth.filter.type = currentSong.melodicSynth.filterType;
-  melodicSynth.synth.modulationIndex.value = currentSong.melodicSynth.metal;
-  melodicSynth.lfoFilter.frequency.value =
-    currentSong.melodicSynth.lfoFrequency;
-  melodicSynth.lfoFilter.type = currentSong.melodicSynth.lfoShape;
-  melodicSynth.lfoFilter.min = currentSong.melodicSynth.filterMod;
+  bassSynth.synth.volume.value = songToLoad.bassVolume; // bass volume
+  melodicSynth.synth.volume.value = songToLoad.melodicVolume; // melodic volume
 
-  bassSynth.synth.envelope.attack = currentSong.bassSynth.attack;
+  /*
+   * Effects
+   */
+  distortion.wet.value = songToLoad.distortion.mix;
+  distortion.distortion = songToLoad.distortion.amount;
+  distortionFilter.frequency.value = songToLoad.distortion.filter;
+
+  reverb.wet.value = songToLoad.reverb.mix;
+  reverb.decay = songToLoad.reverb.decay;
+  reverb.preDelay = songToLoad.reverb.preDelay;
+
+  delay.wet.value = songToLoad.delay.mix;
+  delay.delayTime.value = songToLoad.delay.time;
+  delay.feedback.value = songToLoad.delay.feedback;
+
+  /*
+   * Melodic Synth Params
+   */
+  melodicSynth.synth.envelope.attack = songToLoad.melodicSynth.attack;
+  melodicSynth.synth.envelope.decay = songToLoad.melodicSynth.decay;
+  melodicSynth.synth.envelope.sustain = songToLoad.melodicSynth.sustain;
+  melodicSynth.synth.envelope.release = songToLoad.melodicSynth.release;
+  melodicSynth.synth.oscillator.type = songToLoad.melodicSynth.waveform;
+  melodicSynth.chorus.wet.value = songToLoad.melodicSynth.chorus;
+  melodicSynth.filter.frequency.value = songToLoad.melodicSynth.filterFrequency;
+  melodicSynth.filter.type = songToLoad.melodicSynth.filterType;
+  melodicSynth.synth.modulationIndex.value = songToLoad.melodicSynth.metal;
+  melodicSynth.lfoFilter.frequency.value = songToLoad.melodicSynth.lfoFrequency;
+  melodicSynth.lfoFilter.type = songToLoad.melodicSynth.lfoShape;
+  melodicSynth.lfoFilter.min = songToLoad.melodicSynth.filterMod;
+
+  /*
+   * Bass Synth Params
+   */
+  bassSynth.synth.envelope.attack = songToLoad.bassSynth.attack;
+  bassSynth.synth.envelope.decay = songToLoad.bassSynth.decay;
+  bassSynth.synth.oscillator.type = 'fatsine2';
+  bassSynth.filter.frequency.value = songToLoad.bassSynth.filterFrequency;
 };

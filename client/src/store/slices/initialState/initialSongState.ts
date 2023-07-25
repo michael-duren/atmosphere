@@ -6,9 +6,9 @@ const initialSongState: SongState = {
   currentSong: {
     songName: '',
     masterVolume: 1,
-    drumVolume: 1,
-    bassVolume: 1,
-    melodicVolume: 1,
+    drumVolume: 0.75,
+    bassVolume: 0.75,
+    melodicVolume: 0.75,
     bpm: 120,
     distortion: {
       mix: 0,
@@ -27,7 +27,9 @@ const initialSongState: SongState = {
     },
     bassSynth: {
       attack: 0,
-      decay: 1,
+      decay: 0.25,
+      sustain: 1,
+      release: 0.25,
       waveform: 'fatsine1',
       filterFrequency: 22_000,
     },

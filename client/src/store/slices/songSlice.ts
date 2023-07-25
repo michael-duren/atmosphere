@@ -185,6 +185,12 @@ const songSlice = createSlice({
     setBassSynthDecay: (state, action: { payload: number; type: string }) => {
       state.currentSong.bassSynth.decay = action.payload;
     },
+    setBassSynthSustain: (state, action: { payload: number; type: string }) => {
+      state.currentSong.bassSynth.sustain = action.payload;
+    },
+    setBassSynthRelease: (state, action: { payload: number; type: string }) => {
+      state.currentSong.bassSynth.release = action.payload;
+    },
 
     /*
      * Pattern Reducers
@@ -241,6 +247,8 @@ export const {
   setBassSynthFilterFrequency,
   setBassSynthAttack,
   setBassSynthDecay,
+  setBassSynthSustain,
+  setBassSynthRelease,
 } = songSlice.actions;
 
 export default songSlice.reducer;

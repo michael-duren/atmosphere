@@ -16,8 +16,8 @@ class MelodicPattern {
   private _bassPattern: Pattern<number>;
   private _sequence: number[];
   private _notes: NoteName[];
-  private _melodySynth: MelodicSynth;
-  private _bassSynth: BassSynth;
+  private readonly _melodySynth: MelodicSynth;
+  private readonly _bassSynth: BassSynth;
   constructor(
     melodySynth: MelodicSynth,
     bassSynth: BassSynth,
@@ -84,13 +84,6 @@ class MelodicPattern {
     return newSequence;
   }
 
-  get melodySynth(): MelodicSynth {
-    return this._melodySynth;
-  }
-
-  set melodySynth(value: MelodicSynth) {
-    this._melodySynth = value;
-  }
   get notes(): NoteName[] {
     return this._notes;
   }

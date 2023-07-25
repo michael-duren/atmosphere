@@ -49,6 +49,8 @@ export interface BassSynth {
   id?: number;
   attack: number;
   decay: number;
+  sustain: number;
+  release: number;
   waveform: WaveType;
   filterFrequency: number;
   songId?: number;
