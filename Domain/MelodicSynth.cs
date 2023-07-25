@@ -18,7 +18,9 @@ public class MelodicSynth
     public string FilterType { get; set; } = null!;
     public double Metal { get; set; }
     public double Chorus { get; set; }
-    public double LfoFrequency { get; set; }
+    [Column(TypeName = "varchar(50)")]
+    public string LfoFrequency { get; set; } = null!;
+    [Column(TypeName = "varchar(50)")]
     public string LfoShape { get; set; } = null!;
     
     [ForeignKey("Song")] public int SongId { get; set; }

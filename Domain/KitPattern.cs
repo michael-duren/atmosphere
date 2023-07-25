@@ -6,6 +6,7 @@ namespace Domain;
 public class KitPattern
 {
     [Key] public int Id { get; set; }
+    public int PatternLength { get; set; }
     public bool[] BdSteps { get; set; } = null!;
     public bool[] SdSteps { get; set; } = null!;
     public bool[] ClSteps { get; set; } = null!;

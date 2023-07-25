@@ -31,7 +31,10 @@ namespace DataAccess
                     {
                         AppUserId = userFromDb!.Id,
                         SongName = "First song",
-                        MasterVolume = 0.5,
+                        MasterVolume = 0.7,
+                        DrumVolume = 0.7,
+                        BassVolume = 0.7,
+                        MelodicVolume = 0.7,
                         Bpm = 120,
                     }
                 };
@@ -76,10 +79,12 @@ namespace DataAccess
                     new BassSynth
                     {
                         SongId = songs[0].Id,
-                        Waveform = "Sine",
+                        Waveform = "fatsawtooth",
                         Attack = 0.1,
                         Decay = 0.2,
-                        Filter = 0.9
+                        Sustain = 1,
+                        Release = 0.1,
+                        FilterFrequency = 22_000
                     }
                 };
 
@@ -88,18 +93,18 @@ namespace DataAccess
                     new MelodicSynth
                     {
                         SongId = songs[0].Id,
-                        Waveform = "Sine",
+                        Waveform = "fatsquare",
                         Attack = 0.1,
                         Decay = 0.2,
                         Sustain = 0.9,
                         Release = 0.9,
-                        FilterFrequency = 0.9,
+                        FilterFrequency = 22_000,
                         FilterMod = 0.9,
-                        FilterType = "Lowpass",
+                        FilterType = "lowpass",
                         Metal = 0.9,
                         Chorus = 0.9,
-                        LfoFrequency = 0.9,
-                        LfoShape = "Sine",
+                        LfoFrequency = "4n",
+                        LfoShape = "sine2",
                     }
                 };
 
@@ -119,6 +124,7 @@ namespace DataAccess
                     new KitPattern
                     {
                         SongId = songs[0].Id,
+                        PatternLength = 16,
                         BdSteps = new bool[]
                         {
                             true, false, false, false, true, false, false, false, true, false, false, false, true,
