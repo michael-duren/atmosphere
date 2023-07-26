@@ -20,12 +20,14 @@ public class Register
         private readonly TokenService _tokenService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IValidator<RegisterDto> _validator;
+        private readonly RefreshTokenService _refreshTokenService;
 
-        public Handler(TokenService tokenService, UserManager<AppUser> userManager, IValidator<RegisterDto> validator)
+        public Handler(TokenService tokenService, UserManager<AppUser> userManager, IValidator<RegisterDto> validator, RefreshTokenService refreshTokenService)
         {
             _tokenService = tokenService;
             _userManager = userManager;
             _validator = validator;
+            _refreshTokenService = refreshTokenService;
         }
 
         public async Task<Result<UserDto>> Handle(Command request, CancellationToken cancellationToken)
@@ -43,9 +45,11 @@ public class Register
 
             var result = await _userManager.CreateAsync(user, request.RegisterDto.Password);
 
-            return !result.Succeeded
-                ? Result<UserDto>.Failure(new ErrorMessage(new List<string> { "User creation failed" }))
-                : Result<UserDto>.Success(CreateUserObject.CreateUserDto(user, _tokenService));
+            if (!result.Succeeded)
+                return Result<UserDto>.Failure(new ErrorMessage(new List<string> { "User creation failed" }));
+
+            await _refreshTokenService.SetRefreshToken(user);
+            return Result<UserDto>.Success(CreateUserObject.CreateUserDto(user, _tokenService));
         }
     }
 }

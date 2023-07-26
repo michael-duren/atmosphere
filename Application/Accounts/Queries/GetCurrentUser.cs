@@ -21,13 +21,15 @@ public class GetCurrentUser
         private readonly IMapper _mapper;
         private readonly AppDbContext _context;
         private readonly TokenService _tokenService;
+        private readonly RefreshTokenService _refreshTokenService;
 
-        public Handler(IUserAccessor userAccessor, IMapper mapper, AppDbContext context, TokenService tokenService)
+        public Handler(IUserAccessor userAccessor, IMapper mapper, AppDbContext context, TokenService tokenService, RefreshTokenService refreshTokenService)
         {
             _userAccessor = userAccessor;
             _mapper = mapper;
             _context = context;
             _tokenService = tokenService;
+            _refreshTokenService = refreshTokenService;
         }
 
         public async Task<Result<UserDto>> Handle(Query request, CancellationToken cancellationToken)
@@ -39,6 +41,7 @@ public class GetCurrentUser
                 return Result<UserDto>.Failure(
                     new ErrorMessage(new List<string> { "User not found" }));
 
+            await _refreshTokenService.SetRefreshToken(user);
             return Result<UserDto>.Success(CreateUserObject.CreateUserDto(user, _tokenService));
         }
     }

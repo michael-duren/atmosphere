@@ -22,4 +22,7 @@ public class AppUser : IdentityUser
     // patterns
     public ICollection<KitPatternPreset> PatternPresets { get; set; } = new List<KitPatternPreset>();
     public ICollection<MelodicPatternPreset> MelodicPatternPresets { get; set; } = new List<MelodicPatternPreset>();
+    
+    // refresh token
+    public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 }

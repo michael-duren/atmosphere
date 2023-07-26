@@ -20,12 +20,14 @@ public class Login
         private readonly TokenService _tokenService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IValidator<LoginDto> _validator;
+        private readonly RefreshTokenService _refreshTokenService;
 
-        public Handler(TokenService tokenService, UserManager<AppUser> userManager, IValidator<LoginDto> validator)
+        public Handler(TokenService tokenService, UserManager<AppUser> userManager, IValidator<LoginDto> validator, RefreshTokenService refreshTokenService)
         {
             _tokenService = tokenService;
             _userManager = userManager;
             _validator = validator;
+            _refreshTokenService = refreshTokenService;
         }
 
         public async Task<Result<UserDto>> Handle(Command request, CancellationToken cancellationToken)
@@ -40,9 +42,11 @@ public class Login
 
             var result = await _userManager.CheckPasswordAsync(user, request.LoginDto.Password);
 
-            return result
-                ? Result<UserDto>.Success(CreateUserObject(user))
-                : Result<UserDto>.Failure(new ErrorMessage(new List<string> { "Invalid password" }));
+            if (!result)
+                return Result<UserDto>.Failure(new ErrorMessage(new List<string> { "Invalid password" }));
+
+            await _refreshTokenService.SetRefreshToken(user);
+            return Result<UserDto>.Success(CreateUserObject(user));
         }
 
         private UserDto CreateUserObject(AppUser user)

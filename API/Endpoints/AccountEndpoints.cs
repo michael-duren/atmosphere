@@ -5,6 +5,7 @@ using Application.Accounts.DTOs;
 using Application.Accounts.Queries;
 using Application.Core;
 using MediatR;
+using RefreshToken = Application.Accounts.Commands.RefreshToken;
 
 namespace API.Endpoints;
 
@@ -32,13 +33,26 @@ public class AccountEndpoints : IEndpointDefinition
             .Accepts<RegisterDto>("application/json")
             .Produces<UserDto>(200, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
+
+        accounts.MapPost("/refresh-token", GetRefreshToken)
+            .WithName("RefreshToken")
+            .Produces<UserDto>(200, "application/json")
+            .Produces<ErrorMessage>(403, "application/json");
+    }
+
+    private static async Task<IResult> GetRefreshToken(HttpContext context, IMediator mediator,
+        IHandleResult handleResult)
+    {
+        var refreshToken = context.Request.Cookies["refreshToken"];
+        var result = await mediator.Send(new RefreshToken.Command { CurrentRefreshToken = refreshToken! });
+        return result.IsSuccess ? handleResult.Handle(result) : new Unauthorized(result.Error);
     }
 
     private static async Task<IResult> GetCurrentUser(IMediator mediator, IHandleResult handleResult)
     {
-        var user = await mediator.Send(new GetCurrentUser.Query());
+        var result = await mediator.Send(new GetCurrentUser.Query());
 
-        return handleResult.Handle(user);
+        return result.IsSuccess ? handleResult.Handle(result) : new Unauthorized(result.Error);
     }
 
     private static async Task<IResult> Login(IMediator mediator, IHandleResult handleResult,
@@ -50,7 +64,7 @@ public class AccountEndpoints : IEndpointDefinition
         };
 
         var result = await mediator.Send(login);
-        return !result.IsSuccess ? new Unauthorized(result.Error) : handleResult.Handle(result);
+        return result.IsSuccess ? handleResult.Handle(result) : new Unauthorized(result.Error);
     }
 
     private static async Task<IResult> Register(IMediator mediator, IHandleResult handleResult, RegisterDto registerDto)
@@ -60,6 +74,7 @@ public class AccountEndpoints : IEndpointDefinition
             RegisterDto = registerDto
         };
 
-        return handleResult.Handle(await mediator.Send(register));
+        var result = await mediator.Send(register);
+        return result.IsSuccess ? handleResult.Handle(result) : new Unauthorized(result.Error);
     }
 }
