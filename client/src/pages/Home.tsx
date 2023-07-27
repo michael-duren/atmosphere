@@ -1,10 +1,16 @@
 import HomeLayout from '../components/Layouts/HomeLayout';
 import DarkModal from '../components/Ui/Modals/DarkModal';
 import LoginForm from '../components/Features/Authentication/LoginForm';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import RegisterForm from '../components/Features/Authentication/RegisterForm.tsx';
+import { useAppSelector } from '../store/hooks/useAppSelector.ts';
+import { selectUser } from '../store/slices/userSlice.ts';
+import { IoPlayOutline } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
+import { BsArrowRight } from 'react-icons/bs';
 
 export default function Home() {
+  const user = useAppSelector(selectUser);
   const h1Text = 'ATMOSPHERE';
   const [loginAnimationEnd, setLoginAnimationEnd] = useState(false);
   const [registerAnimationEnd, setRegisterAnimationEnd] = useState(false);
@@ -56,28 +62,59 @@ export default function Home() {
             })}
           </h1>
           <div className="flex justify-between">
-            <button
-              onClick={() => setShowLoginModal(!showLoginModal)}
-              onAnimationEnd={handleLoginAnimationEnd}
-              className={`uppercase ${
-                loginAnimationEnd
-                  ? 'hover:opacity-100 opacity-75'
-                  : 'opacity-0 animation-login-buttons'
-              } font-caps text-5xl `}
-            >
-              Login
-            </button>
-            <button
-              onClick={() => setShowRegisterModal(!showRegisterModal)}
-              onAnimationEnd={handleRegisterAnimationEnd}
-              className={`uppercase ${
-                registerAnimationEnd
-                  ? 'opacity-75 hover:opacity-100'
-                  : 'opacity-0 animation-login-buttons'
-              } font-caps text-5xl`}
-            >
-              Register
-            </button>
+            {!user.user ? (
+              <>
+                <button
+                  onClick={() => setShowLoginModal(!showLoginModal)}
+                  onAnimationEnd={handleLoginAnimationEnd}
+                  className={`uppercase ${
+                    loginAnimationEnd
+                      ? 'hover:opacity-100 opacity-75'
+                      : 'opacity-0 animation-login-buttons'
+                  } font-caps text-5xl `}
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => setShowRegisterModal(!showRegisterModal)}
+                  onAnimationEnd={handleRegisterAnimationEnd}
+                  className={`uppercase ${
+                    registerAnimationEnd
+                      ? 'opacity-75 hover:opacity-100'
+                      : 'opacity-0 animation-login-buttons'
+                  } font-caps text-5xl`}
+                >
+                  Register
+                </button>
+              </>
+            ) : (
+              <>
+                <div
+                  onAnimationEnd={handleRegisterAnimationEnd}
+                  className={`uppercase ${
+                    registerAnimationEnd
+                      ? 'opacity-75 hover:opacity-100'
+                      : 'opacity-0 animation-login-buttons'
+                  } font-caps text-5xl`}
+                >
+                  <Link to={'/app'}>
+                    <IoPlayOutline className="animate-pulse" size={80} />
+                  </Link>
+                </div>
+                <div
+                  onAnimationEnd={handleRegisterAnimationEnd}
+                  className={`uppercase ${
+                    registerAnimationEnd
+                      ? 'opacity-75 hover:opacity-100'
+                      : 'opacity-0 animation-login-buttons'
+                  } font-caps text-5xl`}
+                >
+                  <Link to={'/app'}>
+                    <BsArrowRight className="animate-pulse" size={80} />
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </HomeLayout>
