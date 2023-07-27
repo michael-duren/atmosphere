@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { store } from '../store/store.ts';
+import { USER_ACTIONS } from '../store/actions/userActions.ts';
 
 // set default base
 axios.defaults.baseURL = 'http://localhost:5000/api';
@@ -17,7 +18,7 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(
   (response) => response,
   (e: AxiosError) => {
-    const { data, status } = e.response as AxiosResponse;
+    const { data, status, headers } = e.response as AxiosResponse;
     switch (status) {
       case 400:
         if (data.error) {
@@ -26,6 +27,12 @@ axios.interceptors.response.use(
         }
         break;
       case 401:
+        // if (
+        //   status === 401 &&
+        //   headers['www-authenticate'].startsWith('Bearer error="invalid_token"')
+        // ) {
+        //   store.dispatch({ type: USER_ACTIONS.LOGOUT_ASYNC });
+        // }
         if (data.error) {
           console.log(data.error);
         }

@@ -16,6 +16,31 @@ function App() {
     }
   }, []);
 
+  // Token refresh logic
+  // useEffect(() => {
+  //   const refreshToken = async () => {
+  //     try {
+  //       const refreshedUser = await agent.Account.refreshToken();
+  //       dispatch(setUser(refreshedUser));
+  //       dispatch(setToken(refreshedUser.token));
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
+  //
+  //   if (user && user.token) {
+  //     const jwtToken = JSON.parse(atob(user.token.split('.')[1]));
+  //     const expires = new Date(jwtToken.exp * 1000);
+  //     const timeout = expires.getTime() - Date.now() - 30 * 1000;
+  //
+  //     const timerId = setTimeout(refreshToken, timeout);
+  //
+  //     return () => {
+  //       clearTimeout(timerId);
+  //     };
+  //   }
+  // }, [user, dispatch]);
+
   if (user.isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[100vh]">

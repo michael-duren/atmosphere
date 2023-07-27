@@ -67,6 +67,16 @@ export function* getLoggedInUser() {
   }
 }
 
+export function* refreshToken() {
+  try {
+    const user: User = yield call(agent.Account.refreshToken);
+    yield put(setUser(user));
+    yield put(setToken(user.token));
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export function* userSaga() {
   yield* takeEvery(USER_ACTIONS.LOGIN_ASYNC, login);
   yield* takeEvery(USER_ACTIONS.REGISTER_ASYNC, register);
