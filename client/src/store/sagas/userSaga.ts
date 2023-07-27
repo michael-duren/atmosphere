@@ -82,4 +82,5 @@ export function* userSaga() {
   yield* takeEvery(USER_ACTIONS.REGISTER_ASYNC, register);
   yield* takeEvery(USER_ACTIONS.GET_LOGGED_IN_USER_ASYNC, getLoggedInUser);
   yield* takeEvery(USER_ACTIONS.LOGOUT_ASYNC, logout);
+  yield* takeEvery(USER_ACTIONS.REFRESH_TOKEN_ASYNC, refreshToken);
 }

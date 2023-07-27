@@ -40,7 +40,8 @@ public static class AppServiceExtensions
                     policy
                         .AllowAnyMethod()
                         .AllowAnyHeader()
-                        // .WithExposedHeaders("WWW-Authenticate")
+                        .AllowCredentials()
+                        .WithExposedHeaders("WWW-Authenticate")
                         .WithOrigins("http://localhost:5173");
                 });
         });

@@ -66,7 +66,7 @@ export default function LoginForm({ setIsOpen }: Props) {
           />
         </div>
         <div className="">
-          {loginError &&
+          {Array.isArray(loginError) &&
             loginError.map((error, i) => {
               if (error.toLowerCase().includes('user')) {
                 return (
@@ -94,7 +94,7 @@ export default function LoginForm({ setIsOpen }: Props) {
           />
         </div>
         <div className="m-0">
-          {loginError &&
+          {Array.isArray(loginError) &&
             loginError.map((error, i) => {
               if (error.toLowerCase().includes('password')) {
                 return (
