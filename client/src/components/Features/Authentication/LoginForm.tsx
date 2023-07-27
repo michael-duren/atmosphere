@@ -7,6 +7,7 @@ import { useAppDispatch } from '../../../store/hooks/useAppDispatch.ts';
 import { useAppSelector } from '../../../store/hooks/useAppSelector.ts';
 import { selectUser } from '../../../store/slices/userSlice.ts';
 import FormWarning from '../../Ui/Warnings/FormWarning.tsx';
+import SimpleSpinner from '../../Ui/Spinners/SimpleSpinner.tsx';
 
 interface Props {
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
@@ -14,7 +15,7 @@ interface Props {
 
 export default function LoginForm({ setIsOpen }: Props) {
   const dispatch = useAppDispatch();
-  const loginError = useAppSelector(selectUser).error;
+  const { error, isLoading } = useAppSelector(selectUser);
 
   const formik = useFormik({
     initialValues: {
@@ -66,8 +67,8 @@ export default function LoginForm({ setIsOpen }: Props) {
           />
         </div>
         <div className="">
-          {Array.isArray(loginError) &&
-            loginError.map((error, i) => {
+          {Array.isArray(error) &&
+            error.map((error, i) => {
               if (error.toLowerCase().includes('user')) {
                 return (
                   <Fragment key={i}>
@@ -94,8 +95,8 @@ export default function LoginForm({ setIsOpen }: Props) {
           />
         </div>
         <div className="m-0">
-          {Array.isArray(loginError) &&
-            loginError.map((error, i) => {
+          {Array.isArray(error) &&
+            error.map((error, i) => {
               if (error.toLowerCase().includes('password')) {
                 return (
                   <Fragment key={i}>
@@ -112,7 +113,7 @@ export default function LoginForm({ setIsOpen }: Props) {
           type="submit"
           className="hover:bg-gray-800 py-2 active:scale-105 transition-all duration-300 rounded-xl bg-opacity-80 bg-gray-900"
         >
-          Sign in
+          {isLoading ? <SimpleSpinner size={20} /> : 'Sign in'}
         </button>
       </form>
     </div>

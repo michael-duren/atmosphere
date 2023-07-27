@@ -16,15 +16,15 @@ import { router } from '../../router/Routes.tsx';
 import { setToken } from '../slices/commonSlice.ts';
 
 export function* login({ payload }: LoginAsync) {
-  yield put(setIsUserLoading(true));
+  yield put(setIsUserLoading(true)); // set user is loading to true
   try {
-    const user: User = yield call(agent.Account.login, payload);
-    yield put(resetUserError());
-    yield put(setUser(user));
-    yield put(setToken(user.token));
-    yield call([localStorage, 'setItem'], 'jwt', user.token);
-    yield put(setIsUserLoading(false));
-    yield call(router.navigate, '/app');
+    const user: User = yield call(agent.Account.login, payload); // attempt to login user
+    yield put(resetUserError()); // reset any errors that occured previously while logging in
+    yield put(setUser(user)); // set user in redux store
+    yield put(setToken(user.token)); // set token in common store
+    yield call([localStorage, 'setItem'], 'jwt', user.token); // set token in local storage
+    yield put(setIsUserLoading(false)); // set user is loading to false
+    yield call(router.navigate, '/app'); // navigate to app
   } catch (e: any) {
     console.log(e);
     yield put(setIsUserLoading(false));
@@ -33,22 +33,22 @@ export function* login({ payload }: LoginAsync) {
 }
 
 export function* logout() {
-  yield put(setToken(null));
-  yield put(setUser(null));
-  yield call(router.navigate, '/');
-  yield call([localStorage, 'removeItem'], 'jwt');
+  yield put(setToken(null)); // set token in common store to null
+  yield put(setUser(null)); // set user in redux store to null
+  yield call(router.navigate, '/'); // navigate to login page
+  yield call([localStorage, 'removeItem'], 'jwt'); // remove token from local storage
 }
 
 export function* register({ payload }: RegisterAsync) {
   yield put(setIsUserLoading(true));
   try {
-    const user: User = yield* call(agent.Account.register, payload);
-    yield put(resetUserError());
-    yield put(setUser(user));
-    yield put(setToken(user.token));
-    yield call([localStorage, 'setItem'], 'jwt', user.token);
-    yield put(setIsUserLoading(false));
-    yield call(router.navigate, '/app');
+    const user: User = yield* call(agent.Account.register, payload); // attempt to register user
+    yield put(resetUserError()); // reset any errors that occured while registering
+    yield put(setUser(user)); // set new user in redux store
+    yield put(setToken(user.token)); // set user token in common store
+    yield call([localStorage, 'setItem'], 'jwt', user.token); // set token in local storage
+    yield put(setIsUserLoading(false)); // set user is loading to false
+    yield call(router.navigate, '/app'); // navigate to app
   } catch (e: any) {
     yield put(setIsUserLoading(false));
     yield put(setUserError(e));
@@ -56,22 +56,27 @@ export function* register({ payload }: RegisterAsync) {
 }
 
 export function* getLoggedInUser() {
-  yield put(setIsUserLoading(true));
+  yield put(setIsUserLoading(true)); // set user is loading to true
   try {
-    const user: User = yield call(agent.Account.getCurrentUser);
-    yield put(setUser(user));
-    yield put(setIsUserLoading(false));
+    const user: User = yield call(agent.Account.getCurrentUser); // get current user
+    if (!user) {
+      yield put(setIsUserLoading(false)); // if unsuccessful return
+      return;
+    }
+    yield put(setUser(user)); // set user in redux store
+    yield put(setIsUserLoading(false)); // set user is loading to false
   } catch (e) {
     yield put(setIsUserLoading(false));
+    yield call(router.navigate, '/'); // navigate to login page if error
     throw e;
   }
 }
 
 export function* refreshToken() {
   try {
-    const user: User = yield call(agent.Account.refreshToken);
-    yield put(setUser(user));
-    yield put(setToken(user.token));
+    const user: User = yield call(agent.Account.refreshToken); // get new token
+    yield put(setUser(user)); // set user in redux store
+    yield put(setToken(user.token)); // set token in common store
   } catch (e) {
     console.log(e);
   }

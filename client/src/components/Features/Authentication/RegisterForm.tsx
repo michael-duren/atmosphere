@@ -7,6 +7,7 @@ import { registerFormSchema } from '../../../models/schemas/registerFormSchema.t
 import FormWarning from '../../Ui/Warnings/FormWarning.tsx';
 import { useAppSelector } from '../../../store/hooks/useAppSelector.ts';
 import { selectUser } from '../../../store/slices/userSlice.ts';
+import SimpleSpinner from '../../Ui/Spinners/SimpleSpinner.tsx';
 
 interface Props {
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
@@ -14,7 +15,7 @@ interface Props {
 
 export default function RegisterForm({ setIsOpen }: Props) {
   const dispatch = useAppDispatch();
-  const registerError = useAppSelector(selectUser).error;
+  const { error, isLoading } = useAppSelector(selectUser);
 
   const formik = useFormik({
     initialValues: {
@@ -71,8 +72,8 @@ export default function RegisterForm({ setIsOpen }: Props) {
           />
         </div>
         <div>
-          {registerError &&
-            registerError.map((error, i) => {
+          {error &&
+            error.map((error, i) => {
               if (error.toLowerCase().includes('email')) {
                 return (
                   <Fragment key={i}>
@@ -103,8 +104,8 @@ export default function RegisterForm({ setIsOpen }: Props) {
           />
         </div>
         <div>
-          {registerError &&
-            registerError.map((error, i) => {
+          {error &&
+            error.map((error, i) => {
               if (error.toLowerCase().includes('username')) {
                 return (
                   <Fragment key={i}>
@@ -165,7 +166,7 @@ export default function RegisterForm({ setIsOpen }: Props) {
               : 'bg-gray-900 hover:bg-gray-800 active:scale-105'
           } py-2  transition-all duration-300 rounded-xl bg-opacity-80 `}
         >
-          Create Account
+          {isLoading ? <SimpleSpinner size={20} /> : 'Create Account'}
         </button>
       </form>
     </div>

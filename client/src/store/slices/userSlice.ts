@@ -6,12 +6,14 @@ export interface UserState {
   user: User | null;
   isLoading: boolean;
   error: string[] | null;
+  refreshTokenId: any;
 }
 
 const initialUserState: UserState = {
   user: null,
   isLoading: false,
   error: null,
+  refreshTokenId: null,
 };
 
 const userSlice = createSlice({
@@ -33,12 +35,20 @@ const userSlice = createSlice({
     resetUserError: (state) => {
       state.error = null;
     },
+    setRefreshTokenId: (state, action: { payload: any; type: string }) => {
+      state.refreshTokenId = action.payload;
+    },
   },
 });
 
 export const selectUser = (state: AppState) => state.user;
 
-export const { setUser, setUserError, resetUserError, setIsUserLoading } =
-  userSlice.actions;
+export const {
+  setUser,
+  setRefreshTokenId,
+  setUserError,
+  resetUserError,
+  setIsUserLoading,
+} = userSlice.actions;
 
 export default userSlice.reducer;

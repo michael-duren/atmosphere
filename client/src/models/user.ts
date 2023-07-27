@@ -14,3 +14,7 @@ export interface UserRegister {
   password: string;
   username: string;
 }
+
+export interface JwtPayload {
+  exp: string;
+}
