@@ -1,13 +1,13 @@
 import HomeLayout from '../components/Layouts/HomeLayout';
 import DarkModal from '../components/Ui/Modals/DarkModal';
 import LoginForm from '../components/Features/Authentication/LoginForm';
-import React, { useState } from 'react';
 import RegisterForm from '../components/Features/Authentication/RegisterForm.tsx';
 import { useAppSelector } from '../store/hooks/useAppSelector.ts';
 import { selectUser } from '../store/slices/userSlice.ts';
 import { IoPlayOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
+import { useState } from 'react';
 
 export default function Home() {
   const user = useAppSelector(selectUser);

@@ -18,13 +18,17 @@ class MelodicPattern {
   private _notes: NoteName[];
   private readonly _melodySynth: MelodicSynth;
   private readonly _bassSynth: BassSynth;
+  private _key: string;
+  private _scale: string;
   constructor(
     melodySynth: MelodicSynth,
     bassSynth: BassSynth,
     transpose = 0,
     noteDuration = '8n',
     timeInterval = '8n',
-    patternType: PatternName = 'upDown'
+    patternType: PatternName = 'upDown',
+    key = 'C',
+    scale = 'minor'
   ) {
     this._transpose = transpose;
     this._noteDuration = noteDuration;
@@ -32,10 +36,40 @@ class MelodicPattern {
     this._patternType = patternType;
     this._melodySynth = melodySynth;
     this._bassSynth = bassSynth;
+    this._key = key;
+    this._scale = scale;
 
     this._sequence = this.generateRandomSequence();
-    this._notes = Tonal.Scale.get('C4 minor').notes;
+    this._notes = Tonal.Scale.get(`${this._key} ${this._scale}`).notes;
 
+    this._melodyPattern = new Tone.Pattern(
+      (time: number, noteNumber: number) => {
+        const note = this.mapNotes(noteNumber + this._transpose, this._notes);
+        this._melodySynth.synth.triggerAttackRelease(
+          note,
+          this._noteDuration,
+          time
+        );
+      },
+      this._sequence,
+      this._patternType
+    );
+    this._melodyPattern.interval = this._timeInterval;
+
+    this._bassPattern = new Tone.Pattern(
+      (time: number, noteNumber: number) => {
+        const note = this.mapNotes(noteNumber + -21, this._notes);
+        console.log(note);
+        this._bassSynth.synth.triggerAttackRelease(note, '2n', time);
+      },
+      this._sequence,
+      this._patternType
+    );
+    this._bassPattern.interval = '1n';
+  }
+
+  generateNewPattern() {
+    this._sequence = this.generateRandomSequence();
     this._melodyPattern = new Tone.Pattern(
       (time: number, noteNumber: number) => {
         const note = this.mapNotes(noteNumber + this._transpose, this._notes);

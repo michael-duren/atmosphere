@@ -50,14 +50,6 @@ function App() {
     };
   }, [user.user]); // listen to changes in the user object
 
-  // if (user.isLoading) {
-  //   return (
-  //     <div className="flex items-center justify-center min-h-[100vh]">
-  //       <AbstractSpinner />
-  //     </div>
-  //   );
-  // }
-
   return (
     <>
       <Outlet />

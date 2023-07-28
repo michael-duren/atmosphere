@@ -1,0 +1,17 @@
+export type MusicalScale =
+  | 'major'
+  | 'minor'
+  | 'dorian'
+  | 'phrygian'
+  | 'lydian'
+  | 'mixolydian'
+  | 'locrian'
+  | 'harmonic minor'
+  | 'melodic minor'
+  | 'major pentatonic'
+  | 'minor pentatonic'
+  | 'blues'
+  | 'whole tone'
+  | 'augmented'
+  | 'diminished'
+  | 'chromatic';

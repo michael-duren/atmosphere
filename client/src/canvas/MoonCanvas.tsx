@@ -39,7 +39,7 @@ export default function MoonCanvas() {
         <Cloud color={'#635985'} position={[-4, 2, 10]} args={[3, 2]} />
         <Moon />
         <Stars />
-        <CameraAnimation zoom={2} time={30} initialZ={8} />
+        <CameraAnimation zoom={8} time={30} initialZ={15} />
       </Canvas>
     </div>
   );
