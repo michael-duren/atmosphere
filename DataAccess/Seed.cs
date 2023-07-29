@@ -113,9 +113,13 @@ namespace DataAccess
                     new MelodicPattern
                     {
                         SongId = songs[0].Id,
-                        Scale = "C4 Minor",
+                        Key = "C",
+                        Scale = "minor",
+                        Sequence = new int[] { -12, 4, 4, 6, 7, 1, 7, 1 },
                         PatternType = "up",
-                        Sequence = new int[] { -12, 4, 4, 6, 7, 1, 7, 1 }
+                        TimeInterval = "8n",
+                        NoteDuration = "8n",
+                        Transpose = 0,
                     }
                 };
 
