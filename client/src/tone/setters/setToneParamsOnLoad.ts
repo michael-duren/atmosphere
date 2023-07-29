@@ -65,7 +65,7 @@ export const setToneParamsOnLoad = (songToLoad: Song) => {
    */
   bassSynth.synth.envelope.attack = songToLoad.bassSynth.attack;
   bassSynth.synth.envelope.decay = songToLoad.bassSynth.decay;
-  bassSynth.synth.oscillator.type = 'fatsine2';
+  bassSynth.synth.oscillator.type = songToLoad.bassSynth.waveform;
   bassSynth.filter.frequency.value = songToLoad.bassSynth.filterFrequency;
 
   /*

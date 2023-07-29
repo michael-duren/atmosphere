@@ -6,6 +6,7 @@ import { modulo, random } from '../utils/utilities.ts';
 import MelodicSynth from './MelodicSynth.ts';
 import { PatternName } from 'tone/build/esm/event/PatternGenerator';
 import BassSynth from './BassSynth.ts';
+import { MusicalKey } from '../../models/types/musicalKey.ts';
 
 class MelodicPattern {
   private _transpose: number;
@@ -21,6 +22,7 @@ class MelodicPattern {
   private _key: string;
   private _scale: string;
   private _length: number;
+  private _noteChangeHandler: null | ((note: MusicalKey) => void) = null;
   constructor(
     melodySynth: MelodicSynth,
     bassSynth: BassSynth,
@@ -46,25 +48,14 @@ class MelodicPattern {
     this._notes = Tonal.Scale.get(`${this._key}4 ${this._scale}`).notes;
 
     this._melodyPattern = new Tone.Pattern(
-      (time: number, noteNumber: number) => {
-        const note = this.mapNotes(noteNumber + this._transpose, this._notes);
-        this._melodySynth.synth.triggerAttackRelease(
-          note,
-          this._noteDuration,
-          time
-        );
-      },
+      this.createMelodicPatternCallback,
       this._sequence,
       this._patternType
     );
     this._melodyPattern.interval = this._timeInterval;
 
     this._bassPattern = new Tone.Pattern(
-      (time: number, noteNumber: number) => {
-        const note = this.mapNotes(noteNumber + -21, this._notes);
-        console.log(note);
-        this._bassSynth.synth.triggerAttackRelease(note, '2n', time);
-      },
+      this.createBassPatternCallback,
       this._sequence,
       this._patternType
     );
@@ -72,72 +63,42 @@ class MelodicPattern {
   }
 
   generateNewPattern() {
+    Tone.Transport.stop();
+    Tone.Transport.position = 0;
     this._sequence = this.generateRandomSequence();
 
     this._notes = Tonal.Scale.get(`${this._key}4 ${this._scale}`).notes;
-    this._melodyPattern.callback = (
-      time: number,
-      noteNumber?: number | undefined
-    ) => {
-      const note = this.mapNotes(noteNumber! + this._transpose, this._notes);
-      this._melodySynth.synth.triggerAttackRelease(
-        note,
-        this._noteDuration,
-        time
-      );
-    };
+    this._melodyPattern.callback = this.createMelodicPatternCallback();
+    this._melodyPattern.values = this._sequence;
     this._melodyPattern.pattern = this.patternType;
     this._melodyPattern.interval = this._timeInterval;
     this._melodyPattern.start();
-    console.log('new melody pattern', this._melodyPattern);
 
-    this._bassPattern.dispose();
-    this._bassPattern.callback = (
-      time: number,
-      noteNumber?: number | undefined
-    ) => {
-      const note = this.mapNotes(noteNumber! + -21, this._notes);
-      console.log(note);
-      this._bassSynth.synth.triggerAttackRelease(note, '2n', time);
-    };
+    this._bassPattern.callback = this.createBassPatternCallback();
+    this._bassPattern.values = this._sequence.slice(0, 4);
     this._bassPattern.pattern = this.patternType;
     this._bassPattern.interval = '1n';
     this._bassPattern.start();
+    Tone.Transport.start();
   }
 
   updatePattern() {
+    Tone.Transport.stop();
+    Tone.Transport.position = 0;
     this._notes = Tonal.Scale.get(`${this._key}4 ${this._scale}`).notes;
-    this._melodyPattern.callback = (
-      time: number,
-      noteNumber?: number | undefined
-    ) => {
-      const note = this.mapNotes(noteNumber! + this._transpose, this._notes);
-      this._melodySynth.synth.triggerAttackRelease(
-        note,
-        this._noteDuration,
-        time
-      );
-    };
+    this._melodyPattern.callback = this.createMelodicPatternCallback();
     this._melodyPattern.pattern = this.patternType;
     this._melodyPattern.interval = this._timeInterval;
     this._melodyPattern.start();
-    console.log('new melody pattern', this._melodyPattern);
 
-    this._bassPattern.dispose();
-    this._bassPattern.callback = (
-      time: number,
-      noteNumber?: number | undefined
-    ) => {
-      const note = this.mapNotes(noteNumber! + -21, this._notes);
-      console.log(note);
-      this._bassSynth.synth.triggerAttackRelease(note, '2n', time);
-    };
+    this._bassPattern.callback = this.createBassPatternCallback();
     this._bassPattern.pattern = this.patternType;
     this._bassPattern.interval = '1n';
     this._bassPattern.start();
+    Tone.Transport.start();
   }
 
-  mapNotes(noteNumber: number, notes: string[]): Tonal.NoteName {
+  private mapNotes(noteNumber: number, notes: string[]): Tonal.NoteName {
     let numNotes = notes.length;
     // determine what note is below or above the current range
     let i = modulo(noteNumber, numNotes);
@@ -148,7 +109,25 @@ class MelodicPattern {
     return Tonal.Note.transpose(notes[i], interval);
   }
 
-  generateRandomSequence(): number[] {
+  private createMelodicPatternCallback() {
+    return (time: number, noteNumber?: number | undefined) => {
+      const note = this.mapNotes(noteNumber! + this._transpose, this._notes);
+      if (this._noteChangeHandler) this._noteChangeHandler(note as MusicalKey);
+      this._melodySynth.synth.triggerAttackRelease(
+        note,
+        this._noteDuration,
+        time
+      );
+    };
+  }
+  private createBassPatternCallback() {
+    return (time: number, noteNumber?: number | undefined) => {
+      const note = this.mapNotes(noteNumber! + -21, this._notes);
+      this._bassSynth.synth.triggerAttackRelease(note, '2n', time);
+    };
+  }
+
+  private generateRandomSequence(): number[] {
     const newSequence = [];
     //   number of notes in sequence
     const n = this._length;
@@ -156,6 +135,8 @@ class MelodicPattern {
     for (let i = 0; i < n; i++) {
       newSequence[i] = Math.floor(random(0, 6));
     }
+
+    console.log(newSequence);
     return newSequence;
   }
 
@@ -226,6 +207,14 @@ class MelodicPattern {
   }
   set length(value: number) {
     this._length = value;
+  }
+
+  get noteChangeHandler(): ((note: MusicalKey) => void) | null {
+    return this._noteChangeHandler;
+  }
+
+  set noteChangeHandler(value: ((note: MusicalKey) => void) | null) {
+    this._noteChangeHandler = value;
   }
 }
 

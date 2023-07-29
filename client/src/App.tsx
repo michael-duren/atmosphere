@@ -5,6 +5,7 @@ import { USER_ACTIONS } from './store/actions/userActions.ts';
 import { useAppSelector } from './store/hooks/useAppSelector.ts';
 import { selectUser } from './store/slices/userSlice.ts';
 import { User } from './models/user.ts';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -53,6 +54,15 @@ function App() {
   return (
     <>
       <Outlet />
+      <Toaster
+        toastOptions={{
+          style: {
+            color: '#fff',
+            background: 'black',
+            border: '1px solid #44403C',
+          },
+        }}
+      />
     </>
   );
 }

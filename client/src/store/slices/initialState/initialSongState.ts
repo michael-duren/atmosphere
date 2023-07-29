@@ -30,7 +30,7 @@ const initialSongState: SongState = {
       decay: 0.25,
       sustain: 1,
       release: 0.25,
-      waveform: 'fatsine1',
+      waveform: 'fatsawtooth',
       filterFrequency: 22_000,
     },
     melodicSynth: {
@@ -49,7 +49,7 @@ const initialSongState: SongState = {
     },
     melodicPattern: {
       key: 'C',
-      scale: 'minor',
+      scale: 'major',
       sequence: [],
       patternType: 'up',
       transpose: 0,

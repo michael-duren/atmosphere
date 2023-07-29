@@ -15,8 +15,14 @@ import { NoteType } from '../../../../models/types/noteType.ts';
 import UseMelodicPatternStoreChange from '../../../../hooks/useMelodicPatternStoreChange.ts';
 import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
 import { melodicPattern } from '../../../../tone/singleton.ts';
+import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 export default function MelodicPatternGenerator() {
+  const isPlaying = useAppSelector((store) => store.transport.isPlaying);
+  const [currentNote, setCurrentNote] = useState<MusicalKey | null>(null);
+  const noteChangeHandler = (note: MusicalKey) => setCurrentNote(note);
+  melodicPattern.noteChangeHandler = noteChangeHandler;
   const key = useAppSelector(
     (store) => store.song.currentSong.melodicPattern.key
   );
@@ -48,6 +54,21 @@ export default function MelodicPatternGenerator() {
     setStoreMelodicPatternTypeChange,
     setStoreMelodicPatternTransposeChange,
   } = UseMelodicPatternStoreChange();
+
+  const updatePattern = () => {
+    melodicPattern.updatePattern();
+    toast.success('Melodic Pattern Updated', {
+      position: 'top-left',
+    });
+  };
+
+  const generatePattern = () => {
+    melodicPattern.generateNewPattern();
+    toast.success('New Pattern Generated', {
+      position: 'top-left',
+    });
+  };
+
   return (
     <div className="mt-4 grid grid-cols-2 flex-1 gap-4">
       {/* KEY */}
@@ -148,11 +169,21 @@ export default function MelodicPatternGenerator() {
           items={lengthOptions}
         />
       </div>
+      <div
+        className="flex-col gap-2 justify-center items-center "
+        style={{ zIndex: 47 }}
+      >
+        <div className="font-caps">Playing</div>
+        <div className={`${isPlaying ? 'animate-pulse' : ''} text-center`}>
+          <span className="block rounded-xl  p-1 shadow-md shadow-blue-600 w-10">
+            {currentNote}
+          </span>
+        </div>
+      </div>
+
       <div className="flex items-center ">
         <button
-          onClick={() => {
-            melodicPattern.updatePattern();
-          }}
+          onClick={updatePattern}
           className="inline-flex mt-4 w-24 justify-center opacity-90 shadow-md shadow-blue-950 rounded-xl border border-transparent bg-blue-900 px-4 py-2 text-sm font-medium text-blue-100 
             hover:bg-blue-800 focus:outline-none focus-visible:ring-2 active:scale-105 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
         >
@@ -162,9 +193,7 @@ export default function MelodicPatternGenerator() {
 
       <div className="flex items-center ">
         <button
-          onClick={() => {
-            melodicPattern.generateNewPattern();
-          }}
+          onClick={generatePattern}
           className="inline-flex mt-4 justify-center opacity-90 shadow-md shadow-amber-950 rounded-xl border border-transparent bg-amber-900 px-4 py-2 text-sm font-medium text-amber-100 
             hover:bg-amber-800 focus:outline-none focus-visible:ring-2 active:scale-105 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
         >
