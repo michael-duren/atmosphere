@@ -1,5 +1,6 @@
 import { SiMusicbrainz } from 'react-icons/si';
 import MelodicPatternGenerator from './MelodicPatternGenerator.tsx';
+import Oscilloscopes from './Oscilloscopes.tsx';
 
 export default function MelodicPattern() {
   return (
@@ -10,7 +11,9 @@ export default function MelodicPattern() {
       <div className="flex">
         <MelodicPatternGenerator />
         {/* GRAPH AND OSCILLOSCOPE */}
-        <div className="flex-1">OSCILLOSCOPE</div>
+        <div className="flex-1">
+          <Oscilloscopes />
+        </div>
       </div>
     </div>
   );
