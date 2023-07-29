@@ -6,12 +6,14 @@ export interface CommonState {
   error: ServerError | null;
   token: string | null;
   appLoaded: boolean;
+  saveModalOpen: boolean;
 }
 
 const initialCommonState: CommonState = {
   error: null,
   token: localStorage.getItem('jwt'),
   appLoaded: true,
+  saveModalOpen: false,
 };
 
 const commonSlice = createSlice({
@@ -27,11 +29,15 @@ const commonSlice = createSlice({
     setAppLoaded: (state, action: { payload: boolean; type: string }) => {
       state.appLoaded = action.payload;
     },
+    setSaveModalOpen: (state, action: { payload: boolean; type: string }) => {
+      state.saveModalOpen = action.payload;
+    },
   },
 });
 
 export const selectCommon = (state: AppState) => state.common;
 
-export const { setToken, setError, setAppLoaded } = commonSlice.actions;
+export const { setToken, setError, setAppLoaded, setSaveModalOpen } =
+  commonSlice.actions;
 
 export default commonSlice.reducer;

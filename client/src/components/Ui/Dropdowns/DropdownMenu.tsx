@@ -6,6 +6,7 @@ export interface DropdownItem {
   onClick: () => void;
   ItemIcon: IconType;
   itemTitle: string;
+  additionalSpacing?: string;
 }
 
 interface Props {
@@ -38,12 +39,15 @@ export default function DropdownMenu({
         <Menu.Items
           className={`absolute ${position} mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
         >
-          <div className="px-1 py-1 ">
-            {dropDownArray.map((item) => {
-              const { onClick, ItemIcon, itemTitle } = item;
+          {dropDownArray.map((item) => {
+            const { onClick, ItemIcon, itemTitle, additionalSpacing } = item;
 
-              return (
-                <Fragment key={item.itemTitle}>
+            return (
+              <div
+                key={item.itemTitle}
+                className={`px-1 py-1 ${additionalSpacing}`}
+              >
+                <Fragment>
                   <Menu.Item>
                     {({ active }) => (
                       <button
@@ -68,9 +72,9 @@ export default function DropdownMenu({
                     )}
                   </Menu.Item>
                 </Fragment>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </Menu.Items>
       </Transition>
     </Menu>

@@ -16,11 +16,16 @@ import {
   setIsToneLoaded,
 } from '../store/slices/transportSlice.ts';
 import { setToneParamsOnLoad } from '../tone/setters/setToneParamsOnLoad.ts';
+import DarkModal from '../components/Ui/Modals/DarkModal.tsx';
+import { selectCommon, setSaveModalOpen } from '../store/slices/commonSlice.ts';
+import SongForm from '../components/Features/Daw/SongForm.tsx';
 
 export default function Daw() {
   const user = useAppSelector(selectUser);
   const { currentSong } = useAppSelector(selectSong);
   const { isToneLoaded } = useAppSelector(selectTransport);
+  const { saveModalOpen } = useAppSelector(selectCommon);
+  const isSavedModalOpenHandler = () => dispatch(setSaveModalOpen(true));
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -60,6 +65,9 @@ export default function Daw() {
         <Mixer />
         <DrumSequencer />
       </main>
+      <DarkModal isOpen={saveModalOpen} setIsOpen={isSavedModalOpenHandler}>
+        <SongForm />
+      </DarkModal>
     </DawLayout>
   );
 }

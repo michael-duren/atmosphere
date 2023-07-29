@@ -1,17 +1,24 @@
 import { useAppSelector } from '../../store/hooks/useAppSelector.ts';
 import { selectUser } from '../../store/slices/userSlice.ts';
 import { splitCamelCase, toTitleCase } from '../../utils/string.ts';
-import { HiLogout } from 'react-icons/hi';
+import { HiLogout, HiOutlineSave } from 'react-icons/hi';
 import { DropdownItem } from '../Ui/Dropdowns/DropdownMenu.tsx';
 import { useAppDispatch } from '../../store/hooks/useAppDispatch.ts';
 import { USER_ACTIONS } from '../../store/actions/userActions.ts';
 import DropdownMenu from '../Ui/Dropdowns/DropdownMenu.tsx';
+import { setSaveModalOpen } from '../../store/slices/commonSlice.ts';
 
 export default function DawHeader() {
   const { user } = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
 
   const dropDownItems: DropdownItem[] = [
+    {
+      ItemIcon: HiOutlineSave,
+      itemTitle: 'Save',
+      onClick: () => dispatch(setSaveModalOpen(true)),
+      additionalSpacing: 'mb-2',
+    },
     {
       ItemIcon: HiLogout,
       itemTitle: 'Logout',
