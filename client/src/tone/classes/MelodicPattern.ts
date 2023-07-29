@@ -75,34 +75,64 @@ class MelodicPattern {
     this._sequence = this.generateRandomSequence();
 
     this._notes = Tonal.Scale.get(`${this._key}4 ${this._scale}`).notes;
-    this._melodyPattern.dispose();
-    this._melodyPattern = new Tone.Pattern(
-      (time: number, noteNumber: number) => {
-        console.log('note number', noteNumber);
-        const note = this.mapNotes(noteNumber + this._transpose, this._notes);
-        this._melodySynth.synth.triggerAttackRelease(
-          note,
-          this._noteDuration,
-          time
-        );
-      },
-      this._sequence,
-      this._patternType
-    );
+    this._melodyPattern.callback = (
+      time: number,
+      noteNumber?: number | undefined
+    ) => {
+      const note = this.mapNotes(noteNumber! + this._transpose, this._notes);
+      this._melodySynth.synth.triggerAttackRelease(
+        note,
+        this._noteDuration,
+        time
+      );
+    };
+    this._melodyPattern.pattern = this.patternType;
     this._melodyPattern.interval = this._timeInterval;
     this._melodyPattern.start();
     console.log('new melody pattern', this._melodyPattern);
 
     this._bassPattern.dispose();
-    this._bassPattern = new Tone.Pattern(
-      (time: number, noteNumber: number) => {
-        const note = this.mapNotes(noteNumber + -21, this._notes);
-        console.log(note);
-        this._bassSynth.synth.triggerAttackRelease(note, '2n', time);
-      },
-      this._sequence,
-      this._patternType
-    );
+    this._bassPattern.callback = (
+      time: number,
+      noteNumber?: number | undefined
+    ) => {
+      const note = this.mapNotes(noteNumber! + -21, this._notes);
+      console.log(note);
+      this._bassSynth.synth.triggerAttackRelease(note, '2n', time);
+    };
+    this._bassPattern.pattern = this.patternType;
+    this._bassPattern.interval = '1n';
+    this._bassPattern.start();
+  }
+
+  updatePattern() {
+    this._notes = Tonal.Scale.get(`${this._key}4 ${this._scale}`).notes;
+    this._melodyPattern.callback = (
+      time: number,
+      noteNumber?: number | undefined
+    ) => {
+      const note = this.mapNotes(noteNumber! + this._transpose, this._notes);
+      this._melodySynth.synth.triggerAttackRelease(
+        note,
+        this._noteDuration,
+        time
+      );
+    };
+    this._melodyPattern.pattern = this.patternType;
+    this._melodyPattern.interval = this._timeInterval;
+    this._melodyPattern.start();
+    console.log('new melody pattern', this._melodyPattern);
+
+    this._bassPattern.dispose();
+    this._bassPattern.callback = (
+      time: number,
+      noteNumber?: number | undefined
+    ) => {
+      const note = this.mapNotes(noteNumber! + -21, this._notes);
+      console.log(note);
+      this._bassSynth.synth.triggerAttackRelease(note, '2n', time);
+    };
+    this._bassPattern.pattern = this.patternType;
     this._bassPattern.interval = '1n';
     this._bassPattern.start();
   }

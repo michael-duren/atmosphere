@@ -151,10 +151,22 @@ export default function MelodicPatternGenerator() {
       <div className="flex items-center ">
         <button
           onClick={() => {
+            melodicPattern.updatePattern();
+          }}
+          className="inline-flex mt-4 w-24 justify-center opacity-90 shadow-md shadow-blue-950 rounded-xl border border-transparent bg-blue-900 px-4 py-2 text-sm font-medium text-blue-100 
+            hover:bg-blue-800 focus:outline-none focus-visible:ring-2 active:scale-105 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+        >
+          Update
+        </button>
+      </div>
+
+      <div className="flex items-center ">
+        <button
+          onClick={() => {
             melodicPattern.generateNewPattern();
           }}
-          className="inline-flex mt-4 justify-center opacity-90 shadow-md shadow-blue-950 rounded-xl border border-transparent bg-blue-900 px-4 py-2 text-sm font-medium text-blue-100 
-            hover:bg-blue-800 focus:outline-none focus-visible:ring-2 active:scale-105 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+          className="inline-flex mt-4 justify-center opacity-90 shadow-md shadow-amber-950 rounded-xl border border-transparent bg-amber-900 px-4 py-2 text-sm font-medium text-amber-100 
+            hover:bg-amber-800 focus:outline-none focus-visible:ring-2 active:scale-105 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
         >
           Generate
         </button>
