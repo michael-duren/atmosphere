@@ -6,6 +6,7 @@ import {
   distortion,
   distortionFilter,
   drumKit,
+  melodicPattern,
   melodicSynth,
   reverb,
   volume,
@@ -66,4 +67,16 @@ export const setToneParamsOnLoad = (songToLoad: Song) => {
   bassSynth.synth.envelope.decay = songToLoad.bassSynth.decay;
   bassSynth.synth.oscillator.type = 'fatsine2';
   bassSynth.filter.frequency.value = songToLoad.bassSynth.filterFrequency;
+
+  /*
+   * Pattern Params
+   */
+  melodicPattern.timeInterval = songToLoad.melodicPattern.timeInterval;
+  melodicPattern.noteDuration = songToLoad.melodicPattern.noteDuration;
+  melodicPattern.patternType = songToLoad.melodicPattern.patternType;
+  melodicPattern.transpose = songToLoad.melodicPattern.transpose;
+  melodicPattern.key = songToLoad.melodicPattern.key;
+  melodicPattern.scale = songToLoad.melodicPattern.scale;
+  melodicPattern.length = songToLoad.melodicPattern.length;
+  melodicPattern.generateNewPattern();
 };

@@ -73,8 +73,12 @@ class MelodicPattern {
 
   generateNewPattern() {
     this._sequence = this.generateRandomSequence();
+
+    this._notes = Tonal.Scale.get(`${this._key}4 ${this._scale}`).notes;
+    this._melodyPattern.dispose();
     this._melodyPattern = new Tone.Pattern(
       (time: number, noteNumber: number) => {
+        console.log('note number', noteNumber);
         const note = this.mapNotes(noteNumber + this._transpose, this._notes);
         this._melodySynth.synth.triggerAttackRelease(
           note,
@@ -86,7 +90,10 @@ class MelodicPattern {
       this._patternType
     );
     this._melodyPattern.interval = this._timeInterval;
+    this._melodyPattern.start();
+    console.log('new melody pattern', this._melodyPattern);
 
+    this._bassPattern.dispose();
     this._bassPattern = new Tone.Pattern(
       (time: number, noteNumber: number) => {
         const note = this.mapNotes(noteNumber + -21, this._notes);
@@ -97,6 +104,7 @@ class MelodicPattern {
       this._patternType
     );
     this._bassPattern.interval = '1n';
+    this._bassPattern.start();
   }
 
   mapNotes(noteNumber: number, notes: string[]): Tonal.NoteName {
@@ -113,7 +121,7 @@ class MelodicPattern {
   generateRandomSequence(): number[] {
     const newSequence = [];
     //   number of notes in sequence
-    const n = Math.floor(random(3, 9));
+    const n = this._length;
     //   create random sequence
     for (let i = 0; i < n; i++) {
       newSequence[i] = Math.floor(random(0, 6));

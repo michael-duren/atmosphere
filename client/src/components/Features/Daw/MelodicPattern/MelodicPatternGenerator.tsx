@@ -14,6 +14,7 @@ import { PatternName } from 'tone/build/esm/event/PatternGenerator';
 import { NoteType } from '../../../../models/types/noteType.ts';
 import UseMelodicPatternStoreChange from '../../../../hooks/useMelodicPatternStoreChange.ts';
 import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
+import { melodicPattern } from '../../../../tone/singleton.ts';
 
 export default function MelodicPatternGenerator() {
   const key = useAppSelector(
@@ -149,6 +150,9 @@ export default function MelodicPatternGenerator() {
       </div>
       <div className="flex items-center ">
         <button
+          onClick={() => {
+            melodicPattern.generateNewPattern();
+          }}
           className="inline-flex mt-4 justify-center opacity-90 shadow-md shadow-blue-950 rounded-xl border border-transparent bg-blue-900 px-4 py-2 text-sm font-medium text-blue-100 
             hover:bg-blue-800 focus:outline-none focus-visible:ring-2 active:scale-105 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
         >
