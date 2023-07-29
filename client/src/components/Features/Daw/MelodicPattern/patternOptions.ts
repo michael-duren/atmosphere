@@ -86,4 +86,4 @@ export const durationIntervalOptions: NoteType[] = [
   '64t',
 ];
 
-export const lengthOptions = [4, 8, 16, 32, 64];
+export const lengthOptions = [1, 2, 3, 4, 8, 16, 32, 64];

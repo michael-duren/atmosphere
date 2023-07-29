@@ -5,8 +5,10 @@ import { BsCheck } from 'react-icons/bs';
 import { toTitleCase } from '../../../utils/string.ts';
 import { MusicalScale } from '../../../models/types/musicalScale.ts';
 import { MusicalKey } from '../../../models/types/musicalKey.ts';
+import { PatternName } from 'tone/build/esm/event/PatternGenerator';
+import { NoteType } from '../../../models/types/noteType.ts';
 
-export type Item = MusicalKey | MusicalScale | number;
+export type Item = MusicalKey | MusicalScale | PatternName | NoteType | number;
 
 type Props = {
   items: Item[];
