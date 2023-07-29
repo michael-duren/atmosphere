@@ -16,12 +16,12 @@ const initialSongState: SongState = {
       filter: 22_000,
     },
     reverb: {
-      mix: 0,
+      mix: 0.25,
       decay: 0.5,
       preDelay: 0.2,
     },
     delay: {
-      mix: 0,
+      mix: 0.1,
       time: 0.5,
       feedback: 0.25,
     },

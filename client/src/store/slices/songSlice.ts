@@ -240,6 +240,12 @@ const songSlice = createSlice({
     ) => {
       state.currentSong.melodicPattern.length = action.payload;
     },
+    setMelodicPatternSequence: (
+      state,
+      action: { payload: number[]; type: string }
+    ) => {
+      state.currentSong.melodicPattern.sequence = action.payload;
+    },
     toggleDrumStep: (
       state,
       action: {
@@ -301,6 +307,7 @@ export const {
   setMelodicPatternTime,
   setMelodicPatternNoteDuration,
   setMelodicPatternLength,
+  setMelodicPatternSequence,
 } = songSlice.actions;
 
 export default songSlice.reducer;

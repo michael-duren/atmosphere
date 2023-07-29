@@ -7,6 +7,9 @@ import MelodicSynth from './MelodicSynth.ts';
 import { PatternName } from 'tone/build/esm/event/PatternGenerator';
 import BassSynth from './BassSynth.ts';
 import { MusicalKey } from '../../models/types/musicalKey.ts';
+import { store } from '../../store/store.ts';
+import { setIsPlaying } from '../../store/slices/transportSlice.ts';
+import { setMelodicPatternSequence } from '../../store/slices/songSlice.ts';
 
 class MelodicPattern {
   private _transpose: number;
@@ -63,9 +66,16 @@ class MelodicPattern {
   }
 
   generateNewPattern() {
-    Tone.Transport.stop();
-    Tone.Transport.position = 0;
+    const state = store.getState();
+    const { isPlaying } = state.transport;
+    const wasPlaying = isPlaying;
+    if (isPlaying) {
+      store.dispatch(setIsPlaying(false));
+      Tone.Transport.stop();
+      Tone.Transport.position = 0;
+    }
     this._sequence = this.generateRandomSequence();
+    store.dispatch(setMelodicPatternSequence(this._sequence));
 
     this._notes = Tonal.Scale.get(`${this._key}4 ${this._scale}`).notes;
     this._melodyPattern.callback = this.createMelodicPatternCallback();
@@ -79,12 +89,21 @@ class MelodicPattern {
     this._bassPattern.pattern = this.patternType;
     this._bassPattern.interval = '1n';
     this._bassPattern.start();
-    Tone.Transport.start();
+    if (wasPlaying) {
+      Tone.Transport.start();
+      store.dispatch(setIsPlaying(true));
+    }
   }
 
   updatePattern() {
-    Tone.Transport.stop();
-    Tone.Transport.position = 0;
+    const state = store.getState();
+    const { isPlaying } = state.transport;
+    const wasPlaying = isPlaying;
+    if (isPlaying) {
+      store.dispatch(setIsPlaying(false));
+      Tone.Transport.stop();
+      Tone.Transport.position = 0;
+    }
     this._notes = Tonal.Scale.get(`${this._key}4 ${this._scale}`).notes;
     this._melodyPattern.callback = this.createMelodicPatternCallback();
     this._melodyPattern.pattern = this.patternType;
@@ -95,7 +114,10 @@ class MelodicPattern {
     this._bassPattern.pattern = this.patternType;
     this._bassPattern.interval = '1n';
     this._bassPattern.start();
-    Tone.Transport.start();
+    if (wasPlaying) {
+      Tone.Transport.start();
+      store.dispatch(setIsPlaying(true));
+    }
   }
 
   private mapNotes(noteNumber: number, notes: string[]): Tonal.NoteName {
@@ -140,12 +162,6 @@ class MelodicPattern {
     return newSequence;
   }
 
-  get notes(): NoteName[] {
-    return this._notes;
-  }
-  set notes(value: NoteName[]) {
-    this._notes = value;
-  }
   get sequence(): number[] {
     return this._sequence;
   }
