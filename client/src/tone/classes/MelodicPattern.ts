@@ -24,8 +24,8 @@ class MelodicPattern {
     melodySynth: MelodicSynth,
     bassSynth: BassSynth,
     transpose = 0,
-    noteDuration = '8n',
-    timeInterval = '8n',
+    noteDuration = '64n',
+    timeInterval = '32n',
     patternType: PatternName = 'upDown',
     key = 'C',
     scale = 'minor'
@@ -40,7 +40,7 @@ class MelodicPattern {
     this._scale = scale;
 
     this._sequence = this.generateRandomSequence();
-    this._notes = Tonal.Scale.get(`${this._key} ${this._scale}`).notes;
+    this._notes = Tonal.Scale.get(`${this._key}4 ${this._scale}`).notes;
 
     this._melodyPattern = new Tone.Pattern(
       (time: number, noteNumber: number) => {
@@ -167,6 +167,18 @@ class MelodicPattern {
   }
   set transpose(value: number) {
     this._transpose = value;
+  }
+  get scale(): string {
+    return this._scale;
+  }
+  set scale(value: string) {
+    this._scale = value;
+  }
+  get key(): string {
+    return this._key;
+  }
+  set key(value: string) {
+    this._key = value;
   }
 }
 

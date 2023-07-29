@@ -3,6 +3,8 @@ import { Sampler } from 'tone';
 import { SimpleWaveType, WaveType } from './types/waveTypes.ts';
 import { NoteType } from './types/noteType.ts';
 import { FilterType } from './types/filterType.ts';
+import { MusicalKey } from './types/musicalKey.ts';
+import { MusicalScale } from './types/musicalScale.ts';
 
 export interface Song {
   id?: number;
@@ -75,10 +77,15 @@ export interface MelodicSynth {
 
 export interface MelodicPattern {
   id?: number;
-  scale: string;
+  key: MusicalKey;
+  scale: MusicalScale;
   sequence: number[];
   patternType: PatternName;
+  transpose: number;
   songId?: number;
+  timeInterval: NoteType;
+  noteDuration: NoteType;
+  length: number;
 }
 
 export interface KitPattern {

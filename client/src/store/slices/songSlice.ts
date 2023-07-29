@@ -11,6 +11,9 @@ import {
 } from '../../tone/utils/transformToToneValues.ts';
 import { NoteType } from '../../models/types/noteType.ts';
 import { FilterType } from '../../models/types/filterType.ts';
+import { MusicalKey } from '../../models/types/musicalKey.ts';
+import { MusicalScale } from '../../models/types/musicalScale.ts';
+import { PatternName } from 'tone/build/esm/event/PatternGenerator';
 
 export interface SongState {
   error: ServerError | null;
@@ -195,6 +198,48 @@ const songSlice = createSlice({
     /*
      * Pattern Reducers
      */
+    setMelodicPatternKey: (
+      state,
+      action: { payload: MusicalKey; type: string }
+    ) => {
+      state.currentSong.melodicPattern.key = action.payload;
+    },
+    setMelodicPatternScale: (
+      state,
+      action: { payload: MusicalScale; type: string }
+    ) => {
+      state.currentSong.melodicPattern.scale = action.payload;
+    },
+    setMelodicPatternTranspose: (
+      state,
+      action: { payload: number; type: string }
+    ) => {
+      state.currentSong.melodicPattern.transpose = action.payload;
+    },
+    setMelodicPatternType: (
+      state,
+      action: { payload: PatternName; type: string }
+    ) => {
+      state.currentSong.melodicPattern.patternType = action.payload;
+    },
+    setMelodicPatternTime: (
+      state,
+      action: { payload: NoteType; type: string }
+    ) => {
+      state.currentSong.melodicPattern.timeInterval = action.payload;
+    },
+    setMelodicPatternNoteDuration: (
+      state,
+      action: { payload: NoteType; type: string }
+    ) => {
+      state.currentSong.melodicPattern.noteDuration = action.payload;
+    },
+    setMelodicPatternLength: (
+      state,
+      action: { payload: number; type: string }
+    ) => {
+      state.currentSong.melodicPattern.length = action.payload;
+    },
     toggleDrumStep: (
       state,
       action: {
@@ -249,6 +294,13 @@ export const {
   setBassSynthDecay,
   setBassSynthSustain,
   setBassSynthRelease,
+  setMelodicPatternKey,
+  setMelodicPatternScale,
+  setMelodicPatternTranspose,
+  setMelodicPatternType,
+  setMelodicPatternTime,
+  setMelodicPatternNoteDuration,
+  setMelodicPatternLength,
 } = songSlice.actions;
 
 export default songSlice.reducer;

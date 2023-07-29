@@ -48,9 +48,14 @@ const initialSongState: SongState = {
       lfoShape: 'sine2',
     },
     melodicPattern: {
-      scale: 'C4 minor',
+      key: 'C',
+      scale: 'minor',
       sequence: [],
       patternType: 'up',
+      transpose: 0,
+      timeInterval: '8n',
+      noteDuration: '8n',
+      length: 4,
     },
     kitPattern: {
       patternLength: 16,
