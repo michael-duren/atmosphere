@@ -33,7 +33,7 @@ export default function DawHeader() {
   return (
     <header className="flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <div className="rounded-full text-white flex items-center justify-center font-caps shadow-2xl h-24 w-24 text-3xl bg-black">
+        <div className="rounded-full text-white flex items-center justify-center font-caps shadow-2xl h-16 w-16 text-xl bg-black">
           {user!.username[0].toUpperCase()}
         </div>
         <h2 className="text-xl text-white">

@@ -8,7 +8,7 @@ export default function DawLayout({ children }: Props) {
   return (
     <div className="p-6 min-h-screen flex flex-col">
       <DawHeader />
-      <div className="grid flex-grow lg:grid-cols-12 gap-4 text-white mt-8">
+      <div className="grid flex-grow lg:grid-cols-12 gap-4 text-white mt-4">
         {children}
       </div>
     </div>
