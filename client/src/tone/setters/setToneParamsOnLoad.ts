@@ -92,7 +92,4 @@ export const setToneParamsOnLoad = async (songToLoad: Song) => {
   melodicPattern.length = songToLoad.melodicPattern.length;
   melodicPattern.sequence = songToLoad.melodicPattern.sequence;
   melodicPattern.updatePattern();
-
-  await Tone.start();
-  console.log(volume);
 };

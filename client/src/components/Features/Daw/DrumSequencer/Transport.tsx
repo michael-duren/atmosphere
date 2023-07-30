@@ -13,6 +13,7 @@ import {
 import { useRef, useState } from 'react';
 import { CURRENT_SONG_ACTIONS } from '../../../../store/actions/currentSongActions.ts';
 import { darkInput } from '../../../Ui/Styles/input.ts';
+import { melodicPattern } from '../../../../tone/singleton.ts';
 
 export default function Transport() {
   const { isPlaying } = useAppSelector(selectTransport);
@@ -32,13 +33,18 @@ export default function Transport() {
    */
   const togglePlay = async () => {
     if (Tone.Transport.state === 'started') {
+      melodicPattern.melodyPattern.stop();
+      melodicPattern.bassPattern.stop();
       await Tone.Transport.stop();
+      Tone.Transport.position = 0;
       dispatch(setIsPlaying(false));
     } else {
-      Tone.start().then(() => {
-        Tone.Transport.start();
-        dispatch(setIsPlaying(true));
-      });
+      await Tone.start();
+      Tone.Transport.position = 0;
+      melodicPattern.melodyPattern.start(0);
+      melodicPattern.bassPattern.start(0);
+      await Tone.Transport.start();
+      dispatch(setIsPlaying(true));
     }
   };
 

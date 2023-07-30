@@ -120,6 +120,7 @@ namespace DataAccess
                         TimeInterval = "8n",
                         NoteDuration = "8n",
                         Transpose = 0,
+                        Length = 8
                     }
                 };
 
@@ -136,12 +137,12 @@ namespace DataAccess
                         },
                         SdSteps = new bool[]
                         {
-                            true, false, false, false, true, false, false, false, true, false, false, false, true,
+                            false, false, false, false, false, false, false, false, true, false, false, false, false,
                             false, false, false
                         },
                         ClSteps = new bool[]
                         {
-                            true, false, false, false, true, false, false, false, true, false, false, false, true,
+                            false, false, false, false, false, false, false, false, false, false, false, false, false,
                             false, false, false
                         },
                         ChSteps = new bool[]
