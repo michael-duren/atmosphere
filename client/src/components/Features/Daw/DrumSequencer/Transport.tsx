@@ -11,7 +11,7 @@ import {
   setKitPatternLength,
 } from '../../../../store/slices/songSlice.ts';
 import { useRef, useState } from 'react';
-import { CURRENT_SONG_ACTIONS } from '../../../../store/actions/currentSongActions.ts';
+import { SONG_ACTIONS } from '../../../../store/actions/songActions.ts';
 import { darkInput } from '../../../Ui/Styles/input.ts';
 import { melodicPattern } from '../../../../tone/singleton.ts';
 
@@ -54,7 +54,7 @@ export default function Transport() {
   const handleBpm = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && inputBpm > 20 && inputBpm <= 400) {
       dispatch({
-        type: CURRENT_SONG_ACTIONS.SET_SONG_BPM_ASYNC,
+        type: SONG_ACTIONS.SET_SONG_BPM_ASYNC,
         payload: inputBpm,
       });
       bpmRef.current!.blur();

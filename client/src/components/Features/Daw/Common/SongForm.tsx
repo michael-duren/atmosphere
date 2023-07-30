@@ -1,7 +1,7 @@
-import SimpleSpinner from '../../Ui/Spinners/SimpleSpinner.tsx';
-import { useAppSelector } from '../../../store/hooks/useAppSelector.ts';
-import { selectCommon } from '../../../store/slices/commonSlice.ts';
-import { darkInput } from '../../Ui/Styles/input.ts';
+import SimpleSpinner from '../../../Ui/Spinners/SimpleSpinner.tsx';
+import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
+import { selectCommon } from '../../../../store/slices/commonSlice.ts';
+import { darkInput } from '../../../Ui/Styles/input.ts';
 
 export default function SongForm() {
   const { appLoaded } = useAppSelector(selectCommon);

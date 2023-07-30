@@ -1,8 +1,8 @@
-import { useAppSelector } from '../../../store/hooks/useAppSelector.ts';
-import ColorButton from '../../Ui/Buttons/ColorButton.tsx';
-import { useAppDispatch } from '../../../store/hooks/useAppDispatch.ts';
-import { setLoadSongModalOpen } from '../../../store/slices/commonSlice.ts';
-import { CURRENT_SONG_ACTIONS } from '../../../store/actions/currentSongActions.ts';
+import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
+import ColorButton from '../../../Ui/Buttons/ColorButton.tsx';
+import { useAppDispatch } from '../../../../store/hooks/useAppDispatch.ts';
+import { setLoadSongModalOpen } from '../../../../store/slices/commonSlice.ts';
+import { SONG_ACTIONS } from '../../../../store/actions/songActions.ts';
 
 export default function LoadSongWarning() {
   const { songToLoad } = useAppSelector((store) => store.common);
@@ -11,7 +11,7 @@ export default function LoadSongWarning() {
   const closeModal = () => dispatch(setLoadSongModalOpen(false));
   const loadSong = () => {
     dispatch({
-      type: CURRENT_SONG_ACTIONS.LOAD_SONG_TO_CURRENT,
+      type: SONG_ACTIONS.LOAD_SONG_TO_CURRENT,
       payload: songToLoad,
     });
     dispatch(setLoadSongModalOpen(false));

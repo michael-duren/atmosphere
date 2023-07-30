@@ -16,27 +16,15 @@ import {
   setIsToneLoaded,
 } from '../store/slices/transportSlice.ts';
 import { setToneParamsOnLoad } from '../tone/setters/setToneParamsOnLoad.ts';
-import DarkModal from '../components/Ui/Modals/DarkModal.tsx';
-import {
-  selectCommon,
-  setLoadSongModalOpen,
-  setSaveModalOpen,
-} from '../store/slices/commonSlice.ts';
-import SongForm from '../components/Features/Daw/SongForm.tsx';
-import LoadSongWarning from '../components/Features/Daw/LoadSongWarning.tsx';
 import { toneCleanup, toneState } from '../tone/singleton.ts';
 import toast from 'react-hot-toast';
+import ModalContent from '../components/Features/Daw/Common/ModalContent.tsx';
 
 export default function Daw() {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const { currentSong } = useAppSelector(selectSong);
   const { isToneLoaded } = useAppSelector(selectTransport);
-  const { saveModalOpen, loadSongModalOpen } = useAppSelector(selectCommon);
-  const isSavedModalOpenHandler = () =>
-    dispatch(setSaveModalOpen(!saveModalOpen));
-  const isLoadSongModalOpenHandler = () =>
-    dispatch(setLoadSongModalOpen(!loadSongModalOpen));
 
   useEffect(() => {
     dispatch({ type: SONG_ACTIONS.GET_SONG_LIST_ASYNC });
@@ -76,24 +64,18 @@ export default function Daw() {
   }
 
   return (
-    <DawLayout>
-      <aside className="col-span-4 grid grid-rows-2 rounded-xl bg-dark-transparent">
-        <MelodicPattern />
-        <Collections />
-      </aside>
-      <main className="grid grid-rows-2 rounded-xl bg-dark-transparent col-span-8 ">
-        <Mixer />
-        <DrumSequencer />
-      </main>
-      <DarkModal isOpen={saveModalOpen} setIsOpen={isSavedModalOpenHandler}>
-        <SongForm />
-      </DarkModal>
-      <DarkModal
-        isOpen={loadSongModalOpen}
-        setIsOpen={isLoadSongModalOpenHandler}
-      >
-        <LoadSongWarning />
-      </DarkModal>
-    </DawLayout>
+    <>
+      <DawLayout>
+        <aside className="col-span-4 grid grid-rows-2 rounded-xl bg-dark-transparent">
+          <MelodicPattern />
+          <Collections />
+        </aside>
+        <main className="grid grid-rows-2 rounded-xl bg-dark-transparent col-span-8 ">
+          <Mixer />
+          <DrumSequencer />
+        </main>
+      </DawLayout>
+      <ModalContent />
+    </>
   );
 }
