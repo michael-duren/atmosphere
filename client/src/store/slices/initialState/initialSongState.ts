@@ -13,7 +13,7 @@ const initialSongState: SongState = {
     distortion: {
       mix: 0,
       amount: 0.5,
-      filter: 22_000,
+      filterFrequency: 22_000,
     },
     reverb: {
       mix: 0.25,

@@ -5,7 +5,7 @@ import {
   CircularThumb,
   CircularTrack,
 } from 'react-circular-input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Props {
   color: string;
@@ -25,6 +25,10 @@ export default function MainKnob({
   toneSetter,
 }: Props) {
   const [localLevel, setLocalLevel] = useState<number>(level);
+
+  useEffect(() => {
+    setLocalLevel(level);
+  }, [level]);
 
   const setStoreLevel = () => {
     storeSetter(+localLevel.toFixed(2));

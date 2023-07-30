@@ -65,7 +65,7 @@ const songSlice = createSlice({
       state.currentSong.distortion.amount = action.payload;
     },
     setDistortionFilter: (state, action: { payload: number; type: string }) => {
-      state.currentSong.distortion.filter = action.payload;
+      state.currentSong.distortion.filterFrequency = action.payload;
     },
     setReverbMix: (state, action: { payload: number; type: string }) => {
       state.currentSong.reverb.mix = action.payload;

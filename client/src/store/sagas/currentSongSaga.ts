@@ -27,7 +27,7 @@ export function* loadSongToCurrentAsync(action: LoadSongToCurrent) {
     yield put(setCurrentSong(songToLoad));
     setToneParamsOnLoad(songToLoad);
     console.log('SONG TO LOAD', songToLoad);
-    toast.success('Song loaded');
+    toast.success(`${action.payload.songName} loaded`);
   } catch (e) {
     console.log(e);
     toast.error(`Error loading song ${e}`);

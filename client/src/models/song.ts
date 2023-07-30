@@ -27,7 +27,7 @@ export interface Distortion {
   id?: number;
   mix: number;
   amount: number;
-  filter: number;
+  filterFrequency: number;
   songId?: number;
 }
 

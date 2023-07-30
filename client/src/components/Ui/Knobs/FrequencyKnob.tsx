@@ -5,7 +5,7 @@ import {
   CircularThumb,
   CircularTrack,
 } from 'react-circular-input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { formatFrequency } from '../../../utils/tone.ts';
 import { toFrequency } from '../../../tone/utils/transformToToneValues.ts';
 import { frequencyToInput } from '../../../tone/utils/transformToInputValues.ts';
@@ -28,6 +28,10 @@ export default function FrequencyKnob({
   toneSetter,
 }: Props) {
   const [localLevel, setLocalLevel] = useState<number>(frequencyToInput(level));
+
+  useEffect(() => {
+    setLocalLevel(frequencyToInput(level));
+  }, [level]);
 
   const setStoreLevel = (): void => {
     storeSetter(+localLevel.toFixed(2));

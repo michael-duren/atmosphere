@@ -39,16 +39,20 @@ export default function FilterKnob({
   const stepValue = (val: number) => Math.round(val * 5) / 5;
 
   useEffect(() => {
-    setFilter(inputToFilterType(localLevel));
+    setFilter(inputToFilterType(localLevel)); // convert the number to a filterFrequency type
   }, [localLevel]);
 
+  useEffect(() => {
+    setLocalLevel(filterTypeToInput(level)); // update the local level when a song is loaded
+  }, [level]);
+
   const setStoreLevel = () => {
-    storeSetter(filter);
+    storeSetter(filter); // set to run on mouse up
   };
 
   const setLocalAndToneLevel = (v: number) => {
-    setLocalLevel(stepValue(v));
-    toneSetter(filter);
+    setLocalLevel(stepValue(v)); // set the local level to the step value
+    toneSetter(filter); // set the tone level to the filterFrequency type
   };
 
   return (

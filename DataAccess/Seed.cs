@@ -50,7 +50,7 @@ namespace DataAccess
                         SongId = songs[0].Id,
                         Mix = 0.3,
                         Amount = 0.3,
-                        Filter = 0.9
+                        FilterFrequency = 12_000
                     }
                 };
                 var reverbs = new List<Reverb>

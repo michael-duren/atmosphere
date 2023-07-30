@@ -12,7 +12,21 @@ import {
   volume,
 } from '../singleton.ts';
 
-export const setToneParamsOnLoad = (songToLoad: Song) => {
+export const setToneParamsOnLoad = async (songToLoad: Song) => {
+  // await toneCleanup(toneState);
+  //
+  // const {
+  //   distortion,
+  //   distortionFilter,
+  //   reverb,
+  //   delay,
+  //   volume,
+  //   bassSynth,
+  //   melodicSynth,
+  //   drumKit,
+  //   melodicPattern,
+  // } = instantiateTone();
+
   /*
    * Top Level Params
    */
@@ -34,7 +48,7 @@ export const setToneParamsOnLoad = (songToLoad: Song) => {
    */
   distortion.wet.value = songToLoad.distortion.mix;
   distortion.distortion = songToLoad.distortion.amount;
-  distortionFilter.frequency.value = songToLoad.distortion.filter;
+  distortionFilter.frequency.value = songToLoad.distortion.filterFrequency;
 
   reverb.wet.value = songToLoad.reverb.mix;
   reverb.decay = songToLoad.reverb.decay;
@@ -81,4 +95,7 @@ export const setToneParamsOnLoad = (songToLoad: Song) => {
   melodicPattern.length = songToLoad.melodicPattern.length;
   melodicPattern.sequence = songToLoad.melodicPattern.sequence;
   melodicPattern.updatePattern();
+
+  await Tone.start();
+  console.log(volume);
 };

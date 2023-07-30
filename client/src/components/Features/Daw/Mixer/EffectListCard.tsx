@@ -48,7 +48,7 @@ export default function EffectListCard() {
             type: 'main',
           },
           {
-            level: currentSong.distortion.filter,
+            level: currentSong.distortion.filterFrequency,
             name: 'filter',
             storeSetter: handleDistortionFilterChange,
             toneSetter: setToneDistortionFilter,

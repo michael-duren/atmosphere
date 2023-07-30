@@ -13,6 +13,7 @@ export default function LoadSongWarning() {
       type: CURRENT_SONG_ACTIONS.LOAD_SONG_TO_CURRENT,
       payload: songToLoad,
     });
+    dispatch(setLoadSongModalOpen(false));
   };
 
   return (
