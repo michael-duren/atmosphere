@@ -24,6 +24,8 @@ import {
 } from '../store/slices/commonSlice.ts';
 import SongForm from '../components/Features/Daw/SongForm.tsx';
 import LoadSongWarning from '../components/Features/Daw/LoadSongWarning.tsx';
+import { toneCleanup, toneState } from '../tone/singleton.ts';
+import toast from 'react-hot-toast';
 
 export default function Daw() {
   const dispatch = useAppDispatch();
@@ -43,8 +45,18 @@ export default function Daw() {
   useEffect(() => {
     Tone.loaded().then(() => {
       dispatch(setIsToneLoaded(true));
-      setToneParamsOnLoad(currentSong);
+      setToneParamsOnLoad(currentSong)
+        .then()
+        .catch((err) => {
+          toast.error('Error initializing instruments');
+          console.log(err);
+        });
     });
+
+    // Dispose of the tone service and the Tone context when the app unmounts
+    return () => {
+      toneCleanup(toneState).then(() => Tone.context.dispose());
+    };
   }, []);
 
   if (!user || user.isLoading) {

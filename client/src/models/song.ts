@@ -8,7 +8,7 @@ import { MusicalScale } from './types/musicalScale.ts';
 
 export interface Song {
   id?: number;
-  songName: string;
+  songName?: string;
   masterVolume: number;
   drumVolume: number;
   bassVolume: number;

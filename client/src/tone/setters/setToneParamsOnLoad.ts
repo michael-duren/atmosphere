@@ -16,7 +16,7 @@ import { setCurrentSong } from '../../store/slices/songSlice.ts';
 import initialSongState from '../../store/slices/initialState/initialSongState.ts';
 
 export const setToneParamsOnLoad = async (songToLoad: Song) => {
-  const isPlaying = store.getState().transport.isPlaying;
+  const isPlaying = Tone.Transport.state === 'started';
 
   // if song is playing, throw error and set current song to initial state
   if (isPlaying) {

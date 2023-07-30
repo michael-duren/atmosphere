@@ -6,8 +6,6 @@ import { useAppSelector } from './store/hooks/useAppSelector.ts';
 import { selectUser } from './store/slices/userSlice.ts';
 import { User } from './models/user.ts';
 import { Toaster } from 'react-hot-toast';
-import * as Tone from 'tone';
-import { toneCleanup, toneState } from './tone/singleton.ts';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -19,11 +17,6 @@ function App() {
     if (localStorage.getItem('jwt') && !user.user) {
       dispatch({ type: USER_ACTIONS.GET_LOGGED_IN_USER_ASYNC });
     }
-
-    // Dispose of the tone service and the Tone context when the app unmounts
-    return () => {
-      toneCleanup(toneState).then(() => Tone.context.dispose());
-    };
   }, []);
 
   useEffect(() => {
