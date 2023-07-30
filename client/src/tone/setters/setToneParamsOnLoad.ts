@@ -11,21 +11,18 @@ import {
   reverb,
   volume,
 } from '../singleton.ts';
+import { store } from '../../store/store.ts';
+import { setCurrentSong } from '../../store/slices/songSlice.ts';
+import initialSongState from '../../store/slices/initialState/initialSongState.ts';
 
 export const setToneParamsOnLoad = async (songToLoad: Song) => {
-  // await toneCleanup(toneState);
-  //
-  // const {
-  //   distortion,
-  //   distortionFilter,
-  //   reverb,
-  //   delay,
-  //   volume,
-  //   bassSynth,
-  //   melodicSynth,
-  //   drumKit,
-  //   melodicPattern,
-  // } = instantiateTone();
+  const isPlaying = store.getState().transport.isPlaying;
+
+  // if song is playing, throw error and set current song to initial state
+  if (isPlaying) {
+    store.dispatch(setCurrentSong(initialSongState.currentSong));
+    throw new Error('Cannot load song while playing');
+  }
 
   /*
    * Top Level Params
