@@ -1,4 +1,4 @@
-import DawHeader from './DawHeader.tsx';
+import DawHeader from '../Ui/Header/DawHeader.tsx';
 
 interface Props {
   children?: React.ReactNode;
