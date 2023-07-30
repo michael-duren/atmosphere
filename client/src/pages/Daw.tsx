@@ -3,7 +3,7 @@ import * as Tone from 'tone';
 import AbstractSpinner from '../components/Ui/Spinners/AbstractSpinner.tsx';
 import { useAppSelector } from '../store/hooks/useAppSelector.ts';
 import { selectUser } from '../store/slices/userSlice.ts';
-import Collections from '../components/Features/Daw/Collections.tsx';
+import Collections from '../components/Features/Daw/Collections/Collections.tsx';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../store/hooks/useAppDispatch.ts';
 import { SONG_ACTIONS } from '../store/actions/songActions.ts';
@@ -17,16 +17,24 @@ import {
 } from '../store/slices/transportSlice.ts';
 import { setToneParamsOnLoad } from '../tone/setters/setToneParamsOnLoad.ts';
 import DarkModal from '../components/Ui/Modals/DarkModal.tsx';
-import { selectCommon, setSaveModalOpen } from '../store/slices/commonSlice.ts';
+import {
+  selectCommon,
+  setLoadSongModalOpen,
+  setSaveModalOpen,
+} from '../store/slices/commonSlice.ts';
 import SongForm from '../components/Features/Daw/SongForm.tsx';
+import LoadSongWarning from '../components/Features/Daw/LoadSongWarning.tsx';
 
 export default function Daw() {
+  const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const { currentSong } = useAppSelector(selectSong);
   const { isToneLoaded } = useAppSelector(selectTransport);
-  const { saveModalOpen } = useAppSelector(selectCommon);
-  const isSavedModalOpenHandler = () => dispatch(setSaveModalOpen(true));
-  const dispatch = useAppDispatch();
+  const { saveModalOpen, loadSongModalOpen } = useAppSelector(selectCommon);
+  const isSavedModalOpenHandler = () =>
+    dispatch(setSaveModalOpen(!saveModalOpen));
+  const isLoadSongModalOpenHandler = () =>
+    dispatch(setLoadSongModalOpen(!loadSongModalOpen));
 
   useEffect(() => {
     dispatch({ type: SONG_ACTIONS.GET_SONG_LIST_ASYNC });
@@ -67,6 +75,12 @@ export default function Daw() {
       </main>
       <DarkModal isOpen={saveModalOpen} setIsOpen={isSavedModalOpenHandler}>
         <SongForm />
+      </DarkModal>
+      <DarkModal
+        isOpen={loadSongModalOpen}
+        setIsOpen={isLoadSongModalOpenHandler}
+      >
+        <LoadSongWarning />
       </DarkModal>
     </DawLayout>
   );

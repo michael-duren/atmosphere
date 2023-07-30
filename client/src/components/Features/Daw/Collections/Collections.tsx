@@ -1,13 +1,18 @@
 import { FiHardDrive } from 'react-icons/fi';
-import FolderButton from '../../Ui/Buttons/FolderButton.tsx';
+import FolderButton from '../../../Ui/Buttons/FolderButton.tsx';
 import { useState } from 'react';
-import { useAppSelector } from '../../../store/hooks/useAppSelector.ts';
-import { selectSong } from '../../../store/slices/songSlice.ts';
+import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
+import { selectSong } from '../../../../store/slices/songSlice.ts';
 import { BsFileEarmarkMusic } from 'react-icons/bs';
+import {
+  setLoadSongModalOpen,
+  setSongToLoad,
+} from '../../../../store/slices/commonSlice.ts';
+import { useAppDispatch } from '../../../../store/hooks/useAppDispatch.ts';
 
 export default function Collections() {
   const { songList } = useAppSelector(selectSong);
-
+  const dispatch = useAppDispatch();
   const [isSongsOpen, setIsSongsOpen] = useState(false);
   const [isPatternsOpen, setIsPatternsOpen] = useState(false);
   const [isEffectsOpen, setIsEffectsOpen] = useState(false);
@@ -30,10 +35,15 @@ export default function Collections() {
           {isSongsOpen && (
             <div className="ml-8 mt-4 flex flex-col gap-4">
               {songList.map((song) => {
+                const loadSongModalOpenHandler = () => {
+                  dispatch(setLoadSongModalOpen(true));
+                  dispatch(setSongToLoad(song));
+                };
                 return (
                   <button
                     className="flex group transition-all duration-300 hover:text-violet-300  items-center"
                     key={song.id}
+                    onClick={loadSongModalOpenHandler}
                   >
                     <span className="mr-2">
                       <BsFileEarmarkMusic

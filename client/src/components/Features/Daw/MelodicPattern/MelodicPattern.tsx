@@ -10,7 +10,6 @@ export default function MelodicPattern() {
       </h2>
       <div className="flex">
         <MelodicPatternGenerator />
-        {/* GRAPH AND OSCILLOSCOPE */}
         <div className="flex-1">
           <Oscilloscopes />
         </div>

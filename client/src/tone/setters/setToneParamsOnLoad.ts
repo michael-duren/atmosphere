@@ -71,6 +71,7 @@ export const setToneParamsOnLoad = (songToLoad: Song) => {
   /*
    * Pattern Params
    */
+  // melodic pattern
   melodicPattern.timeInterval = songToLoad.melodicPattern.timeInterval;
   melodicPattern.noteDuration = songToLoad.melodicPattern.noteDuration;
   melodicPattern.patternType = songToLoad.melodicPattern.patternType;
@@ -78,5 +79,6 @@ export const setToneParamsOnLoad = (songToLoad: Song) => {
   melodicPattern.key = songToLoad.melodicPattern.key;
   melodicPattern.scale = songToLoad.melodicPattern.scale;
   melodicPattern.length = songToLoad.melodicPattern.length;
-  melodicPattern.generateNewPattern();
+  melodicPattern.sequence = songToLoad.melodicPattern.sequence;
+  melodicPattern.updatePattern();
 };
