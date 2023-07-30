@@ -8,7 +8,7 @@ public class MappingProfiles : AutoMapper.Profile
     public MappingProfiles()
     {
         CreateMap<Song, Song>();
-        CreateMap<Song, SongQueryDto>();
+        CreateMap<Song, SongQueryDto>().ReverseMap();
         CreateMap<SongCreateDto, Song>();
     }
 }

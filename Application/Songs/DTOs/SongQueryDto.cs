@@ -4,12 +4,13 @@ namespace Application.Songs.DTOs;
 
 public class SongQueryDto
 {
-    
-
     // main song details
     public int Id { get; set; }
     public string SongName { get; set; } = null!;
     public double MasterVolume { get; set; }
+    public double DrumVolume { get; set; }
+    public double BassVolume { get; set; }
+    public double MelodicVolume { get; set; }
     public int Bpm { get; set; }
 
     // effects

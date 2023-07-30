@@ -14,6 +14,7 @@ import {
 import agent from '../../api/agent.ts';
 import { Song } from '../../models/song.ts';
 import { setToneParamsOnLoad } from '../../tone/setters/setToneParamsOnLoad.ts';
+import toast from 'react-hot-toast';
 
 export function* setSongBpmAsync(action: SetSongBpmAsync) {
   yield* put(setBpm(action.payload));
@@ -21,9 +22,16 @@ export function* setSongBpmAsync(action: SetSongBpmAsync) {
 }
 
 export function* loadSongToCurrentAsync(action: LoadSongToCurrent) {
-  const songToLoad: Song = yield call(agent.Song.single, action.payload.id);
-  yield put(setCurrentSong(songToLoad));
-  setToneParamsOnLoad(songToLoad);
+  try {
+    const songToLoad: Song = yield call(agent.Song.single, action.payload.id);
+    yield put(setCurrentSong(songToLoad));
+    setToneParamsOnLoad(songToLoad);
+    console.log('SONG TO LOAD', songToLoad);
+    toast.success('Song loaded');
+  } catch (e) {
+    console.log(e);
+    toast.error(`Error loading song ${e}`);
+  }
 }
 
 export function* setMasterVolumeAsync(action: SetMasterVolumeAsync) {
