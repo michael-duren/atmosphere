@@ -59,7 +59,7 @@ export function* setSongBpmAsync(action: SetSongBpmAsync) {
  */
 export function* songSaga() {
   yield* takeEvery(SONG_ACTIONS.GET_SONG_LIST_ASYNC, getSongList);
-  yield takeEvery(SONG_ACTIONS.SET_SONG_BPM_ASYNC, setSongBpmAsync);
-  yield takeEvery(SONG_ACTIONS.SET_MASTER_VOLUME_ASYNC, setMasterVolumeAsync);
-  yield takeEvery(SONG_ACTIONS.LOAD_SONG_TO_CURRENT, loadSongToCurrentAsync);
+  yield* takeEvery(SONG_ACTIONS.SET_SONG_BPM_ASYNC, setSongBpmAsync);
+  yield* takeEvery(SONG_ACTIONS.SET_MASTER_VOLUME_ASYNC, setMasterVolumeAsync);
+  yield* takeEvery(SONG_ACTIONS.LOAD_SONG_TO_CURRENT, loadSongToCurrentAsync);
 }
