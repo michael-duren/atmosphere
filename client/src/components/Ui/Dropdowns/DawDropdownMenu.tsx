@@ -11,11 +11,12 @@ import { USER_ACTIONS } from '../../../store/actions/userActions.ts';
 import { setSaveModalOpen } from '../../../store/slices/commonSlice.ts';
 import { useAppSelector } from '../../../store/hooks/useAppSelector.ts';
 import { selectUser } from '../../../store/slices/userSlice.ts';
+import { SONG_ACTIONS } from '../../../store/actions/songActions.ts';
 
 export default function DawDropdownMenu() {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(selectUser);
-  const onNewSong = () => console.log('NEW SONG');
+  const onNewSong = () => dispatch({ type: SONG_ACTIONS.SET_NEW_SONG_ASYNC });
   const onSaveSong = () => dispatch(setSaveModalOpen(true));
   const onSaveSongAs = () => dispatch(setSaveModalOpen(true));
   const onLogout = () => dispatch({ type: USER_ACTIONS.LOGOUT_ASYNC });

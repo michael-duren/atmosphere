@@ -38,7 +38,7 @@ const initialSongState: SongState = {
       attack: 0,
       decay: 0.25,
       sustain: 0.25,
-      release: 0.5,
+      release: 0.25,
       filterFrequency: 22_000,
       filterMod: 0,
       filterType: 'lowpass',

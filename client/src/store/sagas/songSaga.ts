@@ -17,6 +17,7 @@ import { Song } from '../../models/song.ts';
 import { songSchema } from '../../models/schemas/songSchema.ts';
 import { setToneParamsOnLoad } from '../../tone/setters/setToneParamsOnLoad.ts';
 import toast from 'react-hot-toast';
+import initialSongState from '../slices/initialState/initialSongState.ts';
 
 /*
  * HTTP Requests & Related Functions
@@ -35,7 +36,6 @@ export function* loadSongToCurrentAsync(action: LoadSongToCurrent) {
     yield songSchema.validate(songToLoad);
     yield put(setCurrentSong(songToLoad));
     yield setToneParamsOnLoad(songToLoad);
-    console.log('SONG TO LOAD', songToLoad);
     toast.success(`${action.payload.songName} loaded`);
   } catch (e) {
     console.error(e);
@@ -46,6 +46,17 @@ export function* loadSongToCurrentAsync(action: LoadSongToCurrent) {
 /*
  * Local Functions
  */
+export function* setNewSongAsync() {
+  try {
+    yield put(setCurrentSong(initialSongState.currentSong));
+    yield setToneParamsOnLoad(initialSongState.currentSong);
+    toast.success(`New song created`);
+  } catch (e) {
+    console.error(e);
+    toast.error(`Error creating new song`);
+  }
+}
+
 export function* setMasterVolumeAsync(action: SetMasterVolumeAsync) {
   yield* put(setMasterVolume(action.payload));
 }
@@ -62,4 +73,5 @@ export function* songSaga() {
   yield* takeEvery(SONG_ACTIONS.SET_SONG_BPM_ASYNC, setSongBpmAsync);
   yield* takeEvery(SONG_ACTIONS.SET_MASTER_VOLUME_ASYNC, setMasterVolumeAsync);
   yield* takeEvery(SONG_ACTIONS.LOAD_SONG_TO_CURRENT, loadSongToCurrentAsync);
+  yield* takeEvery(SONG_ACTIONS.SET_NEW_SONG_ASYNC, setNewSongAsync);
 }
