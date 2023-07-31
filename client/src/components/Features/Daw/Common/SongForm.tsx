@@ -2,12 +2,16 @@ import SimpleSpinner from '../../../Ui/Spinners/SimpleSpinner.tsx';
 import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
 import { selectCommon } from '../../../../store/slices/commonSlice.ts';
 import { darkInput } from '../../../Ui/Styles/input.ts';
-import { useState } from 'react';
-import { songSchema } from '../../../../models/schemas/songSchema.ts';
-import toast from 'react-hot-toast';
+import { Fragment, useState } from 'react';
+import { SONG_ACTIONS } from '../../../../store/actions/songActions.ts';
+import { Song } from '../../../../models/song.ts';
+import { useAppDispatch } from '../../../../store/hooks/useAppDispatch.ts';
+import FormWarning from '../../../Ui/Warnings/FormWarning.tsx';
 
 export default function SongForm() {
   const { appLoaded } = useAppSelector(selectCommon);
+  const error = useAppSelector((store) => store.song.error);
+  const dispatch = useAppDispatch();
   const currentSong = useAppSelector((store) => store.song.currentSong);
   const isNewSong = !currentSong.id; // if currentSong.id is undefined, it's a new song
   const songToSaveName = currentSong.songName
@@ -22,31 +26,17 @@ export default function SongForm() {
     if (isNewSong) {
       // if the song is new, set the song name to the input value
       songToSave.songName = songToSaveNameInput;
-      try {
-        await songSchema.validate(songToSave); // validate the song
-        await submitNewSong(); // submit the song to the server
-      } catch (e) {
-        toast.error(
-          'Something went wrong validating the song. Please try again.'
-        );
-      }
-      return; // exit the function
+      await submitNewSong(songToSave); // submit the song to the server
+      return;
     }
 
     // if the song is not new, update the song
-    try {
-      await songSchema.validate(songToSave);
-      await submitUpdatedSong();
-      console.log(songToSave);
-    } catch (e) {
-      console.error(e);
-      toast.error(
-        'Something went wrong validating the song. Please try again.'
-      );
-    }
+    await submitUpdatedSong();
   };
 
-  const submitNewSong = async () => {};
+  const submitNewSong = async (songToSave: Song) => {
+    dispatch({ type: SONG_ACTIONS.CREATE_NEW_SONG_ASYNC, payload: songToSave });
+  };
   const submitUpdatedSong = async () => {};
 
   return (
@@ -62,6 +52,15 @@ export default function SongForm() {
             className={darkInput}
           />
         </div>
+
+        {Array.isArray(error) &&
+          error.map((error, i) => {
+            return (
+              <Fragment key={i}>
+                <FormWarning touched={true} warning={error} />
+              </Fragment>
+            );
+          })}
         <button
           type="submit"
           className="hover:bg-gray-800 py-2 active:scale-105 transition-all duration-300 rounded-xl bg-opacity-80 bg-gray-900"

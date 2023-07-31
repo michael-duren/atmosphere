@@ -11,7 +11,7 @@ export default function LoadSongWarning() {
   const closeModal = () => dispatch(setLoadSongModalOpen(false));
   const loadSong = () => {
     dispatch({
-      type: SONG_ACTIONS.LOAD_SONG_TO_CURRENT,
+      type: SONG_ACTIONS.LOAD_SONG_TO_CURRENT_ASYNC,
       payload: songToLoad,
     });
     dispatch(setLoadSongModalOpen(false));

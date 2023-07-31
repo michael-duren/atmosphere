@@ -1,12 +1,15 @@
 import { SongListItem } from '../../models/songList.ts';
+import { Song } from '../../models/song.ts';
 
 export const SONG_ACTIONS = {
   GET_SONG_LIST_ASYNC: 'GET_SONG_LIST_ASYNC',
+  LOAD_SONG_TO_CURRENT_ASYNC: 'LOAD_SONG_TO_CURRENT',
+  SET_NEW_SONG_ASYNC: 'SET_NEW_SONG_ASYNC',
+  CREATE_NEW_SONG_ASYNC: 'CREATE_NEW_SONG_ASYNC',
+  UPDATE_CURRENT_SONG_ASYNC: 'UPDATE_CURRENT_SONG_ASYNC',
   SET_SONG_BPM_ASYNC: 'SET_SONG_BPM_ASYNC',
   SET_MASTER_VOLUME_ASYNC: 'SET_MASTER_VOLUME_ASYNC',
   SET_CURRENT_SONG_PATTERN_KEY: 'SET_CURRENT_SONG_PATTERN_KEY',
-  LOAD_SONG_TO_CURRENT: 'LOAD_SONG_TO_CURRENT',
-  SET_NEW_SONG_ASYNC: 'SET_NEW_SONG_ASYNC',
 };
 export interface SetSongBpmAsync {
   type: typeof SONG_ACTIONS.SET_SONG_BPM_ASYNC;
@@ -18,7 +21,12 @@ export interface SetMasterVolumeAsync {
   payload: number;
 }
 
-export interface LoadSongToCurrent {
-  type: typeof SONG_ACTIONS.LOAD_SONG_TO_CURRENT;
+export interface LoadSongToCurrentAsync {
+  type: typeof SONG_ACTIONS.LOAD_SONG_TO_CURRENT_ASYNC;
   payload: SongListItem;
+}
+
+export interface CreateNewSongAsync {
+  type: typeof SONG_ACTIONS.CREATE_NEW_SONG_ASYNC;
+  payload: Song;
 }

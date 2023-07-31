@@ -3,11 +3,13 @@ import { call, put, takeEvery } from 'typed-redux-saga';
 import {
   setBpm,
   setCurrentSong,
+  setError,
   setMasterVolume,
   setSongList,
 } from '../slices/songSlice.ts';
 import {
-  LoadSongToCurrent,
+  CreateNewSongAsync,
+  LoadSongToCurrentAsync,
   SetMasterVolumeAsync,
   SetSongBpmAsync,
   SONG_ACTIONS,
@@ -18,6 +20,7 @@ import { songSchema } from '../../models/schemas/songSchema.ts';
 import { setToneParamsOnLoad } from '../../tone/setters/setToneParamsOnLoad.ts';
 import toast from 'react-hot-toast';
 import initialSongState from '../slices/initialState/initialSongState.ts';
+import { setSaveModalOpen } from '../slices/commonSlice.ts';
 
 /*
  * HTTP Requests & Related Functions
@@ -30,7 +33,7 @@ export function* getSongList() {
     console.log(e);
   }
 }
-export function* loadSongToCurrentAsync(action: LoadSongToCurrent) {
+export function* loadSongToCurrentAsync(action: LoadSongToCurrentAsync) {
   try {
     const songToLoad: Song = yield call(agent.Song.single, action.payload.id);
     yield songSchema.validate(songToLoad);
@@ -40,6 +43,21 @@ export function* loadSongToCurrentAsync(action: LoadSongToCurrent) {
   } catch (e) {
     console.error(e);
     toast.error(`Error loading song`);
+  }
+}
+
+export function* createNewSongAsync({ payload }: CreateNewSongAsync) {
+  try {
+    yield songSchema.isValid(payload); // validate song before sending to server
+    const createdSong: Song = yield call(agent.Song.create, payload); // send to server and get response with song id
+    yield put(setCurrentSong(createdSong)); // set current song in redux store
+    yield* put({ type: SONG_ACTIONS.GET_SONG_LIST_ASYNC }); // get updated song list
+    toast.success(`${payload.songName} was saved`); // notify user
+    yield put(setSaveModalOpen(false));
+  } catch (e) {
+    console.error(e);
+    yield put(setError(e));
+    toast.error(`Error saving ${payload.songName} song`);
   }
 }
 
@@ -72,6 +90,10 @@ export function* songSaga() {
   yield* takeEvery(SONG_ACTIONS.GET_SONG_LIST_ASYNC, getSongList);
   yield* takeEvery(SONG_ACTIONS.SET_SONG_BPM_ASYNC, setSongBpmAsync);
   yield* takeEvery(SONG_ACTIONS.SET_MASTER_VOLUME_ASYNC, setMasterVolumeAsync);
-  yield* takeEvery(SONG_ACTIONS.LOAD_SONG_TO_CURRENT, loadSongToCurrentAsync);
+  yield* takeEvery(
+    SONG_ACTIONS.LOAD_SONG_TO_CURRENT_ASYNC,
+    loadSongToCurrentAsync
+  );
   yield* takeEvery(SONG_ACTIONS.SET_NEW_SONG_ASYNC, setNewSongAsync);
+  yield* takeEvery(SONG_ACTIONS.CREATE_NEW_SONG_ASYNC, createNewSongAsync);
 }

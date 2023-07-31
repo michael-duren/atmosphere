@@ -34,7 +34,7 @@ export default function FrequencyKnob({
   }, [level]);
 
   const setStoreLevel = (): void => {
-    storeSetter(+localLevel.toFixed(2));
+    storeSetter(toFrequency(localLevel));
   };
 
   const setLocalAndToneLevel = (v: number) => {

@@ -25,8 +25,9 @@ axios.interceptors.response.use(
         if (data.error) {
           console.log(data.error);
           throw data.error;
+        } else {
+          throw new Error('Bad Request');
         }
-        break;
       case 401:
         if (status === 401 && localStorage.getItem('jwt')) {
           store.dispatch({ type: USER_ACTIONS.LOGOUT_ASYNC });

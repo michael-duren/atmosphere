@@ -14,9 +14,10 @@ import { FilterType } from '../../models/types/filterType.ts';
 import { MusicalKey } from '../../models/types/musicalKey.ts';
 import { MusicalScale } from '../../models/types/musicalScale.ts';
 import { PatternName } from 'tone/build/esm/event/PatternGenerator';
+import { ServerValidationError } from '../../models/serverValidationError.ts';
 
 export interface SongState {
-  error: ServerError | null;
+  error: ServerError | ServerValidationError | null | unknown;
   currentSong: Song;
   songList: SongList;
 }
@@ -28,7 +29,13 @@ const songSlice = createSlice({
     /*
      * Top Level reducers
      */
-    setError: (state, action: { payload: ServerError; type: string }) => {
+    setError: (
+      state,
+      action: {
+        payload: ServerError | ServerValidationError | unknown;
+        type: string;
+      }
+    ) => {
       state.error = action.payload;
     },
     setCurrentSong: (state, action: { payload: Song; type: string }) => {
