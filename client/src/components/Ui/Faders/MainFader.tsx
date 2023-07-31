@@ -37,6 +37,11 @@ export default function MainFader({
     drawFader(ctx, canvas.width, canvas.height, volumeValue * 100, 'black');
   }, [volumeValue]);
 
+  useEffect(() => {
+    setVolumeValue(volume);
+    setTone(volume);
+  }, [volume]);
+
   const handleVolumeFaderDragStart = () => {
     setIsDragging(true);
   };
