@@ -3,7 +3,8 @@ import { store } from '../store/store.ts';
 import { USER_ACTIONS } from '../store/actions/userActions.ts';
 
 // set default base
-axios.defaults.baseURL = 'http://localhost:5000/api';
+axios.defaults.baseURL =
+  __APP_ENV__ === 'production' ? '/api' : 'http://localhost:5000/api';
 axios.defaults.withCredentials = true;
 // parse data from response
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;

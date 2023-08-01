@@ -5,20 +5,15 @@ import { NoteType } from '../../../../models/types/noteType.ts';
 
 export const musicalKeyOptions: MusicalKey[] = [
   'C',
-  'C#',
   'Db',
   'D',
-  'D#',
   'Eb',
   'E',
   'F',
   'F#',
-  'Gb',
   'G',
-  'G#',
   'Ab',
   'A',
-  'A#',
   'Bb',
   'B',
 ];
@@ -42,7 +37,7 @@ export const musicalScaleOptions: MusicalScale[] = [
   'chromatic',
 ];
 
-export const transposeOptions = [-36, -24, -12, 0, 12, 24, 36];
+export const transposeOptions = [-21, -14, -7, 0, 7, 14, 21];
 
 export const patternTypeOptions: PatternName[] = [
   'up',

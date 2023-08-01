@@ -135,6 +135,11 @@ class MelodicPattern {
     return (time: number, noteNumber?: number | undefined) => {
       const note = this.mapNotes(noteNumber! + this._transpose, this._notes);
       if (this._noteChangeHandler) this._noteChangeHandler(note as MusicalKey);
+      console.log(note);
+      // const sharps = note.match(/#/g)?.length;
+      // if (sharps && sharps > 1) {
+      //   note.replace(/#+/g, '#'); // remove double sharps
+      // }
       this._melodySynth.synth.triggerAttackRelease(
         note,
         this._noteDuration,

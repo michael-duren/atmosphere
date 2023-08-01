@@ -31,8 +31,6 @@ export default function UseMelodicPatternStoreChange() {
     melodicPattern.key = melodicPatternStore.key;
   }, [melodicPatternStore.key]);
 
-  // TODO: add other melodic pattern store changes here
-
   // SCALES
   const setStoreMelodicPatternScaleChange = (scale: MusicalScale): void => {
     dispatch(setMelodicPatternScale(scale));
