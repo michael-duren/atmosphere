@@ -10,6 +10,8 @@ export interface CommonState {
   saveModalOpen: boolean;
   loadSongModalOpen: boolean;
   songToLoad: SongListItem | null;
+  songToDelete: SongListItem | null;
+  deleteSongModalOpen: boolean;
 }
 
 const initialCommonState: CommonState = {
@@ -19,6 +21,8 @@ const initialCommonState: CommonState = {
   saveModalOpen: false,
   loadSongModalOpen: false,
   songToLoad: null,
+  songToDelete: null,
+  deleteSongModalOpen: false,
 };
 
 const commonSlice = createSlice({
@@ -46,6 +50,18 @@ const commonSlice = createSlice({
     setSongToLoad: (state, action: { payload: SongListItem; type: string }) => {
       state.songToLoad = action.payload;
     },
+    setDeleteSongModalOpen: (
+      state,
+      action: { payload: boolean; type: string }
+    ) => {
+      state.deleteSongModalOpen = action.payload;
+    },
+    setSongToDelete: (
+      state,
+      action: { payload: SongListItem; type: string }
+    ) => {
+      state.songToDelete = action.payload;
+    },
   },
 });
 
@@ -57,6 +73,8 @@ export const {
   setAppLoaded,
   setSaveModalOpen,
   setLoadSongModalOpen,
+  setDeleteSongModalOpen,
+  setSongToDelete,
   setSongToLoad,
 } = commonSlice.actions;
 

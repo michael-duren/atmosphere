@@ -9,6 +9,7 @@ import {
 } from '../slices/songSlice.ts';
 import {
   CreateNewSongAsync,
+  DeleteSongAsync,
   LoadSongToCurrentAsync,
   SetMasterVolumeAsync,
   SetSongBpmAsync,
@@ -21,7 +22,10 @@ import { songSchema } from '../../models/schemas/songSchema.ts';
 import { setToneParamsOnLoad } from '../../tone/setters/setToneParamsOnLoad.ts';
 import toast from 'react-hot-toast';
 import initialSongState from '../slices/initialState/initialSongState.ts';
-import { setSaveModalOpen } from '../slices/commonSlice.ts';
+import {
+  setDeleteSongModalOpen,
+  setSaveModalOpen,
+} from '../slices/commonSlice.ts';
 
 /*
  * HTTP Requests & Related Functions
@@ -75,6 +79,19 @@ export function* updateSongAsync({ payload }: UpdateSongAsync) {
   }
 }
 
+export function* deleteSongAsync({ payload }: DeleteSongAsync) {
+  try {
+    yield songSchema.validate(payload); // validate song before sending to server
+    yield call(agent.Song.delete, payload); // send to server and get response with song id
+    toast.success(`${payload.songName} was deleted`); // notify user
+    yield put(setDeleteSongModalOpen(false)); // close delete modal
+    yield* put({ type: SONG_ACTIONS.GET_SONG_LIST_ASYNC }); // get updated song list
+  } catch (e) {
+    console.error(e);
+    toast.error(`Error deleting ${payload.songName} song`);
+  }
+}
+
 /*
  * Local Functions
  */
@@ -111,4 +128,5 @@ export function* songSaga() {
   yield* takeEvery(SONG_ACTIONS.SET_NEW_SONG_ASYNC, setNewSongAsync);
   yield* takeEvery(SONG_ACTIONS.CREATE_NEW_SONG_ASYNC, createNewSongAsync);
   yield* takeEvery(SONG_ACTIONS.UPDATE_SONG_ASYNC, updateSongAsync);
+  yield* takeEvery(SONG_ACTIONS.DELETE_SONG_ASYNC, deleteSongAsync);
 }

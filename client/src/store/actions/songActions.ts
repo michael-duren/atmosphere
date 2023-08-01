@@ -7,6 +7,7 @@ export const SONG_ACTIONS = {
   SET_NEW_SONG_ASYNC: 'SET_NEW_SONG_ASYNC',
   CREATE_NEW_SONG_ASYNC: 'CREATE_NEW_SONG_ASYNC',
   UPDATE_SONG_ASYNC: 'UPDATE_SONG_ASYNC',
+  DELETE_SONG_ASYNC: 'DELETE_SONG_ASYNC',
   SET_SONG_BPM_ASYNC: 'SET_SONG_BPM_ASYNC',
   SET_MASTER_VOLUME_ASYNC: 'SET_MASTER_VOLUME_ASYNC',
   SET_CURRENT_SONG_PATTERN_KEY: 'SET_CURRENT_SONG_PATTERN_KEY',
@@ -34,4 +35,9 @@ export interface CreateNewSongAsync {
 export interface UpdateSongAsync {
   type: typeof SONG_ACTIONS.UPDATE_SONG_ASYNC;
   payload: Song;
+}
+
+export interface DeleteSongAsync {
+  type: typeof SONG_ACTIONS.DELETE_SONG_ASYNC;
+  payload: SongListItem;
 }
