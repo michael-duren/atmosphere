@@ -6,4 +6,5 @@ export const Song = {
   list: () => requests.get<SongList>('/songs'),
   single: (id: number) => requests.get<SongType>(`/songs/${id}`),
   create: (song: SongType) => requests.post<SongType>('/songs', song),
+  update: (song: SongType) => requests.put<SongType>(`/songs/${song.id}`, song),
 };

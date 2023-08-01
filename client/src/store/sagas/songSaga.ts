@@ -13,6 +13,7 @@ import {
   SetMasterVolumeAsync,
   SetSongBpmAsync,
   SONG_ACTIONS,
+  UpdateSongAsync,
 } from '../actions/songActions.ts';
 import * as Tone from 'tone';
 import { Song } from '../../models/song.ts';
@@ -61,6 +62,19 @@ export function* createNewSongAsync({ payload }: CreateNewSongAsync) {
   }
 }
 
+export function* updateSongAsync({ payload }: UpdateSongAsync) {
+  try {
+    yield songSchema.isValid(payload); // validate song before sending to server
+    yield call(agent.Song.update, payload); // send to server and get response with song id
+    toast.success(`${payload.songName} was saved`); // notify user
+    yield put(setSaveModalOpen(false));
+  } catch (e) {
+    console.error(e);
+    yield put(setError(e));
+    toast.error(`Error saving ${payload.songName} song`);
+  }
+}
+
 /*
  * Local Functions
  */
@@ -96,4 +110,5 @@ export function* songSaga() {
   );
   yield* takeEvery(SONG_ACTIONS.SET_NEW_SONG_ASYNC, setNewSongAsync);
   yield* takeEvery(SONG_ACTIONS.CREATE_NEW_SONG_ASYNC, createNewSongAsync);
+  yield* takeEvery(SONG_ACTIONS.UPDATE_SONG_ASYNC, updateSongAsync);
 }

@@ -41,7 +41,7 @@ export default function DarkModal({ children, isOpen, setIsOpen }: Props) {
               >
                 <Dialog.Panel
                   className="w-full max-w-md transform overflow-hidden 
-                rounded-2xl bg-black bg-opacity-90 shadow-xl p-6 text-left align-middle shadow-xl transition-all"
+                rounded-2xl bg-black bg-opacity-90 shadow-2xl p-6 text-left align-middle shadow-gray-700 transition-all"
                 >
                   {children}
                 </Dialog.Panel>

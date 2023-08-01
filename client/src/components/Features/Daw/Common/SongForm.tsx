@@ -1,10 +1,12 @@
 import SimpleSpinner from '../../../Ui/Spinners/SimpleSpinner.tsx';
 import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
-import { selectCommon } from '../../../../store/slices/commonSlice.ts';
+import {
+  selectCommon,
+  setSaveModalOpen,
+} from '../../../../store/slices/commonSlice.ts';
 import { darkInput } from '../../../Ui/Styles/input.ts';
 import { Fragment, useState } from 'react';
 import { SONG_ACTIONS } from '../../../../store/actions/songActions.ts';
-import { Song } from '../../../../models/song.ts';
 import { useAppDispatch } from '../../../../store/hooks/useAppDispatch.ts';
 import FormWarning from '../../../Ui/Warnings/FormWarning.tsx';
 
@@ -26,32 +28,46 @@ export default function SongForm() {
     if (isNewSong) {
       // if the song is new, set the song name to the input value
       songToSave.songName = songToSaveNameInput;
-      await submitNewSong(songToSave); // submit the song to the server
+      dispatch({
+        type: SONG_ACTIONS.CREATE_NEW_SONG_ASYNC,
+        payload: songToSave,
+      });
       return;
     }
 
     // if the song is not new, update the song
-    await submitUpdatedSong();
+    dispatch({ type: SONG_ACTIONS.UPDATE_SONG_ASYNC, payload: songToSave });
   };
-
-  const submitNewSong = async (songToSave: Song) => {
-    dispatch({ type: SONG_ACTIONS.CREATE_NEW_SONG_ASYNC, payload: songToSave });
-  };
-  const submitUpdatedSong = async () => {};
 
   return (
     <div className="text-white flex items-center flex-col">
       <h2 className="text-2xl opacity-90 mb-4 text-white">Save Song</h2>
-      <form onSubmit={onSubmit} className="flex gap-8 flex-col">
-        <div className="flex flex-col gap-2">
-          <label className="font-caps uppercase">Song Name</label>
-          <input
-            type="text"
-            value={songToSaveNameInput}
-            onChange={(e) => setSongToSaveNameInput(e.target.value)}
-            className={darkInput}
-          />
-        </div>
+      <form
+        onSubmit={onSubmit}
+        className="flex gap-8 items-center w-full flex-col"
+      >
+        {
+          // if the song is new, show the input
+          isNewSong ? (
+            <div className="flex items-center gap-2">
+              <label className="font-caps uppercase">Song Name</label>
+              <input
+                type="text"
+                value={songToSaveNameInput}
+                onChange={(e) => setSongToSaveNameInput(e.target.value)}
+                className={`${darkInput} font-caps`}
+              />
+            </div>
+          ) : (
+            // if the song is not new, show the song name
+            <div className="flex   items-center gap-2">
+              <label className="font-caps uppercase">Song Name</label>
+              <p className="font-caps rounded-xl bg-gray-800 px-4 text-violet-300">
+                {songToSaveName}
+              </p>
+            </div>
+          )
+        }
 
         {Array.isArray(error) &&
           error.map((error, i) => {
@@ -61,12 +77,21 @@ export default function SongForm() {
               </Fragment>
             );
           })}
-        <button
-          type="submit"
-          className="hover:bg-gray-800 py-2 active:scale-105 transition-all duration-300 rounded-xl bg-opacity-80 bg-gray-900"
-        >
-          {!appLoaded ? <SimpleSpinner size={20} /> : 'Save'}
-        </button>
+        <div className="flex justify-around w-full">
+          <button
+            type="submit"
+            className="hover:bg-gray-800 py-2 w-24 active:scale-105 transition-all duration-300 rounded-xl bg-opacity-80 bg-gray-900"
+          >
+            {!appLoaded ? <SimpleSpinner size={20} /> : 'Save'}
+          </button>
+          <button
+            type="button"
+            onClick={() => dispatch(setSaveModalOpen(false))}
+            className="hover:bg-gray-800 w-24 py-2 active:scale-105 transition-all duration-300 rounded-xl bg-opacity-80 bg-gray-900"
+          >
+            {!appLoaded ? <SimpleSpinner size={20} /> : 'Cancel'}
+          </button>
+        </div>
       </form>
     </div>
   );
