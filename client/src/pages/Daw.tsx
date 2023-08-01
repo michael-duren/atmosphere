@@ -37,7 +37,7 @@ export default function Daw() {
         .then()
         .catch((err) => {
           toast.error('Error initializing instruments');
-          console.log(err);
+          console.error(err);
         });
     });
 

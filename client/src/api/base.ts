@@ -6,7 +6,6 @@ import { USER_ACTIONS } from '../store/actions/userActions.ts';
 axios.defaults.baseURL =
   import.meta.env.MODE === 'development' ? 'http://localhost:5000/api' : '/api';
 axios.defaults.withCredentials = true;
-console.log(__APP_ENV__);
 // parse data from response
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
@@ -25,7 +24,7 @@ axios.interceptors.response.use(
     switch (status) {
       case 400:
         if (data.error) {
-          console.log(data.error);
+          console.error(data.error);
           throw data.error;
         } else {
           throw new Error('Bad Request');
@@ -35,7 +34,7 @@ axios.interceptors.response.use(
           store.dispatch({ type: USER_ACTIONS.LOGOUT_ASYNC });
         }
         if (data.error) {
-          console.log(data.error);
+          console.error(data.error);
         }
         break;
     }

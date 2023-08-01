@@ -7,7 +7,6 @@ export default function Oscilloscopes() {
   const canvasRefBass = useRef<HTMLCanvasElement | null>(null);
   const melodicWave = useRef<Tone.Waveform>(new Tone.Waveform(256));
   const bassWave = useRef<Tone.Waveform>(new Tone.Waveform(256));
-  console.log(canvasRefMelody);
 
   useEffect(() => {
     melodicSynth.synth.connect(melodicWave.current);

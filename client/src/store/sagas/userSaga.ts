@@ -26,7 +26,7 @@ export function* login({ payload }: LoginAsync) {
     yield put(setIsUserLoading(false)); // set user is loading to false
     yield call(router.navigate, '/app'); // navigate to app
   } catch (e: any) {
-    console.log(e);
+    console.error(e);
     yield put(setIsUserLoading(false));
     yield put(setUserError(e));
   }
@@ -78,7 +78,7 @@ export function* refreshToken() {
     yield put(setUser(user)); // set user in redux store
     yield put(setToken(user.token)); // set token in common store
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }
 
