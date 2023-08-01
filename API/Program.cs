@@ -13,6 +13,10 @@ builder.AddIdentityServiceExtensions();
 
 var app = builder.Build();
 
+app.UseDefaultFiles(); // look in wwwroot folder and find index.html, js, css, etc
+app.UseStaticFiles();
+app.MapFallbackToFile("index.html").AllowAnonymous(); // if we don't find anything, return index.html (react app)
+
 app.UseCors("CorsPolicy");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -27,6 +31,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.RegisterEndpointDefinitions();
+
 
 
 using var scope = app.Services.CreateScope();

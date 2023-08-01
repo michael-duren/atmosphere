@@ -4,8 +4,9 @@ import { USER_ACTIONS } from '../store/actions/userActions.ts';
 
 // set default base
 axios.defaults.baseURL =
-  __APP_ENV__ === 'production' ? '/api' : 'http://localhost:5000/api';
+  import.meta.env.MODE === 'development' ? 'http://localhost:5000/api' : '/api';
 axios.defaults.withCredentials = true;
+console.log(__APP_ENV__);
 // parse data from response
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 

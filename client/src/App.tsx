@@ -10,7 +10,9 @@ import { Toaster } from 'react-hot-toast';
 function App() {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
-  const [timeOutId, setTimeOutId] = useState<number | null>(null);
+  const [timeOutId, setTimeOutId] = useState<number | null | NodeJS.Timeout>(
+    null
+  );
 
   useEffect(() => {
     // If the user is logged in, get the user object from the server
