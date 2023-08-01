@@ -18,6 +18,8 @@ public static class AppServiceExtensions
     public static void RegisterAppServices(this WebApplicationBuilder builder, IConfiguration config)
     {
         // connect db 
+        var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        
         var connection = config.GetConnectionString("DefaultConnection");
 
         builder.Services.AddDbContext<AppDbContext>(options =>

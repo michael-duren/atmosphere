@@ -18,10 +18,15 @@ export type RootReducer = ReturnType<typeof rootReducer>;
 
 // const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+const middleware =
+  import.meta.env.MODE === 'development'
+    ? [sagaMiddleware, logger]
+    : [sagaMiddleware];
+
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware, logger),
+    getDefaultMiddleware({ thunk: false }).concat(middleware),
 });
 
 sagaMiddleware.run(rootSaga);

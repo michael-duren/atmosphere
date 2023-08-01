@@ -35,7 +35,7 @@ export function* getSongList() {
     const songList = yield* call(agent.Song.list);
     yield put(setSongList(songList));
   } catch (e: any) {
-    console.log(e);
+    console.error(e);
   }
 }
 export function* loadSongToCurrentAsync(action: LoadSongToCurrentAsync) {

@@ -59,7 +59,6 @@ export default function MainFader({
     const newVolumeFixed = +newVolume.toFixed(2);
 
     setTone(newVolumeFixed);
-    console.log(newVolumeFixed);
 
     setVolumeValue(newVolumeFixed);
   };
