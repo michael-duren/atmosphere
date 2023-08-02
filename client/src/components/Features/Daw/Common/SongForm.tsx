@@ -12,6 +12,7 @@ import FormWarning from '../../../Ui/Warnings/FormWarning.tsx';
 
 export default function SongForm() {
   const { appLoaded } = useAppSelector(selectCommon);
+  const { isPlaying } = useAppSelector((store) => store.transport);
   const error = useAppSelector((store) => store.song.error);
   const dispatch = useAppDispatch();
   const currentSong = useAppSelector((store) => store.song.currentSong);
@@ -77,10 +78,18 @@ export default function SongForm() {
               </Fragment>
             );
           })}
+        {isPlaying && (
+          <div className="text-red-500 text-xs font-semibold shadow-xl">
+            Cannot Save Song while App is playing
+          </div>
+        )}
         <div className="flex justify-around w-full">
           <button
             type="submit"
-            className="hover:bg-gray-800 py-2 w-24 active:scale-105 transition-all duration-300 rounded-xl bg-opacity-80 bg-gray-900"
+            className={`${
+              isPlaying ? '' : 'hover:bg-gray-800 active:scale-105'
+            } py-2 w-24  transition-all duration-300 rounded-xl bg-opacity-80 bg-gray-900`}
+            disabled={isPlaying}
           >
             {!appLoaded ? <SimpleSpinner size={20} /> : 'Save'}
           </button>
