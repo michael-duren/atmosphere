@@ -13,12 +13,13 @@ builder.AddIdentityServiceExtensions();
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
+
 app.UseDefaultFiles(); // look in wwwroot folder and find index.html, js, css, etc
-app.UseStaticFiles();
-app.MapFallbackToFile("index.html").AllowAnonymous(); // if we don't find anything, return index.html (react app)
+app.UseStaticFiles(); // serve static files from wwwroot folder
+app.MapFallbackToFile("index.html").AllowAnonymous(); // if we don't find anything i.e. api endpoints, return index.html (react app)
 
 app.UseCors("CorsPolicy");
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
