@@ -7,7 +7,7 @@ app = "atmosphere"
 primary_region = "den"
 
 [build]
-  image = "michaelduren/atmosphere:latest"
+  image = "michaelduren/app:latest"
 
 [env]
   ASPNETCORE_URLS="http://+:8080"
