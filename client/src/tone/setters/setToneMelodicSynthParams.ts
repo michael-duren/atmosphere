@@ -39,6 +39,7 @@ export const setToneMelodicSynthChorus = (chorus: number) => {
 
 export const setToneMelodicSynthFilterFrequency = (freq: number) => {
   melodicSynth.filter.frequency.value = freq;
+  melodicSynth.filterTwo.frequency.value = freq;
 };
 
 export const setToneMelodicSynthFilterType = (type: BiquadFilterType) => {

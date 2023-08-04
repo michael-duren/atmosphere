@@ -40,7 +40,7 @@ const initialSongState: SongState = {
       sustain: 0.25,
       release: 0.25,
       filterFrequency: 22_000,
-      filterMod: 0,
+      filterMod: 22_000,
       filterType: 'lowpass',
       metal: 0,
       chorus: 0,

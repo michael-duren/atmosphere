@@ -21,6 +21,10 @@ export const frequencyToInput = (frequency: number): number => {
   return frequency / 22_000;
 };
 
+export const frequencyInvertedToInput = (frequency: number): number => {
+  return (22_000 - frequency) / 21_000;
+};
+
 export const simpleToneWaveFormToInput = (
   simpleToneWaveform: SimpleWaveType
 ): number => {
