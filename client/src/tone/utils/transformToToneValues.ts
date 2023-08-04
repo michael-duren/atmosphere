@@ -7,7 +7,11 @@ import { FilterType } from '../../models/types/filterType.ts';
 import { NoteType } from '../../models/types/noteType.ts';
 
 // convert from 0-1 to 0-22000
-export const toFrequency = (num: number) => Math.round(num * 22000);
+export const toFrequency = (num: number) =>
+  Math.max(10, Math.round(num * 22000));
+
+export const toFrequencyInverted = (num: number) =>
+  Math.max(10, 22000 - toFrequency(num));
 
 export const inputToToneWaveform = (input: KnobWaveType): WaveType => {
   switch (input) {

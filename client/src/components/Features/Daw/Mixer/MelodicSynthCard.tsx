@@ -87,11 +87,12 @@ const MelodicSynthCard: React.FC = () => {
         </Knob>
         {/* Row Two */}
         <Knob title="Filter Mod">
-          <MainKnob
+          <FrequencyKnob
             color="#7C3AED"
             level={currentSong.melodicSynth.filterMod}
             storeSetter={setStoreMelodicSynthFilterModChange}
             toneSetter={setToneMelodicSynthFilterMod}
+            inverted
           />
         </Knob>
         <Knob title="Metal">

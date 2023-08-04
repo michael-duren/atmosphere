@@ -79,6 +79,7 @@ export const instantiateTone = () => {
     delay,
     volume
   );
+  melodicSynth.lfoFilter.start(0);
 
   const drumKit = new DrumKit();
   drumKit.output.chain(distortion, distortionFilter, reverb, delay, volume);

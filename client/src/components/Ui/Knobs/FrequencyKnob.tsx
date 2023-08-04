@@ -7,8 +7,14 @@ import {
 } from 'react-circular-input';
 import { useEffect, useState } from 'react';
 import { formatFrequency } from '../../../utils/tone.ts';
-import { toFrequency } from '../../../tone/utils/transformToToneValues.ts';
-import { frequencyToInput } from '../../../tone/utils/transformToInputValues.ts';
+import {
+  toFrequency,
+  toFrequencyInverted,
+} from '../../../tone/utils/transformToToneValues.ts';
+import {
+  frequencyInvertedToInput,
+  frequencyToInput,
+} from '../../../tone/utils/transformToInputValues.ts';
 
 interface Props {
   color: string;
@@ -17,6 +23,7 @@ interface Props {
   toneSetter: (num: number) => void;
   display?: string;
   displaySize?: string;
+  inverted?: boolean;
 }
 
 const AnimatedCircleInput = animated(CircularInput);
@@ -26,19 +33,37 @@ export default function FrequencyKnob({
   level,
   storeSetter,
   toneSetter,
+  inverted,
 }: Props) {
-  const [localLevel, setLocalLevel] = useState<number>(frequencyToInput(level));
+  const initialValue = inverted
+    ? frequencyInvertedToInput(level)
+    : frequencyToInput(level);
+  const [localLevel, setLocalLevel] = useState<number>(initialValue);
+  console.log('initial value', initialValue);
 
   useEffect(() => {
+    if (inverted) {
+      setLocalLevel(frequencyInvertedToInput(level));
+      return;
+    }
+
     setLocalLevel(frequencyToInput(level));
   }, [level]);
 
   const setStoreLevel = (): void => {
+    if (inverted) {
+      storeSetter(toFrequencyInverted(localLevel));
+      return;
+    }
     storeSetter(toFrequency(localLevel));
   };
 
   const setLocalAndToneLevel = (v: number) => {
     setLocalLevel(v);
+    if (inverted) {
+      toneSetter(toFrequencyInverted(v));
+      return;
+    }
     toneSetter(toFrequency(v));
   };
 
@@ -63,7 +88,11 @@ export default function FrequencyKnob({
         )}
       </Spring>
       <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 text-[0.6rem]">
-        {formatFrequency(toFrequency(localLevel))}
+        {!inverted ? (
+          formatFrequency(toFrequency(localLevel))
+        ) : (
+          <span>{Math.round(localLevel * 100)}%</span>
+        )}
       </div>
     </div>
   );
