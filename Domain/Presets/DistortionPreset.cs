@@ -12,5 +12,5 @@ public class DistortionPreset
     [Column(TypeName = "varchar(50)")] public string PresetName { get; set; } = null!;
     public double Mix { get; set; }
     public double Amount { get; set; }
-    public double Filter { get; set; }
+    public double FilterFrequency { get; set; }
 }
