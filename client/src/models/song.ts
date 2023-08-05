@@ -25,6 +25,7 @@ export interface Song {
 
 export interface Distortion {
   id?: number;
+  presetName?: string;
   mix: number;
   amount: number;
   filterFrequency: number;
@@ -33,6 +34,7 @@ export interface Distortion {
 
 export interface Reverb {
   id?: number;
+  presetName?: string;
   mix: number;
   decay: number;
   preDelay: number;
@@ -41,6 +43,7 @@ export interface Reverb {
 
 export interface Delay {
   id?: number;
+  presetName?: string;
   mix: number;
   time: number;
   feedback: number;
@@ -49,6 +52,7 @@ export interface Delay {
 
 export interface BassSynth {
   id?: number;
+  presetName?: string;
   attack: number;
   decay: number;
   sustain: number;
@@ -60,6 +64,7 @@ export interface BassSynth {
 
 export interface MelodicSynth {
   id?: number;
+  presetName?: string;
   waveform: WaveType;
   attack: number;
   decay: number;
@@ -77,6 +82,7 @@ export interface MelodicSynth {
 
 export interface MelodicPattern {
   id?: number;
+  presetName?: string;
   key: MusicalKey;
   scale: MusicalScale;
   sequence: number[];
@@ -90,6 +96,7 @@ export interface MelodicPattern {
 
 export interface KitPattern {
   id?: number;
+  presetName?: string;
   patternLength: number;
   bdSteps: boolean[];
   sdSteps: boolean[];
