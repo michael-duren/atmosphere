@@ -9,18 +9,18 @@ import {
   Reverb,
 } from '../models/song.ts';
 
-type EffectList = {
+export type EffectList = {
   distortion: Distortion[];
   reverb: Reverb[];
   delay: Delay[];
 };
 
-type InstrumentList = {
+export type InstrumentList = {
   melodicSynth: MelodicSynth[];
   bassSynth: BassSynth[];
 };
 
-type PatternList = {
+export type PatternList = {
   melodicPattern: MelodicPattern[];
   kitPattern: KitPattern[];
 };

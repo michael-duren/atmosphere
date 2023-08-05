@@ -1,0 +1,94 @@
+import { ServerValidationError } from '../../models/serverValidationError.ts';
+import { ServerError } from '../../models/serverError.ts';
+import {
+  BassSynth,
+  Delay,
+  Distortion,
+  KitPattern,
+  MelodicPattern,
+  MelodicSynth,
+  Reverb,
+} from '../../models/song.ts';
+import { createSlice } from '@reduxjs/toolkit';
+
+interface CurrentPresets {
+  effects: {
+    distortion: Distortion[];
+    reverb: Reverb[];
+    delay: Delay[];
+  };
+  synths: {
+    bassSynth: BassSynth[] | null;
+    melodicSynth: MelodicSynth[] | null;
+  };
+  patterns: {
+    melodicPattern: MelodicPattern[] | null;
+    kitPattern: KitPattern[] | null;
+  };
+}
+
+export interface PresetState {
+  error: ServerError | ServerValidationError | null | unknown;
+  currentPresets: CurrentPresets;
+}
+
+const initialPresetState: PresetState = {
+  error: null,
+  currentPresets: {
+    effects: {
+      distortion: [],
+      reverb: [],
+      delay: [],
+    },
+    synths: {
+      bassSynth: null,
+      melodicSynth: null,
+    },
+    patterns: {
+      melodicPattern: null,
+      kitPattern: null,
+    },
+  },
+};
+
+const presetSlice = createSlice({
+  name: 'preset',
+  initialState: initialPresetState,
+  reducers: {
+    /*
+     * Top Level reducers
+     */
+    setError: (
+      state,
+      action: {
+        payload: ServerError | ServerValidationError | unknown;
+        type: string;
+      }
+    ) => {
+      state.error = action.payload;
+    },
+    setEffects: (
+      state,
+      action: { payload: CurrentPresets['effects']; type: string }
+    ) => {
+      state.currentPresets.effects = action.payload;
+    },
+    setSynths: (
+      state,
+      action: { payload: CurrentPresets['synths']; type: string }
+    ) => {
+      state.currentPresets.synths = action.payload;
+    },
+    setPatterns: (
+      state,
+      action: { payload: CurrentPresets['patterns']; type: string }
+    ) => {
+      state.currentPresets.patterns = action.payload;
+    },
+  },
+});
+
+export const { setError, setEffects, setSynths, setPatterns } =
+  presetSlice.actions;
+
+export default presetSlice.reducer;
