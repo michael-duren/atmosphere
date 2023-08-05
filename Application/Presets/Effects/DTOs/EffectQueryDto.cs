@@ -2,7 +2,6 @@ namespace Application.Presets.Effects.DTOs;
 
 public class EffectQueryDto
 {
-    public string AppUserId { get; set; } = null!;
     public int Id { get; set; }
     public string PresetName { get; set; } = null!;
     public double Mix { get; set; }

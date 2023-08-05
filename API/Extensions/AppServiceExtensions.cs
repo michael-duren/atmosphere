@@ -27,7 +27,7 @@ public static class AppServiceExtensions
             // connection string, or development connection string from var.
             if (env == "Development")
             {
-                connStr = config.GetConnectionString("DefaultConnection");
+                connStr = config.GetConnectionString("DefaultConnection")!;
             }
             else
             {
