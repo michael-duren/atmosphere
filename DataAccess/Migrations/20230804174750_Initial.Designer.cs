@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230726191736_RefreshToken")]
-    partial class RefreshToken
+    [Migration("20230804174750_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,7 +169,7 @@ namespace DataAccess.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("double precision");
 
-                    b.Property<double>("Filter")
+                    b.Property<double>("FilterFrequency")
                         .HasColumnType("double precision");
 
                     b.Property<double>("Mix")
@@ -232,19 +232,37 @@ namespace DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("varchar(3)");
+
+                    b.Property<int>("Length")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("NoteDuration")
+                        .IsRequired()
+                        .HasColumnType("varchar(5)");
+
                     b.Property<string>("PatternType")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Scale")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<int[]>("Sequence")
                         .IsRequired()
                         .HasColumnType("integer[]");
 
                     b.Property<int>("SongId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("TimeInterval")
+                        .IsRequired()
+                        .HasColumnType("varchar(5)");
+
+                    b.Property<int>("Transpose")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -332,22 +350,28 @@ namespace DataAccess.Migrations
                     b.Property<double>("Decay")
                         .HasColumnType("double precision");
 
-                    b.Property<double>("Filter")
+                    b.Property<double>("FilterFrequency")
                         .HasColumnType("double precision");
 
                     b.Property<string>("PresetName")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
+                    b.Property<double>("Release")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("Sustain")
+                        .HasColumnType("double precision");
+
                     b.Property<string>("Waveform")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("BassSynthPreset");
+                    b.ToTable("BassSynthPresets");
                 });
 
             modelBuilder.Entity("Domain.Presets.DelayPreset", b =>
@@ -379,7 +403,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("DelayPreset");
+                    b.ToTable("DelayPresets");
                 });
 
             modelBuilder.Entity("Domain.Presets.DistortionPreset", b =>
@@ -397,7 +421,7 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<double>("Filter")
+                    b.Property<double>("FilterFrequency")
                         .HasColumnType("double precision");
 
                     b.Property<double>("Mix")
@@ -411,7 +435,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("DistortionPreset");
+                    b.ToTable("DistortionPresets");
                 });
 
             modelBuilder.Entity("Domain.Presets.KitPatternPreset", b =>
@@ -426,31 +450,34 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int[]>("BdSteps")
+                    b.Property<bool[]>("BdSteps")
                         .IsRequired()
-                        .HasColumnType("integer[]");
+                        .HasColumnType("boolean[]");
 
-                    b.Property<int[]>("ChSteps")
+                    b.Property<bool[]>("ChSteps")
                         .IsRequired()
-                        .HasColumnType("integer[]");
+                        .HasColumnType("boolean[]");
 
-                    b.Property<int[]>("ClSteps")
+                    b.Property<bool[]>("ClSteps")
                         .IsRequired()
-                        .HasColumnType("integer[]");
+                        .HasColumnType("boolean[]");
 
-                    b.Property<string>("PatternName")
+                    b.Property<int>("PatternLength")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PresetName")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int[]>("SdSteps")
+                    b.Property<bool[]>("SdSteps")
                         .IsRequired()
-                        .HasColumnType("integer[]");
+                        .HasColumnType("boolean[]");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("KitPatternPreset");
+                    b.ToTable("KitPatternPresets");
                 });
 
             modelBuilder.Entity("Domain.Presets.MelodicPatternPreset", b =>
@@ -465,9 +492,20 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("varchar(3)");
+
+                    b.Property<int>("Length")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("NoteDuration")
+                        .IsRequired()
+                        .HasColumnType("varchar(5)");
+
                     b.Property<string>("PatternType")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("PresetName")
                         .IsRequired()
@@ -475,17 +513,24 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Scale")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<int[]>("Sequence")
                         .IsRequired()
                         .HasColumnType("integer[]");
 
+                    b.Property<string>("TimeInterval")
+                        .IsRequired()
+                        .HasColumnType("varchar(5)");
+
+                    b.Property<int>("Transpose")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("MelodicPatternPreset");
+                    b.ToTable("MelodicPatternPresets");
                 });
 
             modelBuilder.Entity("Domain.Presets.MelodicSynthPreset", b =>
@@ -519,8 +564,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<double>("LfoFrequency")
-                        .HasColumnType("double precision");
+                    b.Property<string>("LfoFrequency")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("LfoShape")
                         .IsRequired()
@@ -547,7 +593,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("MelodicSynthPreset");
+                    b.ToTable("MelodicSynthPresets");
                 });
 
             modelBuilder.Entity("Domain.Presets.ReverbPreset", b =>
@@ -579,7 +625,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("ReverbPreset");
+                    b.ToTable("ReverbPresets");
                 });
 
             modelBuilder.Entity("Domain.RefreshToken", b =>

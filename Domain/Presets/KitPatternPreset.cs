@@ -9,9 +9,10 @@ public class KitPatternPreset
     public AppUser AppUser { get; set; } = null!;
 
     [Key] public int Id { get; set; }
-    [Column(TypeName = "varchar(50)")] public string PatternName { get; set; } = null!;
-    public int[] BdSteps { get; set; } = null!;
-    public int[] SdSteps { get; set; } = null!;
-    public int[] ClSteps { get; set; } = null!;
-    public int[] ChSteps { get; set; } = null!;
+    [Column(TypeName = "varchar(50)")] public string PresetName { get; set; } = null!;
+    public int PatternLength { get; set; }
+    public bool[] BdSteps { get; set; } = null!;
+    public bool[] SdSteps { get; set; } = null!;
+    public bool[] ClSteps { get; set; } = null!;
+    public bool[] ChSteps { get; set; } = null!;
 }
