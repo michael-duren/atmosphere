@@ -64,7 +64,7 @@ public class CreatePattern
 
                     var melodicPatternResult = await _context.SaveChangesAsync(cancellationToken) > 0;
 
-                    var createdMelodicPattern = await _context.DistortionPresets.Where(p => p.AppUserId == user.Id)
+                    var createdMelodicPattern = await _context.MelodicPatternPresets.Where(p => p.AppUserId == user.Id)
                         .ProjectTo<PatternQueryDto>(_mapper.ConfigurationProvider)
                         .FirstOrDefaultAsync(p => p.Id == melodicPattern.Id, cancellationToken: cancellationToken);
 
@@ -77,13 +77,13 @@ public class CreatePattern
 
                     await _context.KitPatternPresets.AddAsync(kitPattern, cancellationToken);
 
-                    var reverbResult = await _context.SaveChangesAsync(cancellationToken) > 0;
+                    var kitResult = await _context.SaveChangesAsync(cancellationToken) > 0;
 
-                    var createdKitPattern = await _context.ReverbPresets.Where(p => p.AppUserId == user.Id)
+                    var createdKitPattern = await _context.KitPatternPresets.Where(p => p.AppUserId == user.Id)
                         .ProjectTo<PatternQueryDto>(_mapper.ConfigurationProvider)
                         .FirstOrDefaultAsync(p => p.Id == kitPattern.Id, cancellationToken: cancellationToken);
 
-                    return new CreateResult { Result = reverbResult, CreatedPreset = createdKitPattern };
+                    return new CreateResult { Result = kitResult, CreatedPreset = createdKitPattern };
                 default:
                     return new CreateResult { Result = false, CreatedPreset = null };
             }

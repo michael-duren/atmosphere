@@ -12,11 +12,11 @@ namespace Application.Presets.Instruments.Queries;
 
 public class GetAllInstruments
 {
-    public class Query : IRequest<Result<InstrumentsQueryDto>>
+    public class Query : IRequest<Result<SynthsQueryDto>>
     {
     }
 
-    public class Handler : IRequestHandler<Query, Result<InstrumentsQueryDto>>
+    public class Handler : IRequestHandler<Query, Result<SynthsQueryDto>>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -29,13 +29,13 @@ public class GetAllInstruments
             _userAccessor = userAccessor;
         }
 
-        public async Task<Result<InstrumentsQueryDto>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<SynthsQueryDto>> Handle(Query request, CancellationToken cancellationToken)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == _userAccessor.GetUsername(),
                 cancellationToken: cancellationToken);
 
             if (user is null)
-                return Result<InstrumentsQueryDto>.Failure(
+                return Result<SynthsQueryDto>.Failure(
                     new ErrorMessage(new List<string> { "User not found" }));
 
             var melodicSynths = await _context.MelodicSynthPresets
@@ -48,13 +48,13 @@ public class GetAllInstruments
                 .ProjectTo<BassSynthPresetDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
-            var instruments = new InstrumentsQueryDto
+            var instruments = new SynthsQueryDto
             {
                 MelodicSynths = melodicSynths,
                 BassSynths = bassSynths
             };
 
-            return Result<InstrumentsQueryDto>.Success(instruments);
+            return Result<SynthsQueryDto>.Success(instruments);
         }
     }
 }
