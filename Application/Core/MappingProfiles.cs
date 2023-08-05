@@ -1,4 +1,5 @@
 using Application.Presets.Effects.DTOs;
+using Application.Presets.Instruments.DTOs;
 using Application.Presets.Patterns.DTOs;
 using Application.Songs.DTOs;
 using Domain;
@@ -21,5 +22,7 @@ public class MappingProfiles : AutoMapper.Profile
         CreateMap<EffectQueryDto, DelayPreset>().ReverseMap();
         CreateMap<MelodicPatternPresetDto, MelodicPatternPreset>().ReverseMap();
         CreateMap<KitPatternPresetDto, KitPatternPreset>().ReverseMap();
+        CreateMap<MelodicSynthPresetDto, MelodicSynthPreset>().ReverseMap();
+        CreateMap<BassSynthPresetDto, BassSynthPreset>().ReverseMap();
     }
 }
