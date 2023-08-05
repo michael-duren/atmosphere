@@ -12,8 +12,11 @@ public class MappingProfiles : AutoMapper.Profile
         CreateMap<Song, Song>();
         CreateMap<Song, SongQueryDto>().ReverseMap();
         CreateMap<SongCreateDto, Song>();
-        CreateMap<DelayPreset, DelayQueryDto>();
-        CreateMap<DistortionPreset, DistortionQueryDto>();
-        CreateMap<ReverbPreset, ReverbQueryDto>();
+        CreateMap<DelayPreset, DelayQueryDto>().ReverseMap();
+        CreateMap<DistortionPreset, DistortionQueryDto>().ReverseMap();
+        CreateMap<ReverbPreset, ReverbQueryDto>().ReverseMap();
+        CreateMap<EffectQueryDto, DistortionPreset>().ReverseMap();
+        CreateMap<EffectQueryDto, ReverbPreset>().ReverseMap();
+        CreateMap<EffectQueryDto, DelayPreset>().ReverseMap();
     }
 }
