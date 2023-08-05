@@ -31,6 +31,46 @@ public class PatternEndpoints : IEndpointDefinition
             .Accepts<KitPatternPresetDto>("application/json")
             .Produces<KitPatternPresetDto>(200, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
+
+        /*
+         * PUT requests
+         */
+        patterns.MapPut("/melodic/{id}", UpdateMelodicPattern)
+            .WithName("UpdateMelodicPattern")
+            .Accepts<MelodicPatternPresetDto>("application/json")
+            .Produces<MelodicPatternPresetDto>(200, "application/json")
+            .Produces<ErrorMessage>(400, "application/json");
+        patterns.MapPut("/kit/{id}", UpdateKitPattern)
+            .WithName("UpdateKitPattern")
+            .Accepts<KitPatternPresetDto>("application/json")
+            .Produces<KitPatternPresetDto>(200, "application/json")
+            .Produces<ErrorMessage>(400, "application/json");
+    }
+
+    private static async Task<IResult> UpdateKitPattern(IMediator mediator, IHandleResult handleResult,
+        MelodicPatternPresetDto patternQueryDto, int id,
+        CancellationToken cancellationToken)
+    {
+        var updateKitPattern = new UpdatePattern.Command
+        {
+            PatternsQueryDto = patternQueryDto,
+            Type = "kit",
+            Id = id
+        };
+        return handleResult.Handle(await mediator.Send(updateKitPattern, cancellationToken));
+    }
+
+    private static async Task<IResult> UpdateMelodicPattern(IMediator mediator, IHandleResult handleResult,
+        MelodicPatternPresetDto patternQueryDto, int id,
+        CancellationToken cancellationToken)
+    {
+        var updateMelodicPattern = new UpdatePattern.Command
+        {
+            PatternsQueryDto = patternQueryDto,
+            Type = "melodic",
+            Id = id
+        };
+        return handleResult.Handle(await mediator.Send(updateMelodicPattern, cancellationToken));
     }
 
     private static async Task<IResult> CreateMelodicPattern(IMediator mediator, IHandleResult handleResult,
