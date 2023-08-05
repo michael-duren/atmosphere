@@ -24,5 +24,7 @@ public class MappingProfiles : AutoMapper.Profile
         CreateMap<KitPatternPresetDto, KitPatternPreset>().ReverseMap();
         CreateMap<MelodicSynthPresetDto, MelodicSynthPreset>().ReverseMap();
         CreateMap<BassSynthPresetDto, BassSynthPreset>().ReverseMap();
+        CreateMap<PatternQueryDto, MelodicPatternPreset>().ReverseMap();
+        CreateMap<PatternQueryDto, KitPatternPreset>().ReverseMap();
     }
 }

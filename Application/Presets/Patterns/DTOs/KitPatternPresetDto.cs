@@ -3,13 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Application.Presets.Patterns.DTOs;
 
-public class KitPatternPresetDto
+public class KitPatternPresetDto : PatternQueryDto
 {
-    [Key] public int Id { get; set; }
-    [Column(TypeName = "varchar(50)")] public string PresetName { get; set; } = null!;
-    public int PatternLength { get; set; }
-    public bool[] BdSteps { get; set; } = null!;
-    public bool[] SdSteps { get; set; } = null!;
-    public bool[] ClSteps { get; set; } = null!;
-    public bool[] ChSteps { get; set; } = null!;
+    public new int Id { get; set; }
+    public new string PresetName { get; set; } = null!;
+    public new int PatternLength { get; set; }
+    public new bool[] BdSteps { get; set; } = null!;
+    public new bool[] SdSteps { get; set; } = null!;
+    public new bool[] ClSteps { get; set; } = null!;
+    public new bool[] ChSteps { get; set; } = null!;
 }

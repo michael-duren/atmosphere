@@ -1,5 +1,6 @@
 using API.Interfaces;
 using Application.Core;
+using Application.Presets.Patterns.Commands;
 using Application.Presets.Patterns.DTOs;
 using Application.Presets.Patterns.Queries;
 using MediatR;
@@ -16,6 +17,44 @@ public class PatternEndpoints : IEndpointDefinition
             .WithName("GetAllPatterns")
             .Produces<PatternsQueryDto>(200, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
+
+        /*
+         * POST requests
+         */
+        patterns.MapPost("/melodic", CreateMelodicPattern)
+            .WithName("CreateMelodicPattern")
+            .Accepts<MelodicPatternPresetDto>("application/json")
+            .Produces<MelodicPatternPresetDto>(200, "application/json")
+            .Produces<ErrorMessage>(400, "application/json");
+        patterns.MapPost("/kit", CreateKitPattern)
+            .WithName("CreateKitPattern")
+            .Accepts<KitPatternPresetDto>("application/json")
+            .Produces<KitPatternPresetDto>(200, "application/json")
+            .Produces<ErrorMessage>(400, "application/json");
+    }
+
+    private static async Task<IResult> CreateMelodicPattern(IMediator mediator, IHandleResult handleResult,
+        MelodicPatternPresetDto patternQueryDto,
+        CancellationToken cancellationToken)
+    {
+        var createMelodicPattern = new CreatePattern.Command
+        {
+            PatternsQueryDto = patternQueryDto,
+            Type = "melodic"
+        };
+        return handleResult.Handle(await mediator.Send(createMelodicPattern, cancellationToken));
+    }
+
+    private static async Task<IResult> CreateKitPattern(IMediator mediator, IHandleResult handleResult,
+        KitPatternPresetDto patternQueryDto,
+        CancellationToken cancellationToken)
+    {
+        var createKitPattern = new CreatePattern.Command
+        {
+            PatternsQueryDto = patternQueryDto,
+            Type = "kit"
+        };
+        return handleResult.Handle(await mediator.Send(createKitPattern, cancellationToken));
     }
 
     private static async Task<IResult> GetAllPatterns(IMediator mediator, IHandleResult handleResult,
