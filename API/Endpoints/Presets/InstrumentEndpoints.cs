@@ -18,6 +18,11 @@ public class InstrumentEndpoints : IEndpointDefinition
             .Produces<SynthsQueryDto>(200, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
 
+        instruments.MapDelete("/{synthType}/{id}", DeleteSynth)
+            .WithName("DeleteInstrument")
+            .Produces<SynthsQueryDto>(200, "application/json")
+            .Produces<ErrorMessage>(400, "application/json");
+
         /*
          * POST methods
          */
@@ -42,14 +47,19 @@ public class InstrumentEndpoints : IEndpointDefinition
             .WithName("UpdateBassSynth")
             .Produces<SynthsQueryDto>(200, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
+    }
 
-        /*
-         * DELETE methods
-         */
-        // instruments.MapDelete()
-        //     .WithName("DeleteInstrument")
-        //     .Produces<SynthsQueryDto>(200, "application/json")
-        //     .Produces<ErrorMessage>(400, "application/json");
+    private static async Task<IResult> DeleteSynth(IMediator mediator, IHandleResult handleResult,
+        string synthType,
+        int id,
+        CancellationToken cancellationToken)
+    {
+        var deleteSynth = new DeleteSynth.Command
+        {
+            Id = id,
+            Type = synthType
+        };
+        return handleResult.Handle(await mediator.Send(deleteSynth, cancellationToken));
     }
 
     private static async Task<IResult> UpdateBassSynth(IMediator mediator, IHandleResult handleResult,
