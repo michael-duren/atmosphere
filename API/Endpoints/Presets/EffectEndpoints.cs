@@ -43,6 +43,59 @@ public class EffectEndpoints : IEndpointDefinition
             .WithName("CreateDelayPreset")
             .Produces<DelayQueryDto>(201, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
+
+        /*
+         * PUT methods for updating effects
+         */
+        effects.MapPut("/distortion/{id}", UpdateDistortionPreset)
+            .WithName("UpdateDistortionPreset")
+            .Produces(200)
+            .Produces<ErrorMessage>(400, "application/json");
+
+        effects.MapPut("/reverb/{id}", UpdateReverbPreset)
+            .WithName("UpdateReverbPreset")
+            .Produces(200)
+            .Produces<ErrorMessage>(400, "application/json");
+        effects.MapPut("/delay/{id}", UpdateDelayPreset)
+            .WithName("UpdateDelayPreset")
+            .Produces(200)
+            .Produces<ErrorMessage>(400, "application/json");
+    }
+
+    private static async Task<IResult> UpdateDelayPreset(IMediator mediator, IHandleResult handleResult,
+        DelayQueryDto delayQueryDto, CancellationToken cancellationToken, int id)
+    {
+        var updateDelayPreset = new UpdateEffect.Command
+        {
+            Type = "delay",
+            Effect = delayQueryDto,
+            Id = id
+        };
+        return handleResult.Handle(await mediator.Send(updateDelayPreset, cancellationToken));
+    }
+
+    private static async Task<IResult> UpdateReverbPreset(IMediator mediator, IHandleResult handleResult,
+        ReverbQueryDto reverbQueryDto, CancellationToken cancellationToken, int id)
+    {
+        var updateReverbPreset = new UpdateEffect.Command
+        {
+            Type = "reverb",
+            Effect = reverbQueryDto,
+            Id = id
+        };
+        return handleResult.Handle(await mediator.Send(updateReverbPreset, cancellationToken));
+    }
+
+    private static async Task<IResult> UpdateDistortionPreset(IMediator mediator, IHandleResult handleResult,
+        DistortionQueryDto distortionQueryDto, CancellationToken cancellationToken, int id)
+    {
+        var updateDistortionPreset = new UpdateEffect.Command
+        {
+            Type = "distortion",
+            Effect = distortionQueryDto,
+            Id = id
+        };
+        return handleResult.Handle(await mediator.Send(updateDistortionPreset, cancellationToken));
     }
 
     private async Task<IResult> CreateDelayPreset(IMediator mediator, IHandleResult handleResult,

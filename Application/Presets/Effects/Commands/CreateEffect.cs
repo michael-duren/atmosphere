@@ -11,11 +11,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Presets.Effects.Commands;
 
-public class CreateEffect
+public abstract class CreateEffect
 {
     public class Command : IRequest<Result<EffectQueryDto>>
     {
-        public EffectQueryDto? EffectQueryDto { get; set; }
+        public EffectQueryDto EffectQueryDto { get; set; } = null!;
         public string? Type { get; set; }
     }
 
@@ -41,7 +41,7 @@ public class CreateEffect
                 return Result<EffectQueryDto>.Failure(
                     new ErrorMessage(new List<string> { "User not found" }));
 
-            var createResult = await CreateEffect(request.Type!, user, request.EffectQueryDto!, cancellationToken);
+            var createResult = await CreateEffect(request.Type!, user, request.EffectQueryDto, cancellationToken);
 
 
             return createResult.Result
