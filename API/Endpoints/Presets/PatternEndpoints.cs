@@ -18,6 +18,11 @@ public class PatternEndpoints : IEndpointDefinition
             .Produces<PatternsQueryDto>(200, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
 
+        patterns.MapDelete("/{patternType}/{id}", DeletePatternById)
+            .WithName("DeletePatternById")
+            .Produces(200)
+            .Produces<ErrorMessage>(400, "application/json");
+
         /*
          * POST requests
          */
@@ -45,6 +50,18 @@ public class PatternEndpoints : IEndpointDefinition
             .Accepts<KitPatternPresetDto>("application/json")
             .Produces<KitPatternPresetDto>(200, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
+    }
+
+    private static async Task<IResult> DeletePatternById(IMediator mediator, IHandleResult handleResult,
+        string patternType, int id,
+        CancellationToken cancellationToken)
+    {
+        var deletePattern = new DeletePattern.Command
+        {
+            Id = id,
+            Type = patternType
+        };
+        return handleResult.Handle(await mediator.Send(deletePattern, cancellationToken));
     }
 
     private static async Task<IResult> UpdateKitPattern(IMediator mediator, IHandleResult handleResult,
