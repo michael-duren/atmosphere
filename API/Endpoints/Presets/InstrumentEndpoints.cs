@@ -29,6 +29,55 @@ public class InstrumentEndpoints : IEndpointDefinition
             .WithName("CreateBassSynth")
             .Produces<SynthsQueryDto>(200, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
+
+        /*
+         * PUT methods
+         */
+        instruments.MapPut("/melodic/{id}", UpdateMelodicSynth)
+            .WithName("UpdateMelodicSynth")
+            .Produces<SynthsQueryDto>(200, "application/json")
+            .Produces<ErrorMessage>(400, "application/json");
+
+        instruments.MapPut("/bass/{id}", UpdateBassSynth)
+            .WithName("UpdateBassSynth")
+            .Produces<SynthsQueryDto>(200, "application/json")
+            .Produces<ErrorMessage>(400, "application/json");
+
+        /*
+         * DELETE methods
+         */
+        // instruments.MapDelete()
+        //     .WithName("DeleteInstrument")
+        //     .Produces<SynthsQueryDto>(200, "application/json")
+        //     .Produces<ErrorMessage>(400, "application/json");
+    }
+
+    private static async Task<IResult> UpdateBassSynth(IMediator mediator, IHandleResult handleResult,
+        BassSynthPresetDto synthQueryDto,
+        int id,
+        CancellationToken cancellationToken)
+    {
+        var updateBassSynth = new UpdateSynth.Command
+        {
+            SynthQueryDto = synthQueryDto,
+            Type = "bass",
+            Id = id
+        };
+        return handleResult.Handle(await mediator.Send(updateBassSynth, cancellationToken));
+    }
+
+    private static async Task<IResult> UpdateMelodicSynth(IMediator mediator, IHandleResult handleResult,
+        MelodicSynthPresetDto synthQueryDto,
+        int id,
+        CancellationToken cancellationToken)
+    {
+        var updateMelodicSynth = new UpdateSynth.Command
+        {
+            SynthQueryDto = synthQueryDto,
+            Type = "melodic",
+            Id = id
+        };
+        return handleResult.Handle(await mediator.Send(updateMelodicSynth, cancellationToken));
     }
 
     private static async Task<IResult> CreateMelodicSynth(IMediator mediator, IHandleResult handleResult,
