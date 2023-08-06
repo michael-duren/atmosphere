@@ -19,6 +19,7 @@ import { setToneParamsOnLoad } from '../tone/setters/setToneParamsOnLoad.ts';
 import { toneCleanup, toneState } from '../tone/singleton.ts';
 import toast from 'react-hot-toast';
 import ModalContent from '../components/Features/Daw/Common/ModalContent.tsx';
+import { PRESET_ACTIONS } from '../store/actions/presetActions.ts';
 
 export default function Daw() {
   const dispatch = useAppDispatch();
@@ -28,6 +29,7 @@ export default function Daw() {
 
   useEffect(() => {
     dispatch({ type: SONG_ACTIONS.GET_SONG_LIST_ASYNC });
+    dispatch({ type: PRESET_ACTIONS.GET_ALL_PRESETS_ASYNC });
   }, []);
 
   useEffect(() => {
@@ -66,7 +68,7 @@ export default function Daw() {
   return (
     <>
       <DawLayout>
-        <aside className="col-span-4 grid grid-rows-2 rounded-xl bg-dark-transparent">
+        <aside className="col-span-4  flex flex-col rounded-xl bg-dark-transparent">
           <MelodicPattern />
           <Collections />
         </aside>

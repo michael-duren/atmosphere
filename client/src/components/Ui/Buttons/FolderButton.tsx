@@ -4,6 +4,7 @@ import {
   PiFolderNotch,
   PiFolderOpen,
 } from 'react-icons/pi';
+import { toTitleCase } from '../../../utils/string.ts';
 
 interface Props {
   name: string;
@@ -20,23 +21,23 @@ export default function FolderButton({ name, isOpen, setIsOpen }: Props) {
       {isOpen ? (
         <>
           <span className="mr-2">
-            <PiCaretDownBold size={18} />
+            <PiCaretDownBold size={14} />
           </span>{' '}
           <span className="mr-1">
-            <PiFolderOpen size={22} />
+            <PiFolderOpen size={18} />
           </span>
         </>
       ) : (
         <>
           <span className="mr-2">
-            <PiCaretRightBold size={18} />
+            <PiCaretRightBold size={14} />
           </span>
           <span className="mr-1">
-            <PiFolderNotch size={22} />
+            <PiFolderNotch size={18} />
           </span>
         </>
       )}{' '}
-      <span>{name}</span>
+      <span>{toTitleCase(name)}</span>
     </button>
   );
 }
