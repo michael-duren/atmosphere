@@ -13,17 +13,17 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface CurrentPresets {
   effects: {
-    distortion: Distortion[];
-    reverb: Reverb[];
-    delay: Delay[];
+    distortions: Distortion[];
+    reverbs: Reverb[];
+    delays: Delay[];
   };
   synths: {
-    bassSynth: BassSynth[] | null;
-    melodicSynth: MelodicSynth[] | null;
+    bassSynths: BassSynth[] | null;
+    melodicSynths: MelodicSynth[] | null;
   };
   patterns: {
-    melodicPattern: MelodicPattern[] | null;
-    kitPattern: KitPattern[] | null;
+    melodicPatterns: MelodicPattern[] | null;
+    kitPatterns: KitPattern[] | null;
   };
 }
 
@@ -36,17 +36,17 @@ const initialPresetState: PresetState = {
   error: null,
   currentPresets: {
     effects: {
-      distortion: [],
-      reverb: [],
-      delay: [],
+      distortions: [],
+      reverbs: [],
+      delays: [],
     },
     synths: {
-      bassSynth: null,
-      melodicSynth: null,
+      bassSynths: null,
+      melodicSynths: null,
     },
     patterns: {
-      melodicPattern: null,
-      kitPattern: null,
+      melodicPatterns: null,
+      kitPatterns: null,
     },
   },
 };

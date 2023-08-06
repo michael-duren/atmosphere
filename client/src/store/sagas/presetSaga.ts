@@ -20,6 +20,7 @@ export function* getAllInstruments() {
 
 export function* getAllPatterns() {
   const patterns: PatternList = yield call(agent.Preset.Patterns.list);
+  console.log(patterns);
   yield put(setPatterns(patterns));
 }
 
