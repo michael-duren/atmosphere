@@ -1,13 +1,13 @@
 import { FiDelete } from 'react-icons/fi';
-import { IconType } from 'react-icons';
 import { toTitleCase } from '../../../../utils/string.ts';
 
 interface Props {
   mainOnClick: () => void;
   deleteOnClick: () => void;
   name: string;
-  Icon: IconType;
-  iconSize: number;
+  Icon: any;
+  iconSize?: number;
+  additionalStyles?: string;
 }
 
 export default function CollectionItem({
@@ -16,6 +16,7 @@ export default function CollectionItem({
   Icon,
   name,
   iconSize,
+  additionalStyles,
 }: Props) {
   return (
     <div className="flex gap-8 items-center">
@@ -24,7 +25,10 @@ export default function CollectionItem({
         onClick={mainOnClick}
       >
         <span className="mr-2">
-          <Icon className="group-active:scale-110" size={iconSize} />
+          <Icon
+            className={`group-active:scale-110 ${additionalStyles}`}
+            size={iconSize}
+          />
         </span>
         <span className="group-active:scale-105 text-sm">
           {toTitleCase(name)}
