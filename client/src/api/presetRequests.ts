@@ -10,19 +10,19 @@ import {
 } from '../models/song.ts';
 
 export type EffectList = {
-  distortion: Distortion[];
-  reverb: Reverb[];
-  delay: Delay[];
+  distortionPresets: Distortion[];
+  reverbPresets: Reverb[];
+  delayPresets: Delay[];
 };
 
 export type InstrumentList = {
-  melodicSynth: MelodicSynth[];
-  bassSynth: BassSynth[];
+  melodicSynths: MelodicSynth[];
+  bassSynths: BassSynth[];
 };
 
 export type PatternList = {
-  melodicPattern: MelodicPattern[];
-  kitPattern: KitPattern[];
+  melodicPatterns: MelodicPattern[];
+  kitPatterns: KitPattern[];
 };
 
 const Effects = {
