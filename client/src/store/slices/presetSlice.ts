@@ -13,9 +13,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface CurrentPresets {
   effects: {
-    distortions: Distortion[];
-    reverbs: Reverb[];
-    delays: Delay[];
+    distortionPresets: Distortion[];
+    reverbPresets: Reverb[];
+    delayPresets: Delay[];
   };
   synths: {
     bassSynths: BassSynth[] | null;
@@ -36,9 +36,9 @@ const initialPresetState: PresetState = {
   error: null,
   currentPresets: {
     effects: {
-      distortions: [],
-      reverbs: [],
-      delays: [],
+      distortionPresets: [],
+      reverbPresets: [],
+      delayPresets: [],
     },
     synths: {
       bassSynths: null,

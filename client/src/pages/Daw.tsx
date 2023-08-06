@@ -68,7 +68,7 @@ export default function Daw() {
   return (
     <>
       <DawLayout>
-        <aside className="col-span-4 grid grid-rows-2 rounded-xl bg-dark-transparent">
+        <aside className="col-span-4  flex flex-col rounded-xl bg-dark-transparent">
           <MelodicPattern />
           <Collections />
         </aside>

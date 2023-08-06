@@ -1,5 +1,6 @@
 import { FiDelete } from 'react-icons/fi';
 import { IconType } from 'react-icons';
+import { toTitleCase } from '../../../../utils/string.ts';
 
 interface Props {
   mainOnClick: () => void;
@@ -25,7 +26,9 @@ export default function CollectionItem({
         <span className="mr-2">
           <Icon className="group-active:scale-110" size={iconSize} />
         </span>
-        <span className="group-active:scale-105 text-sm">{name}</span>
+        <span className="group-active:scale-105 text-sm">
+          {toTitleCase(name)}
+        </span>
       </button>
       <button
         onClick={deleteOnClick}
