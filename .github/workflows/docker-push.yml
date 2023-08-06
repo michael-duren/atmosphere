@@ -21,7 +21,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: michaelduren/app:latest
+          tags: michaelduren/atmosphere:latest
   deploy:
     needs: docker
     name: Deploy app
