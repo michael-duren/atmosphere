@@ -1,10 +1,6 @@
 import { darkInput } from '../../../Ui/Styles/input.ts';
 import { Fragment, useState } from 'react';
 import FormWarning from '../../../Ui/Warnings/FormWarning.tsx';
-import {
-  setPresetModalOpen,
-  setSaveModalOpen,
-} from '../../../../store/slices/commonSlice.ts';
 import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
 import { useAppDispatch } from '../../../../store/hooks/useAppDispatch.ts';
 
@@ -15,12 +11,14 @@ interface Props<T extends GeneralPreset> {
   dispatchType: string;
   currentPreset: T;
   presetType: string;
+  closeModal: () => void;
 }
 
 export default function SavePresetForm<T extends GeneralPreset>({
   dispatchType,
   currentPreset,
   presetType,
+  closeModal,
 }: Props<T>) {
   const { isPlaying } = useAppSelector((store) => store.transport);
   const error = useAppSelector((store) => store.preset.error);
@@ -32,8 +30,8 @@ export default function SavePresetForm<T extends GeneralPreset>({
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(setPresetModalOpen(false));
     const presetToSave = { ...currentPreset };
+    closeModal();
     if (isNewPreset) {
       presetToSave.presetName = presetToSaveNameInput;
       dispatch({ type: dispatchType, payload: presetToSave });
@@ -98,7 +96,7 @@ export default function SavePresetForm<T extends GeneralPreset>({
           </button>
           <button
             type="button"
-            onClick={() => dispatch(setSaveModalOpen(false))}
+            onClick={closeModal}
             className="hover:bg-gray-800 w-24 py-2 active:scale-105 transition-all duration-300 rounded-xl bg-opacity-80 bg-gray-900"
           >
             Cancel

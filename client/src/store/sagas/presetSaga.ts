@@ -16,6 +16,7 @@ import {
   LoadMelodicPattern,
   LoadReverbEffect,
   PRESET_ACTIONS,
+  UpdateMelodicPattern,
 } from '../actions/presetActions.ts';
 import {
   BassSynth,
@@ -87,6 +88,16 @@ export function* createMelodicPattern({ payload }: CreateMelodicPattern) {
     yield put({ type: PRESET_ACTIONS.GET_ALL_PATTERNS_ASYNC });
   } catch (e) {
     toast.error('Error creating pattern');
+  }
+}
+
+export function* updateMelodicPattern({ payload }: UpdateMelodicPattern) {
+  try {
+    yield call(agent.Preset.Patterns.updateMelodicPattern, payload);
+    toast.success('Pattern updated');
+    yield put({ type: PRESET_ACTIONS.GET_ALL_PATTERNS_ASYNC });
+  } catch (e) {
+    toast.error('Error updating pattern');
   }
 }
 
@@ -169,6 +180,10 @@ export function* presetSaga() {
   yield* takeEvery(
     PRESET_ACTIONS.DELETE_MELODIC_PATTERN_ASYNC,
     deleteMelodicPattern
+  );
+  yield* takeEvery(
+    PRESET_ACTIONS.UPDATE_MELODIC_PATTERN_ASYNC,
+    updateMelodicPattern
   );
   yield* takeEvery(PRESET_ACTIONS.LOAD_KIT_PATTERN_ASYNC, loadKitPattern);
   yield* takeEvery(PRESET_ACTIONS.LOAD_MELODIC_SYNTH_ASYNC, loadMelodicSynth);

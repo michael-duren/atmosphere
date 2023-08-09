@@ -67,21 +67,11 @@ public class UpdatePattern
 
                     // map new values
                     var melodicPattern = _mapper.Map<PatternQueryDto, MelodicPatternPreset>(patternQueryDto);
-                    oldMelodicPattern.PresetName = melodicPattern.PresetName;
-                    oldMelodicPattern.Length = melodicPattern.Length;
-                    oldMelodicPattern.Key = melodicPattern.Key;
-                    oldMelodicPattern.Scale = melodicPattern.Scale;
-                    oldMelodicPattern.Sequence = melodicPattern.Sequence;
-                    oldMelodicPattern.PatternType = melodicPattern.PatternType;
-                    oldMelodicPattern.Transpose = melodicPattern.Transpose;
-                    melodicPattern.TimeInterval = melodicPattern.TimeInterval;
-                    melodicPattern.NoteDuration = melodicPattern.NoteDuration;
+                    melodicPattern.AppUserId = user.Id;
+                    melodicPattern.AppUser = user;
+                    _mapper.Map(melodicPattern, oldMelodicPattern);
 
                     var melodicPatternResult = await _context.SaveChangesAsync(cancellationToken) > 0;
-
-                    var updatedMelodicPattern = await _context.DistortionPresets.Where(p => p.AppUserId == user.Id)
-                        .ProjectTo<PatternQueryDto>(_mapper.ConfigurationProvider)
-                        .FirstOrDefaultAsync(p => p.Id == melodicPattern.Id, cancellationToken: cancellationToken);
 
                     return new UpdatedResult { Result = melodicPatternResult };
 
@@ -94,12 +84,9 @@ public class UpdatePattern
 
                     // map new values
                     var kitPattern = _mapper.Map<PatternQueryDto, KitPatternPreset>(patternQueryDto);
-                    oldKitPattern.PresetName = kitPattern.PresetName;
-                    oldKitPattern.PatternLength = kitPattern.PatternLength;
-                    oldKitPattern.BdSteps = kitPattern.BdSteps;
-                    oldKitPattern.SdSteps = kitPattern.SdSteps;
-                    oldKitPattern.ClSteps = kitPattern.ClSteps;
-                    oldKitPattern.ChSteps = kitPattern.ChSteps;
+                    kitPattern.AppUserId = user.Id;
+                    kitPattern.AppUser = user;
+                    _mapper.Map(kitPattern, oldKitPattern);
 
                     var kitResult = await _context.SaveChangesAsync(cancellationToken) > 0;
                     return new UpdatedResult { Result = kitResult };

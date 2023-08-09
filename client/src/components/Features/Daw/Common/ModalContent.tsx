@@ -68,6 +68,7 @@ export default function ModalContent() {
           dispatchType={presetModalDispatchType!}
           currentPreset={presetModalData}
           presetType={presetModalType!}
+          closeModal={isPresetModalOpenHandler}
         />
       </DarkModal>
       <DarkModal
