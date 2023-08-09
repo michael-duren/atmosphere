@@ -9,6 +9,7 @@ import { PRESET_ACTIONS } from '../../../../store/actions/presetActions.ts';
 import toast from 'react-hot-toast';
 import {
   setPresetDeleteDispatchType,
+  setPresetDeleteModalOpen,
   setPresetDeleteType,
   setPresetModalOpen,
   setPresetToDelete,
@@ -49,8 +50,9 @@ export default function Patterns() {
                     toast.success(`Loaded ${pattern.presetName}`);
                   };
                   const loadDeletePresetFormHandler = () => {
+                    console.log(pattern);
                     dispatch(setPresetToDelete(pattern));
-                    dispatch(setPresetModalOpen(true));
+                    dispatch(setPresetDeleteModalOpen(true));
                     dispatch(setPresetDeleteType('Kit Pattern'));
                     dispatch(
                       setPresetDeleteDispatchType(

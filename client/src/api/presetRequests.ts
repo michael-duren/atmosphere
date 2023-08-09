@@ -84,7 +84,7 @@ const Patterns = {
   updateKitPattern: (pattern: KitPattern) =>
     requests.put(`/presets/patterns/kit/${pattern.id}`, pattern),
   deleteMelodicPattern: (id: number) =>
-    requests.del(`/presets/patterns/kit/${id}`),
+    requests.del(`/presets/patterns/melodic/${id}`),
   deleteKitPattern: (id: number) => requests.del(`/presets/patterns/kit/${id}`),
 };
 

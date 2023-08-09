@@ -166,6 +166,10 @@ export function* presetSaga() {
     PRESET_ACTIONS.CREATE_MELODIC_PATTERN_ASYNC,
     createMelodicPattern
   );
+  yield* takeEvery(
+    PRESET_ACTIONS.DELETE_MELODIC_PATTERN_ASYNC,
+    deleteMelodicPattern
+  );
   yield* takeEvery(PRESET_ACTIONS.LOAD_KIT_PATTERN_ASYNC, loadKitPattern);
   yield* takeEvery(PRESET_ACTIONS.LOAD_MELODIC_SYNTH_ASYNC, loadMelodicSynth);
   yield* takeEvery(PRESET_ACTIONS.LOAD_DISTORTION_EFFECT_ASYNC, loadDistortion);
