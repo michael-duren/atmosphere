@@ -18,7 +18,12 @@ public class PatternEndpoints : IEndpointDefinition
             .Produces<PatternsQueryDto>(200, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
         patterns.MapGet("/melodic/{id}", GetMelodicPatternById)
-            .WithName("GetPatternById")
+            .WithName("GetMelodicPatternById")
+            .Produces<PatternsQueryDto>(200, "application/json")
+            .Produces<ErrorMessage>(400, "application/json");
+
+        patterns.MapGet("/kit/{id}", GetKitPatternById)
+            .WithName("GetKitPatternById")
             .Produces<PatternsQueryDto>(200, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
 
@@ -54,6 +59,18 @@ public class PatternEndpoints : IEndpointDefinition
             .Accepts<KitPatternPresetDto>("application/json")
             .Produces<KitPatternPresetDto>(200, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
+    }
+
+    private static async Task<IResult> GetKitPatternById(IMediator mediator, CancellationToken cancellationToken,
+        IHandleResult handleResult, int id
+    )
+    {
+        var getPatternById = new GetKitPatternById.Query
+        {
+            Id = id
+        };
+
+        return handleResult.Handle(await mediator.Send(getPatternById, cancellationToken));
     }
 
     private static async Task<IResult> GetMelodicPatternById(IMediator mediator, CancellationToken cancellationToken,

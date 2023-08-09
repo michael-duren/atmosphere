@@ -1,7 +1,10 @@
 import { darkInput } from '../../../Ui/Styles/input.ts';
 import { Fragment, useState } from 'react';
 import FormWarning from '../../../Ui/Warnings/FormWarning.tsx';
-import { setSaveModalOpen } from '../../../../store/slices/commonSlice.ts';
+import {
+  setPresetModalOpen,
+  setSaveModalOpen,
+} from '../../../../store/slices/commonSlice.ts';
 import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
 import { useAppDispatch } from '../../../../store/hooks/useAppDispatch.ts';
 
@@ -11,11 +14,13 @@ interface GeneralPreset {
 interface Props<T extends GeneralPreset> {
   dispatchType: string;
   currentPreset: T;
+  presetType: string;
 }
 
 export default function SavePresetForm<T extends GeneralPreset>({
   dispatchType,
   currentPreset,
+  presetType,
 }: Props<T>) {
   const { isPlaying } = useAppSelector((store) => store.transport);
   const error = useAppSelector((store) => store.preset.error);
@@ -27,6 +32,7 @@ export default function SavePresetForm<T extends GeneralPreset>({
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    dispatch(setPresetModalOpen(false));
     const presetToSave = { ...currentPreset };
     if (isNewPreset) {
       presetToSave.presetName = presetToSaveNameInput;
@@ -39,7 +45,7 @@ export default function SavePresetForm<T extends GeneralPreset>({
 
   return (
     <div className="text-white flex items-center flex-col">
-      <h2 className="text-2xl opacity-90 mb-4 text-white">Save Song</h2>
+      <h2 className="text-2xl opacity-90 mb-4 text-white">{presetType}</h2>
       <form
         onSubmit={onSubmit}
         className="flex gap-8 items-center w-full flex-col"
@@ -48,7 +54,7 @@ export default function SavePresetForm<T extends GeneralPreset>({
           // if the song is new, show the input
           isNewPreset ? (
             <div className="flex items-center gap-2">
-              <label className="font-caps uppercase">Song Name</label>
+              <label className="font-caps uppercase">Name</label>
               <input
                 type="text"
                 value={presetToSaveNameInput}
@@ -59,7 +65,7 @@ export default function SavePresetForm<T extends GeneralPreset>({
           ) : (
             // if the song is not new, show the song name
             <div className="flex   items-center gap-2">
-              <label className="font-caps uppercase">Song Name</label>
+              <label className="font-caps uppercase">Name</label>
               <p className="font-caps rounded-xl bg-gray-800 px-4 text-violet-300">
                 {presetToSaveName}
               </p>

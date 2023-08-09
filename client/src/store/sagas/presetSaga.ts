@@ -7,6 +7,8 @@ import {
 } from '../../api/presetRequests.ts';
 import { setEffects, setPatterns, setSynths } from '../slices/presetSlice.ts';
 import {
+  CreateMelodicPattern,
+  DeleteMelodicPattern,
   LoadBassSynth,
   LoadDelayEffect,
   LoadDistortionEffect,
@@ -40,6 +42,7 @@ import {
   setToneReverb,
 } from '../../tone/setters/setToneMixParams.ts';
 import { setToneBassSynth } from '../../tone/setters/setToneBassSynthParams.ts';
+import toast from 'react-hot-toast';
 
 export function* getAllEffects() {
   const effects: EffectList = yield call(agent.Preset.Effects.list);
@@ -71,9 +74,32 @@ export function* loadMelodicPattern({ payload }: LoadMelodicPattern) {
     agent.Preset.Patterns.getMelodicPatternById,
     +payload
   );
-  console.log('IN LOAD MELODIC PATTERN', pattern);
   yield put(setMelodicPattern(pattern));
 }
+export function* createMelodicPattern({ payload }: CreateMelodicPattern) {
+  try {
+    const pattern: MelodicPattern = yield call(
+      agent.Preset.Patterns.createMelodicPattern,
+      payload
+    );
+    yield put(setMelodicPattern(pattern));
+    toast.success('Pattern created');
+    yield put({ type: PRESET_ACTIONS.GET_ALL_PATTERNS_ASYNC });
+  } catch (e) {
+    toast.error('Error creating pattern');
+  }
+}
+
+export function* deleteMelodicPattern({ payload }: DeleteMelodicPattern) {
+  try {
+    yield call(agent.Preset.Patterns.deleteMelodicPattern, +payload);
+    toast.success('Pattern deleted');
+    yield put({ type: PRESET_ACTIONS.GET_ALL_PATTERNS_ASYNC });
+  } catch (e) {
+    toast.error('Error deleting pattern');
+  }
+}
+
 export function* loadKitPattern({ payload }: LoadKitPattern) {
   const pattern: KitPattern = yield call(
     agent.Preset.Patterns.getKitPatternById,
@@ -131,10 +157,14 @@ export function* presetSaga() {
   yield* takeEvery(PRESET_ACTIONS.GET_ALL_INSTRUMENTS_ASYNC, getAllInstruments);
   yield* takeEvery(PRESET_ACTIONS.GET_ALL_PATTERNS_ASYNC, getAllPatterns);
   yield* takeEvery(PRESET_ACTIONS.GET_ALL_PRESETS_ASYNC, getAllPresets);
-  // loading individual presets
+  // patterns
   yield* takeEvery(
     PRESET_ACTIONS.LOAD_MELODIC_PATTERN_ASYNC,
     loadMelodicPattern
+  );
+  yield* takeEvery(
+    PRESET_ACTIONS.CREATE_MELODIC_PATTERN_ASYNC,
+    createMelodicPattern
   );
   yield* takeEvery(PRESET_ACTIONS.LOAD_KIT_PATTERN_ASYNC, loadKitPattern);
   yield* takeEvery(PRESET_ACTIONS.LOAD_MELODIC_SYNTH_ASYNC, loadMelodicSynth);
