@@ -71,19 +71,21 @@ const Instruments = {
 
 const Patterns = {
   list: () => requests.get<PatternList>('/presets/patterns'),
-  getMelodicPatternById: (id: number) => requests.get(`/presets/melodic/${id}`),
-  getKitPatternById: (id: number) => requests.get(`/presets/kit/${id}`),
+  getMelodicPatternById: (id: number) =>
+    requests.get(`/presets/patterns/melodic/${id}`),
+  getKitPatternById: (id: number) =>
+    requests.get(`/presets/patterns/kit/${id}`),
   createMelodicPattern: (pattern: MelodicPattern) =>
-    requests.post('/presets/melodicPattern', pattern),
+    requests.post('/presets/patterns/melodic', pattern),
   createKitPattern: (pattern: KitPattern) =>
-    requests.post('/presets/kit', pattern),
+    requests.post('/presets/patterns/kit', pattern),
   updateMelodicPattern: (pattern: MelodicPattern) =>
-    requests.put(`/presets/melodicPattern/${pattern.id}`, pattern),
+    requests.put(`/presets/patterns/melodic/${pattern.id}`, pattern),
   updateKitPattern: (pattern: KitPattern) =>
-    requests.put(`/presets/kit/${pattern.id}`, pattern),
+    requests.put(`/presets/patterns/kit/${pattern.id}`, pattern),
   deleteMelodicPattern: (id: number) =>
-    requests.del(`/presets/melodicPattern/${id}`),
-  deleteKitPattern: (id: number) => requests.del(`/presets/kit/${id}`),
+    requests.del(`/presets/patterns/kit/${id}`),
+  deleteKitPattern: (id: number) => requests.del(`/presets/patterns/kit/${id}`),
 };
 
 const Preset = {

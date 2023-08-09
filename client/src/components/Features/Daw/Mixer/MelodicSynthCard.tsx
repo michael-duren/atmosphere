@@ -27,7 +27,6 @@ import MainKnob from '../../../Ui/Knobs/MainKnob.tsx';
 import FrequencyKnob from '../../../Ui/Knobs/FrequencyKnob.tsx';
 import FilterKnob from '../../../Ui/Knobs/FilterKnob.tsx';
 import NoteFrequencyKnob from '../../../Ui/Knobs/NoteFrequencyKnob.tsx';
-import SaveButton from '../../../Ui/Buttons/SaveButton.tsx';
 
 const MelodicSynthCard: React.FC = () => {
   const { currentSong } = useAppSelector(selectSong);
@@ -53,7 +52,7 @@ const MelodicSynthCard: React.FC = () => {
           <MelodicSynthSvg className="h-8 w-8  fill-white stroke-2 stroke-white" />
           <h2 className="text-xl">Melodic Synth</h2>
         </div>
-        <SaveButton />
+        {/*<SaveButton />*/}
       </div>
       <div className="grid grid-cols-4 grid-rows-3 gap-x-4 gap-y-8">
         {/* Row One */}

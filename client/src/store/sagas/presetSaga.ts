@@ -71,6 +71,7 @@ export function* loadMelodicPattern({ payload }: LoadMelodicPattern) {
     agent.Preset.Patterns.getMelodicPatternById,
     +payload
   );
+  console.log('IN LOAD MELODIC PATTERN', pattern);
   yield put(setMelodicPattern(pattern));
 }
 export function* loadKitPattern({ payload }: LoadKitPattern) {

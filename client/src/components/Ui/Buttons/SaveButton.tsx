@@ -2,7 +2,7 @@ import { TfiSave } from 'react-icons/tfi';
 
 interface Props {
   size?: number;
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 export default function SaveButton({ size, onClick }: Props) {
