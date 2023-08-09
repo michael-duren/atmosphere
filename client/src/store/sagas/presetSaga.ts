@@ -7,7 +7,9 @@ import {
 } from '../../api/presetRequests.ts';
 import { setEffects, setPatterns, setSynths } from '../slices/presetSlice.ts';
 import {
+  CreateKitPattern,
   CreateMelodicPattern,
+  DeleteKitPattern,
   DeleteMelodicPattern,
   LoadBassSynth,
   LoadDelayEffect,
@@ -16,6 +18,7 @@ import {
   LoadMelodicPattern,
   LoadReverbEffect,
   PRESET_ACTIONS,
+  UpdateKitPattern,
   UpdateMelodicPattern,
 } from '../actions/presetActions.ts';
 import {
@@ -119,6 +122,40 @@ export function* loadKitPattern({ payload }: LoadKitPattern) {
   yield put(setKitPattern(pattern));
 }
 
+export function* createKitPattern({ payload }: CreateKitPattern) {
+  try {
+    const pattern: KitPattern = yield call(
+      agent.Preset.Patterns.createKitPattern,
+      payload
+    );
+    yield put(setKitPattern(pattern));
+    toast.success('Pattern created');
+    yield put({ type: PRESET_ACTIONS.GET_ALL_PATTERNS_ASYNC });
+  } catch (e) {
+    toast.error('Error creating pattern');
+  }
+}
+
+export function* updateKitPattern({ payload }: UpdateKitPattern) {
+  try {
+    yield call(agent.Preset.Patterns.updateKitPattern, payload);
+    toast.success('Pattern updated');
+    yield put({ type: PRESET_ACTIONS.GET_ALL_PATTERNS_ASYNC });
+  } catch (e) {
+    toast.error('Error updating pattern');
+  }
+}
+
+export function* deleteKitPattern({ payload }: DeleteKitPattern) {
+  try {
+    yield call(agent.Preset.Patterns.deleteKitPattern, +payload);
+    toast.success('Pattern deleted');
+    yield put({ type: PRESET_ACTIONS.GET_ALL_PATTERNS_ASYNC });
+  } catch (e) {
+    toast.error('Error deleting pattern');
+  }
+}
+
 // instruments
 export function* loadMelodicSynth({ payload }: LoadMelodicPattern) {
   const synth: MelodicSynth = yield call(
@@ -186,6 +223,11 @@ export function* presetSaga() {
     updateMelodicPattern
   );
   yield* takeEvery(PRESET_ACTIONS.LOAD_KIT_PATTERN_ASYNC, loadKitPattern);
+  yield* takeEvery(PRESET_ACTIONS.CREATE_KIT_PATTERN_ASYNC, createKitPattern);
+  yield* takeEvery(PRESET_ACTIONS.UPDATE_KIT_PATTERN_ASYNC, updateKitPattern);
+  yield* takeEvery(PRESET_ACTIONS.DELETE_KIT_PATTERN_ASYNC, deleteKitPattern);
+
+  // instruments
   yield* takeEvery(PRESET_ACTIONS.LOAD_MELODIC_SYNTH_ASYNC, loadMelodicSynth);
   yield* takeEvery(PRESET_ACTIONS.LOAD_DISTORTION_EFFECT_ASYNC, loadDistortion);
   yield* takeEvery(PRESET_ACTIONS.LOAD_REVERB_EFFECT_ASYNC, loadReverb);

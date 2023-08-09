@@ -10,20 +10,38 @@ import {
   selectSong,
   setKitPatternLength,
 } from '../../../../store/slices/songSlice.ts';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { SONG_ACTIONS } from '../../../../store/actions/songActions.ts';
 import { darkInput } from '../../../Ui/Styles/input.ts';
 import { melodicPattern } from '../../../../tone/singleton.ts';
+import SaveButton from '../../../Ui/Buttons/SaveButton.tsx';
+import {
+  setPresetModalData,
+  setPresetModalDispatchType,
+  setPresetModalOpen,
+  setPresetModalType,
+} from '../../../../store/slices/commonSlice.ts';
+import { PRESET_ACTIONS } from '../../../../store/actions/presetActions.ts';
 
 export default function Transport() {
   const { isPlaying } = useAppSelector(selectTransport);
   const {
     currentSong: { bpm },
   } = useAppSelector(selectSong);
+  const patternLength = useAppSelector(
+    (store) => store.song.currentSong.kitPattern.patternLength
+  );
   const bpmRef = useRef<HTMLInputElement | null>(null);
   const [inputBpm, setInputBpm] = useState(bpm);
   const stepsRef = useRef<HTMLInputElement | null>(null);
   const [inputSteps, setInputSteps] = useState(16);
+  const kitPattern = useAppSelector(
+    (store) => store.song.currentSong.kitPattern
+  );
+
+  useEffect(() => {
+    setInputSteps(patternLength);
+  }, [patternLength]);
 
   const dispatch = useAppDispatch();
 
@@ -64,9 +82,6 @@ export default function Transport() {
     setInputBpm(+event.target.value);
   };
 
-  /*
-   * TODO: implement steps
-   */
   const handleSteps = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && inputSteps > 0 && inputSteps <= 16) {
       dispatch(setKitPatternLength(inputSteps));
@@ -75,6 +90,25 @@ export default function Transport() {
   };
   const handleStepsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputSteps(+event.target.value);
+  };
+
+  /*
+   * Saving Kit Pattern
+   */
+  const saveKitPatternHandler = () => {
+    dispatch(setPresetModalData(kitPattern));
+    dispatch(setPresetModalType('Kit Pattern'));
+    if (kitPattern.presetName) {
+      dispatch(
+        setPresetModalDispatchType(PRESET_ACTIONS.UPDATE_KIT_PATTERN_ASYNC)
+      );
+    } else {
+      dispatch(
+        setPresetModalDispatchType(PRESET_ACTIONS.CREATE_KIT_PATTERN_ASYNC)
+      );
+    }
+
+    dispatch(setPresetModalOpen(true));
   };
 
   return (
@@ -108,6 +142,9 @@ export default function Transport() {
             onKeyDown={handleSteps}
             className={darkInput}
           />
+        </div>
+        <div className="ml-2 -mb-6">
+          <SaveButton onClick={saveKitPatternHandler} size={20} />
         </div>
       </div>
     </div>

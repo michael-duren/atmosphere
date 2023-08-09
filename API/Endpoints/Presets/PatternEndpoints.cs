@@ -98,7 +98,7 @@ public class PatternEndpoints : IEndpointDefinition
     }
 
     private static async Task<IResult> UpdateKitPattern(IMediator mediator, IHandleResult handleResult,
-        MelodicPatternPresetDto patternQueryDto, int id,
+        KitPatternPresetDto patternQueryDto, int id,
         CancellationToken cancellationToken)
     {
         var updateKitPattern = new UpdatePattern.Command

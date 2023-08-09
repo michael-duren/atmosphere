@@ -77,7 +77,7 @@ public class UpdatePattern
 
                 case "kit":
                     var oldKitPattern = await _context.KitPatternPresets.Where(p => p.AppUserId == user.Id)
-                        .FirstOrDefaultAsync(p => p.Id == id, cancellationToken: cancellationToken);
+                        .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 
                     if (oldKitPattern is null)
                         return new UpdatedResult { Result = false };
