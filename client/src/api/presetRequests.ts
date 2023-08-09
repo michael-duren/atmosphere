@@ -54,6 +54,8 @@ const Effects = {
 
 const Instruments = {
   list: () => requests.get<InstrumentList>('/presets/instruments'),
+  getMelodicSynthById: (id: number) => requests.get(`/presets/melodic/${id}`),
+  getBassSynthById: (id: number) => requests.get(`/presets/bass/${id}`),
   createMelodicSynth: (melodicSynth: MelodicSynth) =>
     requests.post('/presets/melodicSynth', melodicSynth),
   createBassSynth: (bassSynth: BassSynth) =>
@@ -69,6 +71,8 @@ const Instruments = {
 
 const Patterns = {
   list: () => requests.get<PatternList>('/presets/patterns'),
+  getMelodicPatternById: (id: number) => requests.get(`/presets/melodic/${id}`),
+  getKitPatternById: (id: number) => requests.get(`/presets/kit/${id}`),
   createMelodicPattern: (pattern: MelodicPattern) =>
     requests.post('/presets/melodicPattern', pattern),
   createKitPattern: (pattern: KitPattern) =>

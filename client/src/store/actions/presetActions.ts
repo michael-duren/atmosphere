@@ -52,7 +52,7 @@ export const PRESET_ACTIONS = {
 // patterns
 export interface LoadMelodicPattern {
   type: typeof PRESET_ACTIONS.LOAD_MELODIC_PATTERN_ASYNC;
-  payload: MelodicPattern;
+  payload: string;
 }
 
 export interface CreateMelodicPattern {
@@ -68,6 +68,11 @@ export interface UpdateMelodicPattern {
 export interface DeleteMelodicPattern {
   type: typeof PRESET_ACTIONS.DELETE_MELODIC_PATTERN_ASYNC;
   payload: MelodicPattern;
+}
+
+export interface LoadKitPattern {
+  type: typeof PRESET_ACTIONS.LOAD_KIT_PATTERN_ASYNC;
+  payload: string;
 }
 
 export interface CreateKitPattern {
@@ -89,7 +94,7 @@ export interface DeleteKitPattern {
 
 export interface LoadMelodicSynth {
   type: typeof PRESET_ACTIONS.LOAD_MELODIC_SYNTH_ASYNC;
-  payload: MelodicSynth;
+  payload: string;
 }
 
 export interface CreateMelodicSynth {
@@ -109,7 +114,7 @@ export interface DeleteMelodicSynth {
 
 export interface LoadBassSynth {
   type: typeof PRESET_ACTIONS.LOAD_BASS_SYNTH_ASYNC;
-  payload: BassSynth;
+  payload: string;
 }
 
 export interface CreateBassSynth {
@@ -130,7 +135,7 @@ export interface DeleteBassSynth {
 // effects
 export interface LoadDistortionEffect {
   type: typeof PRESET_ACTIONS.LOAD_DISTORTION_EFFECT_ASYNC;
-  payload: Distortion;
+  payload: string;
 }
 
 export interface CreateDistortionEffect {
@@ -150,7 +155,7 @@ export interface DeleteDistortionEffect {
 
 export interface LoadReverbEffect {
   type: typeof PRESET_ACTIONS.LOAD_REVERB_EFFECT_ASYNC;
-  payload: Reverb;
+  payload: string;
 }
 
 export interface CreateReverbEffect {
@@ -170,7 +175,7 @@ export interface DeleteReverbEffect {
 
 export interface LoadDelayEffect {
   type: typeof PRESET_ACTIONS.LOAD_DELAY_EFFECT_ASYNC;
-  payload: Delay;
+  payload: string;
 }
 
 export interface CreateDelayEffect {

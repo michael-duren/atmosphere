@@ -5,6 +5,26 @@ import {
   inputToToneWaveform,
 } from '../utils/transformToToneValues.ts';
 import { KnobWaveType } from '../../models/types/waveTypes.ts';
+import { MelodicSynth } from '../../models/song.ts';
+
+export const setToneMelodicSynth = (synth: MelodicSynth) => {
+  melodicSynth.synth.envelope.attack = synth.attack;
+  melodicSynth.synth.envelope.decay = synth.decay;
+  melodicSynth.synth.envelope.sustain = synth.sustain;
+  melodicSynth.synth.envelope.release = synth.release;
+
+  melodicSynth.synth.oscillator.type = synth.waveform;
+  melodicSynth.chorus.wet.value = synth.chorus;
+  melodicSynth.filter.frequency.value = synth.filterFrequency;
+  melodicSynth.filterTwo.frequency.value = synth.filterFrequency;
+  melodicSynth.filter.type = synth.filterType;
+  melodicSynth.filterTwo.type = synth.filterType;
+  melodicSynth.filterTwo.frequency.value = synth.filterMod;
+  melodicSynth.lfoFilter.frequency.value = synth.lfoFrequency;
+
+  melodicSynth.lfoFilter.min = synth.filterMod;
+  melodicSynth.lfoFilter.type = synth.lfoShape;
+};
 
 /*
  * Envelope Params

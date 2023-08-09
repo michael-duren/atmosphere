@@ -1,7 +1,17 @@
 import { KnobWaveType } from '../../models/types/waveTypes.ts';
 import { bassSynth } from '../singleton.ts';
 import { inputToToneWaveform } from '../utils/transformToToneValues.ts';
+import { BassSynth } from '../../models/song.ts';
 
+export const setToneBassSynth = (synth: BassSynth) => {
+  bassSynth.synth.envelope.attack = synth.attack;
+  bassSynth.synth.envelope.decay = synth.decay;
+  bassSynth.synth.envelope.sustain = synth.sustain;
+  bassSynth.synth.envelope.release = synth.release;
+
+  bassSynth.synth.oscillator.type = synth.waveform;
+  bassSynth.filter.frequency.value = synth.filterFrequency;
+};
 export const setToneBassSynthWaveform = (waveForm: KnobWaveType) =>
   (bassSynth.synth.oscillator.type = inputToToneWaveform(waveForm));
 
