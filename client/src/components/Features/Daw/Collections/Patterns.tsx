@@ -11,7 +11,6 @@ import {
   setPresetDeleteDispatchType,
   setPresetDeleteModalOpen,
   setPresetDeleteType,
-  setPresetModalOpen,
   setPresetToDelete,
 } from '../../../../store/slices/commonSlice.ts';
 
@@ -84,7 +83,7 @@ export default function Patterns() {
                 {kitPatterns.map((pattern) => {
                   const loadDeletePresetFormHandler = () => {
                     dispatch(setPresetToDelete(pattern));
-                    dispatch(setPresetModalOpen(true));
+                    dispatch(setPresetDeleteModalOpen(true));
                     dispatch(setPresetDeleteType('Kit Pattern'));
                     dispatch(
                       setPresetDeleteDispatchType(
