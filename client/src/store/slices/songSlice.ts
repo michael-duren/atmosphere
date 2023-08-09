@@ -1,6 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ServerError } from '../../models/serverError.ts';
-import { DrumTrackSteps, Song } from '../../models/song.ts';
+import {
+  BassSynth,
+  Delay,
+  Distortion,
+  DrumTrackSteps,
+  KitPattern,
+  MelodicPattern,
+  MelodicSynth,
+  Reverb,
+  Song,
+} from '../../models/song.ts';
 import { SongList } from '../../models/songList.ts';
 import initialSongState from './initialState/initialSongState.ts';
 import { AppState } from '../store.ts';
@@ -95,6 +105,12 @@ const songSlice = createSlice({
     /*
      * Melodic Synth Reducers
      */
+    setMelodicSynth: (
+      state,
+      action: { payload: MelodicSynth; type: string }
+    ) => {
+      state.currentSong.melodicSynth = action.payload;
+    },
     setMelodicSynthAttack: (
       state,
       action: { payload: number; type: string }
@@ -205,6 +221,12 @@ const songSlice = createSlice({
     /*
      * Pattern Reducers
      */
+    setMelodicPattern: (
+      state,
+      action: { payload: MelodicPattern; type: string }
+    ) => {
+      state.currentSong.melodicPattern = action.payload;
+    },
     setMelodicPatternKey: (
       state,
       action: { payload: MusicalKey; type: string }
@@ -253,6 +275,9 @@ const songSlice = createSlice({
     ) => {
       state.currentSong.melodicPattern.sequence = action.payload;
     },
+    setKitPattern: (state, action: { type: string; payload: KitPattern }) => {
+      state.currentSong.kitPattern = action.payload;
+    },
     toggleDrumStep: (
       state,
       action: {
@@ -263,6 +288,18 @@ const songSlice = createSlice({
       const { drumName, step } = action.payload;
       state.currentSong.kitPattern[drumName][step] =
         !state.currentSong.kitPattern[drumName][step];
+    },
+    setDistortion: (state, action: { payload: Distortion; type: string }) => {
+      state.currentSong.distortion = action.payload;
+    },
+    setReverb: (state, action: { payload: Reverb; type: string }) => {
+      state.currentSong.reverb = action.payload;
+    },
+    setDelay: (state, action: { payload: Delay; type: string }) => {
+      state.currentSong.delay = action.payload;
+    },
+    setBassSynth: (state, action: { payload: BassSynth; type: string }) => {
+      state.currentSong.bassSynth = action.payload;
     },
   },
 });
@@ -315,6 +352,13 @@ export const {
   setMelodicPatternNoteDuration,
   setMelodicPatternLength,
   setMelodicPatternSequence,
+  setMelodicPattern,
+  setKitPattern,
+  setMelodicSynth,
+  setDistortion,
+  setReverb,
+  setDelay,
+  setBassSynth,
 } = songSlice.actions;
 
 export default songSlice.reducer;

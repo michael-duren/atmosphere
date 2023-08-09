@@ -4,6 +4,15 @@ import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
 import CollectionItem from './CollectionItem.tsx';
 import { SiMusicbrainz } from 'react-icons/si';
 import { GiAbstract016 } from 'react-icons/gi';
+import { useAppDispatch } from '../../../../store/hooks/useAppDispatch.ts';
+import { PRESET_ACTIONS } from '../../../../store/actions/presetActions.ts';
+import toast from 'react-hot-toast';
+import {
+  setPresetDeleteDispatchType,
+  setPresetDeleteType,
+  setPresetModalOpen,
+  setPresetToDelete,
+} from '../../../../store/slices/commonSlice.ts';
 
 export default function Patterns() {
   const { melodicPatterns, kitPatterns } = useAppSelector(
@@ -12,6 +21,7 @@ export default function Patterns() {
   const [isPatternOpen, setIsPatternOpen] = useState(false);
   const [isMelodicPatternOpen, setIsMelodicPatternOpen] = useState(false);
   const [isKitPatternOpen, setIsKitPatternOpen] = useState(false);
+  const dispatch = useAppDispatch();
 
   return (
     <div>
@@ -31,11 +41,28 @@ export default function Patterns() {
             {isMelodicPatternOpen && melodicPatterns && (
               <div className="ml-8 flex flex-col gap-4">
                 {melodicPatterns.map((pattern) => {
+                  const loadPresetHandler = () => {
+                    dispatch({
+                      type: PRESET_ACTIONS.LOAD_MELODIC_PATTERN_ASYNC,
+                      payload: pattern.id,
+                    });
+                    toast.success(`Loaded ${pattern.presetName}`);
+                  };
+                  const loadDeletePresetFormHandler = () => {
+                    dispatch(setPresetToDelete(pattern));
+                    dispatch(setPresetModalOpen(true));
+                    dispatch(setPresetDeleteType('Kit Pattern'));
+                    dispatch(
+                      setPresetDeleteDispatchType(
+                        PRESET_ACTIONS.DELETE_MELODIC_PATTERN_ASYNC
+                      )
+                    );
+                  };
                   return (
                     <Fragment key={pattern.presetName}>
                       <CollectionItem
-                        mainOnClick={() => console.log('YOU GOT ME')}
-                        deleteOnClick={() => console.log('YOU GOT ME')}
+                        mainOnClick={loadPresetHandler}
+                        deleteOnClick={loadDeletePresetFormHandler}
                         name={pattern.presetName!}
                         Icon={SiMusicbrainz}
                         iconSize={14}
@@ -53,11 +80,28 @@ export default function Patterns() {
             {isKitPatternOpen && kitPatterns && (
               <div className="ml-8 flex flex-col gap-4">
                 {kitPatterns.map((pattern) => {
+                  const loadDeletePresetFormHandler = () => {
+                    dispatch(setPresetToDelete(pattern));
+                    dispatch(setPresetModalOpen(true));
+                    dispatch(setPresetDeleteType('Kit Pattern'));
+                    dispatch(
+                      setPresetDeleteDispatchType(
+                        PRESET_ACTIONS.DELETE_KIT_PATTERN_ASYNC
+                      )
+                    );
+                  };
+                  const loadPresetHandler = () => {
+                    dispatch({
+                      type: PRESET_ACTIONS.LOAD_KIT_PATTERN_ASYNC,
+                      payload: pattern.id,
+                    });
+                    toast.success(`Loaded ${pattern.presetName}`);
+                  };
                   return (
                     <Fragment key={pattern.presetName}>
                       <CollectionItem
-                        mainOnClick={() => console.log('YOU GOT ME')}
-                        deleteOnClick={() => console.log('YOU GOT ME')}
+                        mainOnClick={loadPresetHandler}
+                        deleteOnClick={loadDeletePresetFormHandler}
                         name={pattern.presetName!}
                         Icon={GiAbstract016}
                         iconSize={14}

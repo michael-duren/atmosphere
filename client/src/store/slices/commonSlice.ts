@@ -12,6 +12,14 @@ export interface CommonState {
   songToLoad: SongListItem | null;
   songToDelete: SongListItem | null;
   deleteSongModalOpen: boolean;
+  presetModalOpen: boolean;
+  presetModalData: any;
+  presetModalDispatchType: string | null;
+  presetModalType: string | null;
+  presetDeleteModalOpen: boolean;
+  presetToDelete: any;
+  presetDeleteType: string | null;
+  presetDeleteDispatchType: string | null;
 }
 
 const initialCommonState: CommonState = {
@@ -23,6 +31,14 @@ const initialCommonState: CommonState = {
   songToLoad: null,
   songToDelete: null,
   deleteSongModalOpen: false,
+  presetModalOpen: false,
+  presetModalData: null,
+  presetModalDispatchType: null,
+  presetModalType: null,
+  presetDeleteModalOpen: false,
+  presetToDelete: null,
+  presetDeleteType: null,
+  presetDeleteDispatchType: null,
 };
 
 const commonSlice = createSlice({
@@ -62,6 +78,39 @@ const commonSlice = createSlice({
     ) => {
       state.songToDelete = action.payload;
     },
+    setPresetModalOpen: (state, action: { payload: boolean; type: string }) => {
+      state.presetModalOpen = action.payload;
+    },
+    setPresetModalData: (state, action: { payload: any; type: string }) => {
+      state.presetModalData = action.payload;
+    },
+    setPresetModalDispatchType: (
+      state,
+      action: { payload: string; type: string }
+    ) => {
+      state.presetModalDispatchType = action.payload;
+    },
+    setPresetModalType: (state, action: { payload: string; type: string }) => {
+      state.presetModalType = action.payload;
+    },
+    setPresetDeleteModalOpen: (
+      state,
+      action: { payload: boolean; type: string }
+    ) => {
+      state.presetDeleteModalOpen = action.payload;
+    },
+    setPresetToDelete: (state, action: { payload: any; type: string }) => {
+      state.presetToDelete = action.payload;
+    },
+    setPresetDeleteType: (state, action: { payload: string; type: string }) => {
+      state.presetDeleteType = action.payload;
+    },
+    setPresetDeleteDispatchType: (
+      state,
+      action: { payload: string; type: string }
+    ) => {
+      state.presetDeleteDispatchType = action.payload;
+    },
   },
 });
 
@@ -76,6 +125,14 @@ export const {
   setDeleteSongModalOpen,
   setSongToDelete,
   setSongToLoad,
+  setPresetModalOpen,
+  setPresetModalData,
+  setPresetModalDispatchType,
+  setPresetModalType,
+  setPresetDeleteModalOpen,
+  setPresetToDelete,
+  setPresetDeleteType,
+  setPresetDeleteDispatchType,
 } = commonSlice.actions;
 
 export default commonSlice.reducer;

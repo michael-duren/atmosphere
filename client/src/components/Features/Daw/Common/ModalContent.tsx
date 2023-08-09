@@ -5,16 +5,31 @@ import {
   selectCommon,
   setDeleteSongModalOpen,
   setLoadSongModalOpen,
+  setPresetDeleteModalOpen,
+  setPresetModalOpen,
   setSaveModalOpen,
 } from '../../../../store/slices/commonSlice.ts';
 import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
 import { useAppDispatch } from '../../../../store/hooks/useAppDispatch.ts';
 import DeleteSongWarning from './DeleteSongWarning.tsx';
+import SavePresetForm from './SavePresetForm.tsx';
+import DeletePresetWarning from './DeletePresetWarning.tsx';
 
 export default function ModalContent() {
   const dispatch = useAppDispatch();
-  const { saveModalOpen, loadSongModalOpen, deleteSongModalOpen } =
-    useAppSelector(selectCommon);
+  const {
+    saveModalOpen,
+    loadSongModalOpen,
+    deleteSongModalOpen,
+    presetModalOpen,
+    presetModalData,
+    presetModalDispatchType,
+    presetModalType,
+    presetDeleteModalOpen,
+    presetToDelete,
+    presetDeleteDispatchType,
+    presetDeleteType,
+  } = useAppSelector(selectCommon);
 
   const isDeleteModalOpenHandler = () => {
     dispatch(setDeleteSongModalOpen(!deleteSongModalOpen));
@@ -23,6 +38,14 @@ export default function ModalContent() {
     dispatch(setSaveModalOpen(!saveModalOpen));
   const isLoadSongModalOpenHandler = () =>
     dispatch(setLoadSongModalOpen(!loadSongModalOpen));
+
+  const isPresetModalOpenHandler = () =>
+    dispatch(setPresetModalOpen(!presetModalOpen));
+
+  const isPresetDeleteModalOpenHandler = () => {
+    dispatch(setPresetDeleteModalOpen(!presetDeleteModalOpen));
+  };
+
   return (
     <>
       <DarkModal isOpen={saveModalOpen} setIsOpen={isSavedModalOpenHandler}>
@@ -39,6 +62,24 @@ export default function ModalContent() {
         setIsOpen={isDeleteModalOpenHandler}
       >
         <DeleteSongWarning />
+      </DarkModal>
+      <DarkModal isOpen={presetModalOpen} setIsOpen={isPresetModalOpenHandler}>
+        <SavePresetForm
+          dispatchType={presetModalDispatchType!}
+          currentPreset={presetModalData}
+          presetType={presetModalType!}
+        />
+      </DarkModal>
+      <DarkModal
+        isOpen={presetDeleteModalOpen}
+        setIsOpen={isPresetDeleteModalOpenHandler}
+      >
+        <DeletePresetWarning
+          closeModal={isPresetDeleteModalOpenHandler}
+          presetToDelete={presetToDelete}
+          type={presetDeleteType!}
+          dispatchType={presetDeleteDispatchType!}
+        />
       </DarkModal>
     </>
   );

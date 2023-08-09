@@ -47,9 +47,12 @@ const MelodicSynthCard: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center rounded-2xl justify-center pl-4">
-      <div className="w-full items-end gap-2 font-caps flex mb-4">
-        <MelodicSynthSvg className="h-8 w-8  fill-white stroke-2 stroke-white" />
-        <h2 className="text-xl">Melodic Synth</h2>
+      <div className="flex items-center justify-between w-full">
+        <div className="w-full items-end gap-2 font-caps flex mb-4">
+          <MelodicSynthSvg className="h-8 w-8  fill-white stroke-2 stroke-white" />
+          <h2 className="text-xl">Melodic Synth</h2>
+        </div>
+        {/*<SaveButton />*/}
       </div>
       <div className="grid grid-cols-4 grid-rows-3 gap-x-4 gap-y-8">
         {/* Row One */}

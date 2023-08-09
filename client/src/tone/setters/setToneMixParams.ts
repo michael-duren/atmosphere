@@ -10,10 +10,18 @@ import {
 } from '../singleton.ts';
 import * as Tone from 'tone';
 import { bottomRange } from '../../utils/number.ts';
+import { Delay, Distortion, Reverb } from '../../models/song.ts';
 
 /*
  * Effects
  */
+
+export const setToneDistortion = (val: Distortion) => {
+  distortion.wet.value = val.mix;
+  distortion.distortion = val.amount;
+  distortionFilter.frequency.value = val.filterFrequency;
+};
+
 export const setToneDistortionMix = (val: number) => {
   distortion.wet.value = val;
 };
@@ -26,12 +34,24 @@ export const setToneDistortionFilter = (val: number) => {
   distortionFilter.frequency.value = val;
 };
 
+export const setToneReverb = (val: Reverb) => {
+  reverb.wet.value = val.mix;
+  reverb.decay = val.decay;
+  reverb.preDelay = val.preDelay;
+};
+
 export const setToneReverbMix = (val: number) => {
   reverb.wet.value = val;
 };
 
 export const setToneReverbDecay = (val: number) => {
   reverb.decay = val;
+};
+
+export const setToneDelay = (val: Delay) => {
+  delay.wet.value = val.mix;
+  delay.delayTime.value = val.time;
+  delay.feedback.value = val.feedback;
 };
 
 export const setToneReverbPreDelay = (val: number) => {
