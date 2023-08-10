@@ -6,12 +6,15 @@ import { SiMusicbrainz } from 'react-icons/si';
 import { GiAbstract016 } from 'react-icons/gi';
 import { useAppDispatch } from '../../../../store/hooks/useAppDispatch.ts';
 import { PRESET_ACTIONS } from '../../../../store/actions/presetActions.ts';
-import toast from 'react-hot-toast';
 import {
   setPresetDeleteDispatchType,
   setPresetDeleteModalOpen,
   setPresetDeleteType,
   setPresetToDelete,
+  setPresetToLoad,
+  setPresetToLoadDispatchType,
+  setPresetToLoadModalOpen,
+  setPresetToLoadType,
 } from '../../../../store/slices/commonSlice.ts';
 
 export default function Patterns() {
@@ -42,11 +45,14 @@ export default function Patterns() {
               <div className="ml-8 flex flex-col gap-4">
                 {melodicPatterns.map((pattern) => {
                   const loadPresetHandler = () => {
-                    dispatch({
-                      type: PRESET_ACTIONS.LOAD_MELODIC_PATTERN_ASYNC,
-                      payload: pattern.id,
-                    });
-                    toast.success(`Loaded ${pattern.presetName}`);
+                    dispatch(setPresetToLoad(pattern.id));
+                    dispatch(setPresetToLoadModalOpen(true));
+                    dispatch(setPresetToLoadType('Melodic Pattern'));
+                    dispatch(
+                      setPresetToLoadDispatchType(
+                        PRESET_ACTIONS.LOAD_MELODIC_PATTERN_ASYNC
+                      )
+                    );
                   };
                   const loadDeletePresetFormHandler = () => {
                     console.log(pattern);
@@ -92,11 +98,14 @@ export default function Patterns() {
                     );
                   };
                   const loadPresetHandler = () => {
-                    dispatch({
-                      type: PRESET_ACTIONS.LOAD_KIT_PATTERN_ASYNC,
-                      payload: pattern.id,
-                    });
-                    toast.success(`Loaded ${pattern.presetName}`);
+                    dispatch(setPresetToLoad(pattern.id));
+                    dispatch(setPresetToLoadModalOpen(true));
+                    dispatch(setPresetToLoadType('Kit Pattern'));
+                    dispatch(
+                      setPresetToLoadDispatchType(
+                        PRESET_ACTIONS.LOAD_KIT_PATTERN_ASYNC
+                      )
+                    );
                   };
                   return (
                     <Fragment key={pattern.presetName}>

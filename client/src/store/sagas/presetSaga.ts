@@ -74,11 +74,17 @@ export function* getAllPresets() {
 
 // patterns
 export function* loadMelodicPattern({ payload }: LoadMelodicPattern) {
-  const pattern: MelodicPattern = yield call(
-    agent.Preset.Patterns.getMelodicPatternById,
-    +payload
-  );
-  yield put(setMelodicPattern(pattern));
+  try {
+    const pattern: MelodicPattern = yield call(
+      agent.Preset.Patterns.getMelodicPatternById,
+      +payload
+    );
+    yield put(setMelodicPattern(pattern));
+    toast.success('Pattern loaded');
+  } catch (e) {
+    toast.error('Error loading pattern');
+    console.error(e);
+  }
 }
 export function* createMelodicPattern({ payload }: CreateMelodicPattern) {
   try {
@@ -115,11 +121,17 @@ export function* deleteMelodicPattern({ payload }: DeleteMelodicPattern) {
 }
 
 export function* loadKitPattern({ payload }: LoadKitPattern) {
-  const pattern: KitPattern = yield call(
-    agent.Preset.Patterns.getKitPatternById,
-    +payload
-  );
-  yield put(setKitPattern(pattern));
+  try {
+    const pattern: KitPattern = yield call(
+      agent.Preset.Patterns.getKitPatternById,
+      +payload
+    );
+    yield put(setKitPattern(pattern));
+    toast.success('Pattern loaded');
+  } catch (e) {
+    console.error(e);
+    toast.error('Error loading pattern');
+  }
 }
 
 export function* createKitPattern({ payload }: CreateKitPattern) {

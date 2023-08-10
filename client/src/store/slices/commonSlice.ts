@@ -12,6 +12,10 @@ export interface CommonState {
   songToLoad: SongListItem | null;
   songToDelete: SongListItem | null;
   deleteSongModalOpen: boolean;
+  presetToLoad: any;
+  presetToLoadModalOpen: boolean;
+  presetToLoadType: string | null;
+  presetToLoadDispatchType: string | null;
   presetModalOpen: boolean;
   presetModalData: any;
   presetModalDispatchType: string | null;
@@ -31,6 +35,10 @@ const initialCommonState: CommonState = {
   songToLoad: null,
   songToDelete: null,
   deleteSongModalOpen: false,
+  presetToLoad: null,
+  presetToLoadType: null,
+  presetToLoadDispatchType: null,
+  presetToLoadModalOpen: false,
   presetModalOpen: false,
   presetModalData: null,
   presetModalDispatchType: null,
@@ -111,6 +119,24 @@ const commonSlice = createSlice({
     ) => {
       state.presetDeleteDispatchType = action.payload;
     },
+    setPresetToLoad: (state, action: { payload: any; type: string }) => {
+      state.presetToLoad = action.payload;
+    },
+    setPresetToLoadModalOpen: (
+      state,
+      action: { payload: boolean; type: string }
+    ) => {
+      state.presetToLoadModalOpen = action.payload;
+    },
+    setPresetToLoadType: (state, action: { payload: string; type: string }) => {
+      state.presetToLoadType = action.payload;
+    },
+    setPresetToLoadDispatchType: (
+      state,
+      action: { payload: string; type: string }
+    ) => {
+      state.presetToLoadDispatchType = action.payload;
+    },
   },
 });
 
@@ -133,6 +159,10 @@ export const {
   setPresetToDelete,
   setPresetDeleteType,
   setPresetDeleteDispatchType,
+  setPresetToLoad,
+  setPresetToLoadModalOpen,
+  setPresetToLoadType,
+  setPresetToLoadDispatchType,
 } = commonSlice.actions;
 
 export default commonSlice.reducer;

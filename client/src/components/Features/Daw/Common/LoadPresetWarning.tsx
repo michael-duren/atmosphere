@@ -1,30 +1,41 @@
-import ColorButton from '../../../Ui/Buttons/ColorButton.tsx';
 import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
+import ColorButton from '../../../Ui/Buttons/ColorButton.tsx';
+import { useAppDispatch } from '../../../../store/hooks/useAppDispatch.ts';
 
 interface Props {
-  presetName: string;
-  onClick: () => void;
+  presetToLoad: any;
+  type: string;
+  dispatchType: string;
   closeModal: () => void;
 }
 
-export default function SavePresetWarning({
-  presetName,
-  onClick,
+export default function LoadPresetWarning({
+  presetToLoad,
+  type,
+  dispatchType,
   closeModal,
 }: Props) {
   const { isPlaying } = useAppSelector((store) => store.transport);
+  const dispatch = useAppDispatch();
+  const loadPreset = () => {
+    dispatch({
+      type: dispatchType,
+      payload: presetToLoad,
+    });
+    closeModal();
+  };
 
   return (
     <div className="text-white flex flex-col items-center justify-center gap-4">
       <h2 className="text-2xl">
-        Are you sure you want to load <i>{presetName}</i>?
+        Are you sure you want to load <i>{presetToLoad!.presetName}</i>?
       </h2>
       <div className="flex w-full">
         <p>Any unsaved changes will be lost</p>
       </div>
       {isPlaying && (
         <div className="text-red-500 text-xs font-semibold shadow-xl">
-          Cannot Load Song while App is playing
+          Cannot Load {type} while App is playing
         </div>
       )}
       <div className="flex w-full justify-around mt-8">
@@ -33,7 +44,7 @@ export default function SavePresetWarning({
           type="button"
           title="Yes"
           disabled={isPlaying}
-          onClick={onClick}
+          onClick={loadPreset}
         />
         <ColorButton
           color="green"

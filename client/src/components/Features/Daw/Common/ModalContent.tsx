@@ -7,6 +7,7 @@ import {
   setLoadSongModalOpen,
   setPresetDeleteModalOpen,
   setPresetModalOpen,
+  setPresetToLoadModalOpen,
   setSaveModalOpen,
 } from '../../../../store/slices/commonSlice.ts';
 import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
@@ -14,6 +15,7 @@ import { useAppDispatch } from '../../../../store/hooks/useAppDispatch.ts';
 import DeleteSongWarning from './DeleteSongWarning.tsx';
 import SavePresetForm from './SavePresetForm.tsx';
 import DeletePresetWarning from './DeletePresetWarning.tsx';
+import LoadPresetWarning from './LoadPresetWarning.tsx';
 
 export default function ModalContent() {
   const dispatch = useAppDispatch();
@@ -29,6 +31,10 @@ export default function ModalContent() {
     presetToDelete,
     presetDeleteDispatchType,
     presetDeleteType,
+    presetToLoadModalOpen,
+    presetToLoad,
+    presetToLoadDispatchType,
+    presetToLoadType,
   } = useAppSelector(selectCommon);
 
   const isDeleteModalOpenHandler = () => {
@@ -44,6 +50,10 @@ export default function ModalContent() {
 
   const isPresetDeleteModalOpenHandler = () => {
     dispatch(setPresetDeleteModalOpen(!presetDeleteModalOpen));
+  };
+
+  const isPresetToLoadModalOpenHandler = () => {
+    dispatch(setPresetToLoadModalOpen(!presetToLoadModalOpen));
   };
 
   return (
@@ -80,6 +90,17 @@ export default function ModalContent() {
           presetToDelete={presetToDelete}
           type={presetDeleteType!}
           dispatchType={presetDeleteDispatchType!}
+        />
+      </DarkModal>
+      <DarkModal
+        isOpen={presetToLoadModalOpen}
+        setIsOpen={isPresetToLoadModalOpenHandler}
+      >
+        <LoadPresetWarning
+          closeModal={isPresetToLoadModalOpenHandler}
+          presetToLoad={presetToLoad}
+          type={presetToLoadType!}
+          dispatchType={presetToLoadDispatchType!}
         />
       </DarkModal>
     </>
