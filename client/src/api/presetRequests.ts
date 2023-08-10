@@ -54,19 +54,25 @@ const Effects = {
 
 const Instruments = {
   list: () => requests.get<InstrumentList>('/presets/instruments'),
-  getMelodicSynthById: (id: number) => requests.get(`/presets/melodic/${id}`),
-  getBassSynthById: (id: number) => requests.get(`/presets/bass/${id}`),
+  getMelodicSynthById: (id: number) =>
+    requests.get(`/presets/instruments/melodic/${id}`),
+  getBassSynthById: (id: number) =>
+    requests.get(`/presets/instruments/bass/${id}`),
   createMelodicSynth: (melodicSynth: MelodicSynth) =>
-    requests.post('/presets/melodicSynth', melodicSynth),
+    requests.post('/presets/instruments/melodicSynth', melodicSynth),
   createBassSynth: (bassSynth: BassSynth) =>
-    requests.post('/presets/bassSynth', bassSynth),
+    requests.post('/presets/instruments/bassSynth', bassSynth),
   updateMelodicSynth: (melodicSynth: MelodicSynth) =>
-    requests.put(`/presets/melodicSynth/${melodicSynth.id}`, melodicSynth),
+    requests.put(
+      `/presets/instruments/melodicSynth/${melodicSynth.id}`,
+      melodicSynth
+    ),
   updateBassSynth: (bassSynth: BassSynth) =>
-    requests.put(`/presets/bassSynth/${bassSynth.id}`, bassSynth),
+    requests.put(`/presets/instruments/bassSynth/${bassSynth.id}`, bassSynth),
   deleteMelodicSynth: (id: number) =>
-    requests.del(`/presets/melodicSynth/${id}`),
-  deleteBassSynth: (id: number) => requests.del(`/presets/bassSynth/${id}`),
+    requests.del(`/presets/instruments/melodicSynth/${id}`),
+  deleteBassSynth: (id: number) =>
+    requests.del(`/presets/instruments/bassSynth/${id}`),
 };
 
 const Patterns = {

@@ -3,6 +3,7 @@ using Application.Core;
 using Application.Presets.Instruments.Commands;
 using Application.Presets.Instruments.DTOs;
 using Application.Presets.Instruments.Queries;
+using Application.Presets.Patterns.Queries;
 using MediatR;
 
 namespace API.Endpoints.Presets;
@@ -17,6 +18,12 @@ public class InstrumentEndpoints : IEndpointDefinition
             .WithName("GetAllInstruments")
             .Produces<SynthsQueryDto>(200, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
+        
+        instruments.MapGet("/melodic/{id}", GetMelodicSynthById)
+            .WithName("GetMelodicSynthById")
+            .Produces<MelodicSynthPresetDto>(200, "application/json")
+            .Produces<ErrorMessage>(400, "application/json");
+            
 
         instruments.MapDelete("/{synthType}/{id}", DeleteSynth)
             .WithName("DeleteInstrument")
@@ -47,6 +54,18 @@ public class InstrumentEndpoints : IEndpointDefinition
             .WithName("UpdateBassSynth")
             .Produces<SynthsQueryDto>(200, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
+    }
+
+    private static async Task<IResult> GetMelodicSynthById(IMediator mediator, CancellationToken cancellationToken,
+        IHandleResult handleResult, int id
+    )
+    {
+        var getMelodicSynthById = new GetMelodicSynthById.Query
+        {
+            Id = id
+        };
+
+        return handleResult.Handle(await mediator.Send(getMelodicSynthById, cancellationToken));
     }
 
     private static async Task<IResult> DeleteSynth(IMediator mediator, IHandleResult handleResult,

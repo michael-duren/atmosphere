@@ -170,21 +170,32 @@ export function* deleteKitPattern({ payload }: DeleteKitPattern) {
 
 // instruments
 export function* loadMelodicSynth({ payload }: LoadMelodicPattern) {
-  const synth: MelodicSynth = yield call(
-    agent.Preset.Instruments.getMelodicSynthById,
-    +payload
-  );
-  yield put(setMelodicSynth(synth));
-  yield call(setToneMelodicSynth, synth);
+  try {
+    const synth: MelodicSynth = yield call(
+      agent.Preset.Instruments.getMelodicSynthById,
+      +payload
+    );
+    yield put(setMelodicSynth(synth));
+    yield call(setToneMelodicSynth, synth);
+    toast.success('Synth loaded');
+  } catch (e) {
+    toast.error('Error loading synth');
+    console.error(e);
+  }
 }
 
 export function* loadBassSynth({ payload }: LoadBassSynth) {
-  const synth: BassSynth = yield call(
-    agent.Preset.Instruments.getBassSynthById,
-    +payload
-  );
-  yield put(setBassSynth(synth));
-  yield call(setToneBassSynth, synth);
+  try {
+    const synth: BassSynth = yield call(
+      agent.Preset.Instruments.getBassSynthById,
+      +payload
+    );
+    yield put(setBassSynth(synth));
+    yield call(setToneBassSynth, synth);
+  } catch (e) {
+    toast.error('Error loading synth');
+    console.error(e);
+  }
 }
 
 // effects
@@ -241,6 +252,7 @@ export function* presetSaga() {
 
   // instruments
   yield* takeEvery(PRESET_ACTIONS.LOAD_MELODIC_SYNTH_ASYNC, loadMelodicSynth);
+  yield* takeEvery(PRESET_ACTIONS.LOAD_BASS_SYNTH_ASYNC, loadBassSynth);
   yield* takeEvery(PRESET_ACTIONS.LOAD_DISTORTION_EFFECT_ASYNC, loadDistortion);
   yield* takeEvery(PRESET_ACTIONS.LOAD_REVERB_EFFECT_ASYNC, loadReverb);
   yield* takeEvery(PRESET_ACTIONS.LOAD_DELAY_EFFECT_ASYNC, loadDelay);

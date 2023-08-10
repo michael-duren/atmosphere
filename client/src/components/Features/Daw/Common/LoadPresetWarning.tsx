@@ -28,7 +28,7 @@ export default function LoadPresetWarning({
   return (
     <div className="text-white flex flex-col items-center justify-center gap-4">
       <h2 className="text-2xl">
-        Are you sure you want to load <i>{presetToLoad!.presetName}</i>?
+        Are you sure you want to load <i>{type}</i>?
       </h2>
       <div className="flex w-full">
         <p>Any unsaved changes will be lost</p>

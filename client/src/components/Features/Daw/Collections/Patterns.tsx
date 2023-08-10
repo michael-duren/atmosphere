@@ -55,10 +55,9 @@ export default function Patterns() {
                     );
                   };
                   const loadDeletePresetFormHandler = () => {
-                    console.log(pattern);
                     dispatch(setPresetToDelete(pattern));
                     dispatch(setPresetDeleteModalOpen(true));
-                    dispatch(setPresetDeleteType('Kit Pattern'));
+                    dispatch(setPresetDeleteType('Melodic Pattern'));
                     dispatch(
                       setPresetDeleteDispatchType(
                         PRESET_ACTIONS.DELETE_MELODIC_PATTERN_ASYNC

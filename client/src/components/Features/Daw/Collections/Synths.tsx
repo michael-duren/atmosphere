@@ -3,6 +3,18 @@ import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
 import { Fragment, useState } from 'react';
 import FolderButton from '../../../Ui/Buttons/FolderButton.tsx';
 import CollectionItem from './CollectionItem.tsx';
+import {
+  setPresetDeleteDispatchType,
+  setPresetDeleteModalOpen,
+  setPresetDeleteType,
+  setPresetToDelete,
+  setPresetToLoad,
+  setPresetToLoadDispatchType,
+  setPresetToLoadModalOpen,
+  setPresetToLoadType,
+} from '../../../../store/slices/commonSlice.ts';
+import { PRESET_ACTIONS } from '../../../../store/actions/presetActions.ts';
+import { useAppDispatch } from '../../../../store/hooks/useAppDispatch.ts';
 
 export default function Synths() {
   const { bassSynths, melodicSynths } = useAppSelector(
@@ -11,6 +23,7 @@ export default function Synths() {
   const [isSynthsOpen, setIsSynthsOpen] = useState(false);
   const [isMelodicSynthsOpen, setIsMelodicSynthsOpen] = useState(false);
   const [isBassSynthsOpen, setIsBassSynthsOpen] = useState(false);
+  const dispatch = useAppDispatch();
 
   return (
     <div>
@@ -30,11 +43,31 @@ export default function Synths() {
             {isMelodicSynthsOpen && melodicSynths && (
               <div className="ml-8 flex flex-col gap-4">
                 {melodicSynths.map((synth) => {
+                  const loadPresetHandler = () => {
+                    dispatch(setPresetToLoad(synth.id));
+                    dispatch(setPresetToLoadModalOpen(true));
+                    dispatch(setPresetToLoadType('Melodic Synth'));
+                    dispatch(
+                      setPresetToLoadDispatchType(
+                        PRESET_ACTIONS.LOAD_MELODIC_SYNTH_ASYNC
+                      )
+                    );
+                  };
+                  const loadDeletePresetFormHandler = () => {
+                    dispatch(setPresetToDelete(synth));
+                    dispatch(setPresetDeleteModalOpen(true));
+                    dispatch(setPresetDeleteType('Melodic Synth'));
+                    dispatch(
+                      setPresetDeleteDispatchType(
+                        PRESET_ACTIONS.DELETE_MELODIC_SYNTH_ASYNC
+                      )
+                    );
+                  };
                   return (
                     <Fragment key={synth.presetName}>
                       <CollectionItem
-                        mainOnClick={() => console.log('YOU GOT ME')}
-                        deleteOnClick={() => console.log('YOU GOT ME')}
+                        mainOnClick={loadPresetHandler}
+                        deleteOnClick={loadDeletePresetFormHandler}
                         name={synth.presetName!}
                         Icon={BassSynthSvg}
                         additionalStyles={
@@ -54,11 +87,31 @@ export default function Synths() {
             {isBassSynthsOpen && bassSynths && (
               <div className="ml-8 flex flex-col gap-4">
                 {bassSynths.map((synth) => {
+                  const loadPresetHandler = () => {
+                    dispatch(setPresetToLoad(synth.id));
+                    dispatch(setPresetToLoadModalOpen(true));
+                    dispatch(setPresetToLoadType('Bass Synth'));
+                    dispatch(
+                      setPresetToLoadDispatchType(
+                        PRESET_ACTIONS.LOAD_BASS_SYNTH_ASYNC
+                      )
+                    );
+                  };
+                  const loadDeletePresetFormHandler = () => {
+                    dispatch(setPresetToDelete(synth));
+                    dispatch(setPresetDeleteModalOpen(true));
+                    dispatch(setPresetDeleteType('Bass Synth'));
+                    dispatch(
+                      setPresetDeleteDispatchType(
+                        PRESET_ACTIONS.DELETE_BASS_SYNTH_ASYNC
+                      )
+                    );
+                  };
                   return (
                     <Fragment key={synth.presetName}>
                       <CollectionItem
-                        mainOnClick={() => console.log('YOU GOT ME')}
-                        deleteOnClick={() => console.log('YOU GOT ME')}
+                        mainOnClick={loadPresetHandler}
+                        deleteOnClick={loadDeletePresetFormHandler}
                         name={synth.presetName!}
                         Icon={BassSynthSvg}
                         additionalStyles={
