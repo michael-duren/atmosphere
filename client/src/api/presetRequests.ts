@@ -57,7 +57,7 @@ const Instruments = {
   getMelodicSynthById: (id: number) =>
     requests.get(`/presets/instruments/melodic/${id}`),
   getBassSynthById: (id: number) =>
-    requests.get(`/presets/instruments/bass/${id}`),
+    requests.get<BassSynth>(`/presets/instruments/bass/${id}`),
   createMelodicSynth: (melodicSynth: MelodicSynth) =>
     requests.post('/presets/instruments/melodicSynth', melodicSynth),
   createBassSynth: (bassSynth: BassSynth) =>

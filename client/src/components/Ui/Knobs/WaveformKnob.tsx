@@ -38,6 +38,11 @@ export default function WaveformKnob({
     setWave(getWaveFromNumber(localLevel));
   }, [localLevel]);
 
+  useEffect(() => {
+    setLocalLevel(level);
+    setWave(getWaveFromNumber(level));
+  }, [level]);
+
   const setStoreLevel = () => {
     storeSetter(wave);
   };

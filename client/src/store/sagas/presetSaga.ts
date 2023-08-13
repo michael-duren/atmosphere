@@ -192,6 +192,7 @@ export function* loadBassSynth({ payload }: LoadBassSynth) {
     );
     yield put(setBassSynth(synth));
     yield call(setToneBassSynth, synth);
+    toast.success('Bass Synth loaded');
   } catch (e) {
     toast.error('Error loading synth');
     console.error(e);
