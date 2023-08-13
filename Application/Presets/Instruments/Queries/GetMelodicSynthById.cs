@@ -1,7 +1,6 @@
 using Application.Core;
 using Application.Interfaces;
 using Application.Presets.Instruments.DTOs;
-using Application.Presets.Patterns.DTOs;
 using AutoMapper;
 using DataAccess;
 using MediatR;

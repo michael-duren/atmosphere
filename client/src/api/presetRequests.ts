@@ -45,11 +45,9 @@ const Effects = {
     requests.put<Reverb>(`/presets/reverb/${reverb.id}`, reverb),
   updateDelay: (delay: Delay) =>
     requests.put<Delay>(`/presets/delay/${delay.id}`, delay),
-  deleteDistortion: (distortion: Distortion) =>
-    requests.del(`/presets/distortion/${distortion.id}`),
-  deleteReverb: (reverb: Reverb) =>
-    requests.del(`/presets/reverb/${reverb.id}`),
-  deleteDelay: (delay: Delay) => requests.del(`/presets/delay/${delay.id}`),
+  deleteDistortion: (id: number) => requests.del(`/presets/distortion/${id}`),
+  deleteReverb: (id: number) => requests.del(`/presets/reverb/${id}`),
+  deleteDelay: (id: number) => requests.del(`/presets/delay/${id}`),
 };
 
 const Instruments = {

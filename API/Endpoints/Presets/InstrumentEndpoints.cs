@@ -3,7 +3,7 @@ using Application.Core;
 using Application.Presets.Instruments.Commands;
 using Application.Presets.Instruments.DTOs;
 using Application.Presets.Instruments.Queries;
-using Application.Presets.Patterns.Queries;
+using AutoMapper;
 using MediatR;
 
 namespace API.Endpoints.Presets;
@@ -22,6 +22,11 @@ public class InstrumentEndpoints : IEndpointDefinition
         instruments.MapGet("/melodic/{id}", GetMelodicSynthById)
             .WithName("GetMelodicSynthById")
             .Produces<MelodicSynthPresetDto>(200, "application/json")
+            .Produces<ErrorMessage>(400, "application/json");
+        
+        instruments.MapGet("/bass/{id}", GetBassSynthById)
+            .WithName("GetBassSynthById")
+            .Produces<BassSynthPresetDto>(200, "application/json")
             .Produces<ErrorMessage>(400, "application/json");
             
 
@@ -56,6 +61,16 @@ public class InstrumentEndpoints : IEndpointDefinition
             .Produces<ErrorMessage>(400, "application/json");
     }
 
+    private static async Task<IResult> GetBassSynthById(IMediator mediator, CancellationToken cancellationToken, IHandleResult handleResult, int id)
+    {
+        var getBassSynthById = new GetBassSynthById.Query
+        {
+            Id = id
+        };
+
+        return handleResult.Handle(await mediator.Send(getBassSynthById, cancellationToken));
+    }
+
     private static async Task<IResult> GetMelodicSynthById(IMediator mediator, CancellationToken cancellationToken,
         IHandleResult handleResult, int id
     )
@@ -83,12 +98,14 @@ public class InstrumentEndpoints : IEndpointDefinition
 
     private static async Task<IResult> UpdateBassSynth(IMediator mediator, IHandleResult handleResult,
         BassSynthPresetDto synthQueryDto,
+        IMapper mapper,
         int id,
         CancellationToken cancellationToken)
     {
+       var synthQueryDtoMapped = mapper.Map<SynthQueryDto>(synthQueryDto);
         var updateBassSynth = new UpdateSynth.Command
         {
-            SynthQueryDto = synthQueryDto,
+            SynthQueryDto = synthQueryDtoMapped,
             Type = "bass",
             Id = id
         };
@@ -123,11 +140,13 @@ public class InstrumentEndpoints : IEndpointDefinition
 
     private static async Task<IResult> CreateBassSynth(IMediator mediator, IHandleResult handleResult,
         BassSynthPresetDto synthQueryDto,
+        IMapper mapper,
         CancellationToken cancellationToken)
     {
+        var synthQueryDtoMapped = mapper.Map<SynthQueryDto>(synthQueryDto);
         var createMelodicSynth = new CreateSynth.Command
         {
-            SynthQueryDto = synthQueryDto,
+            SynthQueryDto = synthQueryDtoMapped,
             Type = "bass"
         };
         return handleResult.Handle(await mediator.Send(createMelodicSynth, cancellationToken));

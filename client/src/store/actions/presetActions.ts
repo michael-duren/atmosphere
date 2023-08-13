@@ -150,7 +150,7 @@ export interface UpdateDistortionEffect {
 
 export interface DeleteDistortionEffect {
   type: typeof PRESET_ACTIONS.DELETE_DISTORTION_EFFECT_ASYNC;
-  payload: Distortion;
+  payload: number;
 }
 
 export interface LoadReverbEffect {
