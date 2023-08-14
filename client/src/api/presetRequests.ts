@@ -28,26 +28,30 @@ export type PatternList = {
 const Effects = {
   list: () => requests.get<EffectList>('/presets/effects'),
   getDistortionById: (id: number) =>
-    requests.get<Distortion>(`/presets/distortion/${id}`),
-  getReverbById: (id: number) => requests.get<Reverb>(`/presets/reverb/${id}`),
-  getDelayById: (id: number) => requests.get<Delay>(`/presets/delay/${id}`),
+    requests.get<Distortion>(`/presets/effects/distortion/${id}`),
+  getReverbById: (id: number) =>
+    requests.get<Reverb>(`/presets/effects/reverb/${id}`),
+  getDelayById: (id: number) =>
+    requests.get<Delay>(`/presets/effects/delay/${id}`),
   createDistortion: (distortion: Distortion) =>
-    requests.post<Distortion>('/presets/distortion', distortion),
+    requests.post<Distortion>('/presets/effects/distortion', distortion),
   createReverb: (reverb: Reverb) =>
-    requests.post<Reverb>('/presets/reverb', reverb),
-  createDelay: (delay: Delay) => requests.post<Delay>('/presets/delay', delay),
+    requests.post<Reverb>('/presets/effects/reverb', reverb),
+  createDelay: (delay: Delay) =>
+    requests.post<Delay>('/presets/effects/delay', delay),
   updateDistortion: (distortion: Distortion) =>
     requests.put<Distortion>(
-      `/presets/distortion/${distortion.id}`,
+      `/presets/effects/distortion/${distortion.id}`,
       distortion
     ),
   updateReverb: (reverb: Reverb) =>
-    requests.put<Reverb>(`/presets/reverb/${reverb.id}`, reverb),
+    requests.put<Reverb>(`/presets/effects/reverb/${reverb.id}`, reverb),
   updateDelay: (delay: Delay) =>
-    requests.put<Delay>(`/presets/delay/${delay.id}`, delay),
-  deleteDistortion: (id: number) => requests.del(`/presets/distortion/${id}`),
-  deleteReverb: (id: number) => requests.del(`/presets/reverb/${id}`),
-  deleteDelay: (id: number) => requests.del(`/presets/delay/${id}`),
+    requests.put<Delay>(`/presets/effects/delay/${delay.id}`, delay),
+  deleteDistortion: (id: number) =>
+    requests.del(`/presets/effects/distortion/${id}`),
+  deleteReverb: (id: number) => requests.del(`/presets/effects/reverb/${id}`),
+  deleteDelay: (id: number) => requests.del(`/presets/effects/delay/${id}`),
 };
 
 const Instruments = {
