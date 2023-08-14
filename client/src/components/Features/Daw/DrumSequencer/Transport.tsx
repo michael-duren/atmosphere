@@ -15,16 +15,12 @@ import { SONG_ACTIONS } from '../../../../store/actions/songActions.ts';
 import { darkInput } from '../../../Ui/Styles/input.ts';
 import { melodicPattern } from '../../../../tone/singleton.ts';
 import SaveButton from '../../../Ui/Buttons/SaveButton.tsx';
-import {
-  setPresetModalData,
-  setPresetModalDispatchType,
-  setPresetModalOpen,
-  setPresetModalType,
-} from '../../../../store/slices/commonSlice.ts';
-import { PRESET_ACTIONS } from '../../../../store/actions/presetActions.ts';
+import useSavePresetHandlers from '../../../../hooks/useSavePresetHandlers.ts';
 
 export default function Transport() {
   const { isPlaying } = useAppSelector(selectTransport);
+  const { kitPattern } = useAppSelector((store) => store.song.currentSong);
+  const { saveKitPatternHandler } = useSavePresetHandlers();
   const {
     currentSong: { bpm },
   } = useAppSelector(selectSong);
@@ -35,9 +31,6 @@ export default function Transport() {
   const [inputBpm, setInputBpm] = useState(bpm);
   const stepsRef = useRef<HTMLInputElement | null>(null);
   const [inputSteps, setInputSteps] = useState(16);
-  const kitPattern = useAppSelector(
-    (store) => store.song.currentSong.kitPattern
-  );
 
   useEffect(() => {
     setInputSteps(patternLength);
@@ -92,25 +85,6 @@ export default function Transport() {
     setInputSteps(+event.target.value);
   };
 
-  /*
-   * Saving Kit Pattern
-   */
-  const saveKitPatternHandler = () => {
-    dispatch(setPresetModalData(kitPattern));
-    dispatch(setPresetModalType('Kit Pattern'));
-    if (kitPattern.presetName) {
-      dispatch(
-        setPresetModalDispatchType(PRESET_ACTIONS.UPDATE_KIT_PATTERN_ASYNC)
-      );
-    } else {
-      dispatch(
-        setPresetModalDispatchType(PRESET_ACTIONS.CREATE_KIT_PATTERN_ASYNC)
-      );
-    }
-
-    dispatch(setPresetModalOpen(true));
-  };
-
   return (
     <div>
       <div className="flex items-center gap-2">
@@ -144,7 +118,10 @@ export default function Transport() {
           />
         </div>
         <div className="ml-2 -mb-6">
-          <SaveButton onClick={saveKitPatternHandler} size={20} />
+          <SaveButton
+            onClick={() => saveKitPatternHandler(kitPattern)}
+            size={20}
+          />
         </div>
       </div>
     </div>
