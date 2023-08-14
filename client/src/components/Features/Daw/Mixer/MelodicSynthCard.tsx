@@ -3,7 +3,6 @@ import { ReactComponent as MelodicSynthSvg } from '../../../../assets/icons/Melo
 import Knob from '../../../Ui/Knobs/Knob.tsx';
 import WaveformKnob from '../../../Ui/Knobs/WaveformKnob.tsx';
 import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
-import { selectSong } from '../../../../store/slices/songSlice.ts';
 import {
   simpleToneWaveFormToInput,
   toneWaveFormToInput,
@@ -28,9 +27,13 @@ import FrequencyKnob from '../../../Ui/Knobs/FrequencyKnob.tsx';
 import FilterKnob from '../../../Ui/Knobs/FilterKnob.tsx';
 import NoteFrequencyKnob from '../../../Ui/Knobs/NoteFrequencyKnob.tsx';
 import SaveButton from '../../../Ui/Buttons/SaveButton.tsx';
+import useSavePresetHandlers from '../../../../hooks/useSavePresetHandlers.ts';
 
-const MelodicSynthCard: React.FC = () => {
-  const { currentSong } = useAppSelector(selectSong);
+const MelodicSynthCard = () => {
+  const melodicSynth = useAppSelector(
+    (store) => store.song.currentSong.melodicSynth
+  );
+  const { saveMelodicSynthHandler } = useSavePresetHandlers();
   const {
     setStoreMelodicSynthWaveformChange,
     setStoreMelodicSynthChorusChange,
@@ -49,13 +52,12 @@ const MelodicSynthCard: React.FC = () => {
   return (
     <div className="flex flex-col items-center rounded-2xl justify-center pl-4">
       <div className="flex items-center justify-between w-full">
-        <div>
+        <div className="flex items-center justify-between flex-1">
           <div className="w-full items-end gap-2 font-caps flex mb-4">
             <MelodicSynthSvg className="h-8 w-8  fill-white stroke-2 stroke-white" />
             <h2 className="text-xl">Melodic Synth</h2>
           </div>
-          {/*<SaveButton />*/}
-          <SaveButton onClick={() => console.log('save')} />
+          <SaveButton onClick={() => saveMelodicSynthHandler(melodicSynth)} />
         </div>
       </div>
       <div className="grid grid-cols-4 grid-rows-3 gap-x-4 gap-y-8">
@@ -63,7 +65,7 @@ const MelodicSynthCard: React.FC = () => {
         <Knob title="Waveform">
           <WaveformKnob
             color="#7C3AED"
-            level={toneWaveFormToInput(currentSong.melodicSynth.waveform)}
+            level={toneWaveFormToInput(melodicSynth.waveform)}
             storeSetter={setStoreMelodicSynthWaveformChange}
             toneSetter={setToneMelodicSynthWaveform}
           />
@@ -71,7 +73,7 @@ const MelodicSynthCard: React.FC = () => {
         <Knob title="Chorus">
           <MainKnob
             color="#7C3AED"
-            level={currentSong.melodicSynth.chorus}
+            level={melodicSynth.chorus}
             storeSetter={setStoreMelodicSynthChorusChange}
             toneSetter={setToneMelodicSynthChorus}
           />
@@ -79,7 +81,7 @@ const MelodicSynthCard: React.FC = () => {
         <Knob title="Filter Freq">
           <FrequencyKnob
             color="#7C3AED"
-            level={currentSong.melodicSynth.filterFrequency}
+            level={melodicSynth.filterFrequency}
             storeSetter={setStoreMelodicSynthFilterFrequencyChange}
             toneSetter={setToneMelodicSynthFilterFrequency}
           />
@@ -87,7 +89,7 @@ const MelodicSynthCard: React.FC = () => {
         <Knob title="Filter Shape">
           <FilterKnob
             color="#7C3AED"
-            level={currentSong.melodicSynth.filterType}
+            level={melodicSynth.filterType}
             storeSetter={setStoreMelodicSynthFilterTypeChange}
             toneSetter={setToneMelodicSynthFilterType}
           />
@@ -96,7 +98,7 @@ const MelodicSynthCard: React.FC = () => {
         <Knob title="Filter Mod">
           <FrequencyKnob
             color="#7C3AED"
-            level={currentSong.melodicSynth.filterMod}
+            level={melodicSynth.filterMod}
             storeSetter={setStoreMelodicSynthFilterModChange}
             toneSetter={setToneMelodicSynthFilterMod}
             inverted
@@ -105,7 +107,7 @@ const MelodicSynthCard: React.FC = () => {
         <Knob title="Metal">
           <MainKnob
             color="#7C3AED"
-            level={currentSong.melodicSynth.metal}
+            level={melodicSynth.metal}
             storeSetter={setStoreMelodicSynthMetalChange}
             toneSetter={setToneMelodicSynthMetal}
           />
@@ -113,7 +115,7 @@ const MelodicSynthCard: React.FC = () => {
         <Knob title="Lfo Freq">
           <NoteFrequencyKnob
             color="#7C3AED"
-            level={currentSong.melodicSynth.lfoFrequency}
+            level={melodicSynth.lfoFrequency}
             storeSetter={setStoreMelodicSynthLfoFreqChange}
             toneSetter={setToneMelodicSynthLfoFreq}
           />
@@ -121,7 +123,7 @@ const MelodicSynthCard: React.FC = () => {
         <Knob title="Lfo Shape">
           <WaveformKnob
             color="#7C3AED"
-            level={simpleToneWaveFormToInput(currentSong.melodicSynth.lfoShape)}
+            level={simpleToneWaveFormToInput(melodicSynth.lfoShape)}
             storeSetter={setStoreMelodicSynthLfoWaveformChange}
             toneSetter={setToneMelodicSynthLfoWaveform}
           />
@@ -130,7 +132,7 @@ const MelodicSynthCard: React.FC = () => {
         <Knob title="Attack">
           <MainKnob
             color="#4F46E5"
-            level={currentSong.melodicSynth.attack}
+            level={melodicSynth.attack}
             storeSetter={setStoreMelodicSynthAttackChange}
             toneSetter={setToneMelodicSynthAttack}
           />
@@ -138,7 +140,7 @@ const MelodicSynthCard: React.FC = () => {
         <Knob title="Decay">
           <MainKnob
             color="#4F46E5"
-            level={currentSong.melodicSynth.decay}
+            level={melodicSynth.decay}
             storeSetter={setStoreMelodicSynthDecayChange}
             toneSetter={setToneMelodicSynthDecay}
           />
@@ -146,7 +148,7 @@ const MelodicSynthCard: React.FC = () => {
         <Knob title="Sustain">
           <MainKnob
             color="#4F46E5"
-            level={currentSong.melodicSynth.sustain}
+            level={melodicSynth.sustain}
             storeSetter={setStoreMelodicSynthSustainChange}
             toneSetter={setToneMelodicSynthSustain}
           />
@@ -154,7 +156,7 @@ const MelodicSynthCard: React.FC = () => {
         <Knob title="Release">
           <MainKnob
             color="#4F46E5"
-            level={currentSong.melodicSynth.release}
+            level={melodicSynth.release}
             storeSetter={setStoreMelodicSynthReleaseChange}
             toneSetter={setToneMelodicSynthRelease}
           />

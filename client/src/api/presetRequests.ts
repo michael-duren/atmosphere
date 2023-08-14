@@ -61,20 +61,20 @@ const Instruments = {
   getBassSynthById: (id: number) =>
     requests.get<BassSynth>(`/presets/instruments/bass/${id}`),
   createMelodicSynth: (melodicSynth: MelodicSynth) =>
-    requests.post('/presets/instruments/melodicSynth', melodicSynth),
+    requests.post('/presets/instruments/melodic', melodicSynth),
   createBassSynth: (bassSynth: BassSynth) =>
-    requests.post('/presets/instruments/bassSynth', bassSynth),
+    requests.post('/presets/instruments/bass', bassSynth),
   updateMelodicSynth: (melodicSynth: MelodicSynth) =>
     requests.put(
-      `/presets/instruments/melodicSynth/${melodicSynth.id}`,
+      `/presets/instruments/melodic/${melodicSynth.id}`,
       melodicSynth
     ),
   updateBassSynth: (bassSynth: BassSynth) =>
-    requests.put(`/presets/instruments/bassSynth/${bassSynth.id}`, bassSynth),
+    requests.put(`/presets/instruments/bass/${bassSynth.id}`, bassSynth),
   deleteMelodicSynth: (id: number) =>
-    requests.del(`/presets/instruments/melodicSynth/${id}`),
+    requests.del(`/presets/instruments/melodic/${id}`),
   deleteBassSynth: (id: number) =>
-    requests.del(`/presets/instruments/bassSynth/${id}`),
+    requests.del(`/presets/instruments/bass/${id}`),
 };
 
 const Patterns = {

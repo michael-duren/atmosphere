@@ -75,16 +75,16 @@ public class UpdateSynth
                     oldMelodicSynth.Sustain = melodicSynth.Sustain;
                     oldMelodicSynth.Release = melodicSynth.Release;
                     oldMelodicSynth.FilterFrequency = melodicSynth.FilterFrequency;
-                    melodicSynth.FilterMod = melodicSynth.FilterMod;
-                    melodicSynth.FilterType = melodicSynth.FilterType;
-                    melodicSynth.Metal = melodicSynth.Metal;
-                    melodicSynth.Chorus = melodicSynth.Chorus;
-                    melodicSynth.LfoFrequency = melodicSynth.LfoFrequency;
-                    melodicSynth.LfoShape = melodicSynth.LfoShape;
+                    oldMelodicSynth.FilterMod = melodicSynth.FilterMod;
+                    oldMelodicSynth.FilterType = melodicSynth.FilterType;
+                    oldMelodicSynth.Metal = melodicSynth.Metal;
+                    oldMelodicSynth.Chorus = melodicSynth.Chorus;
+                    oldMelodicSynth.LfoFrequency = melodicSynth.LfoFrequency;
+                    oldMelodicSynth.LfoShape = melodicSynth.LfoShape;
 
-                    var melodicPatternResult = await _context.SaveChangesAsync(cancellationToken) > 0;
+                    var melodicSynthResult = await _context.SaveChangesAsync(cancellationToken) > 0;
 
-                    return new UpdatedResult { Result = melodicPatternResult };
+                    return new UpdatedResult { Result = melodicSynthResult };
 
                 case "bass":
                     var oldBassSynth = await _context.BassSynthPresets.Where(p => p.AppUserId == user.Id)
