@@ -1,6 +1,7 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, PluginOption } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
@@ -9,12 +10,20 @@ export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   return {
-    plugins: [react(), svgr()],
+    plugins: [react(), svgr(), visualizer() as PluginOption],
     define: {
       __APP_ENV__: JSON.stringify(env.APP_ENV),
     },
     build: {
       outDir: '../API/wwwroot',
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['axios', 'tone'],
+            three: ['three'],
+          },
+        },
+      },
     },
   };
 });

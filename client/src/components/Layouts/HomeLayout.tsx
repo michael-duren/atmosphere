@@ -1,6 +1,6 @@
-import { Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import AbstractSpinner from '../Ui/Spinners/AbstractSpinner';
-import MoonCanvas from '../../canvas/MoonCanvas';
+const MoonCanvas = lazy(() => import('../../canvas/MoonCanvas'));
 
 interface Props {
   children: React.ReactNode;
