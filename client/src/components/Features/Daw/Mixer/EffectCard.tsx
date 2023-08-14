@@ -3,6 +3,7 @@ import MainKnob from '../../../Ui/Knobs/MainKnob.tsx';
 import { IconType } from 'react-icons';
 import FrequencyKnob from '../../../Ui/Knobs/FrequencyKnob.tsx';
 import Knob from '../../../Ui/Knobs/Knob.tsx';
+import SaveButton from '../../../Ui/Buttons/SaveButton.tsx';
 
 interface Parameter {
   level: number;
@@ -18,6 +19,8 @@ interface Props {
   title: string;
   EffectIcon?: IconType;
   size?: string;
+  saveDispatch: (preset: any) => void;
+  effectToSave: any;
 }
 
 export default function EffectCard({
@@ -26,16 +29,23 @@ export default function EffectCard({
   size = 'text-lg',
   EffectIcon,
   title,
+  saveDispatch,
+  effectToSave,
 }: Props) {
   return (
     <div
       className="p-2 justify-evenly flex flex-col
   items-center rounded-xl "
     >
-      <h3 className={`${size} w-full items-center gap-1 flex mb-2  font-caps`}>
-        {EffectIcon && <EffectIcon size={16} />}
-        <span>{toTitleCase(splitCamelCase(title))}</span>
-      </h3>
+      <div className="flex items-center justify-between w-full">
+        <h3
+          className={`${size} w-full items-center gap-1 flex mb-2  font-caps`}
+        >
+          {EffectIcon && <EffectIcon size={16} />}
+          <span>{toTitleCase(splitCamelCase(title))}</span>
+        </h3>
+        <SaveButton size={14} onClick={() => saveDispatch(effectToSave)} />
+      </div>
       <div className="flex w-full items-center gap-8">
         {state.map((param) => {
           const paramTitle = toTitleCase(splitCamelCase(param.name));

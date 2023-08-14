@@ -1,5 +1,4 @@
 import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
-import { selectSong } from '../../../../store/slices/songSlice.ts';
 import EffectCard from './EffectCard.tsx';
 import { GiAbstract053, GiAbstract098, GiAbstract024 } from 'react-icons/gi';
 import useMixChange from '../../../../hooks/useMixChange.ts';
@@ -14,9 +13,14 @@ import {
   setToneReverbMix,
   setToneReverbPreDelay,
 } from '../../../../tone/setters/setToneMixParams.ts';
+import useSavePresetHandlers from '../../../../hooks/useSavePresetHandlers.ts';
 
 export default function EffectListCard() {
-  const { currentSong } = useAppSelector(selectSong);
+  const { distortion, reverb, delay } = useAppSelector(
+    (store) => store.song.currentSong
+  );
+  const { saveDistortionHandler, saveReverbHandler, saveDelayHandler } =
+    useSavePresetHandlers();
   const {
     handleDistortionMixChange,
     handleDistortionAmountChange,
@@ -32,23 +36,25 @@ export default function EffectListCard() {
   return (
     <div>
       <EffectCard
+        effectToSave={distortion}
+        saveDispatch={saveDistortionHandler}
         state={[
           {
-            level: currentSong.distortion.mix,
+            level: distortion.mix,
             name: 'mix',
             storeSetter: handleDistortionMixChange,
             toneSetter: setToneDistortionMix,
             type: 'main',
           },
           {
-            level: currentSong.distortion.amount,
+            level: distortion.amount,
             name: 'amount',
             storeSetter: handleDistortionAmountChange,
             toneSetter: setToneDistortionAmount,
             type: 'main',
           },
           {
-            level: currentSong.distortion.filterFrequency,
+            level: distortion.filterFrequency,
             name: 'filter',
             storeSetter: handleDistortionFilterChange,
             toneSetter: setToneDistortionFilter,
@@ -60,23 +66,25 @@ export default function EffectListCard() {
         EffectIcon={GiAbstract098}
       />
       <EffectCard
+        effectToSave={reverb}
+        saveDispatch={saveReverbHandler}
         state={[
           {
-            level: currentSong.reverb.mix,
+            level: reverb.mix,
             name: 'mix',
             storeSetter: handleReverbMixChange,
             toneSetter: setToneReverbMix,
             type: 'main',
           },
           {
-            level: currentSong.reverb.decay,
+            level: reverb.decay,
             name: 'decay',
             storeSetter: handleReverbDecayChange,
             toneSetter: setToneReverbDecay,
             type: 'main',
           },
           {
-            level: currentSong.reverb.preDelay,
+            level: reverb.preDelay,
             name: 'pre delay',
             storeSetter: handleReverbPreDelayChange,
             toneSetter: setToneReverbPreDelay,
@@ -88,23 +96,25 @@ export default function EffectListCard() {
         EffectIcon={GiAbstract024}
       />
       <EffectCard
+        effectToSave={delay}
+        saveDispatch={saveDelayHandler}
         state={[
           {
-            level: currentSong.delay.mix,
+            level: delay.mix,
             name: 'mix',
             storeSetter: handleDelayMixChange,
             toneSetter: setToneDelayMix,
             type: 'main',
           },
           {
-            level: currentSong.delay.time,
+            level: delay.time,
             name: 'time',
             storeSetter: handleDelayTimeChange,
             toneSetter: setToneDelayTime,
             type: 'main',
           },
           {
-            level: currentSong.delay.feedback,
+            level: delay.feedback,
             name: 'feedback',
             storeSetter: handleDelayFeedbackChange,
             toneSetter: setToneDelayFeedback,

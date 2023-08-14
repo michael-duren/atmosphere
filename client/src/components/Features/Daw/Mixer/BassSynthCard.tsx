@@ -1,7 +1,6 @@
 import { ReactComponent as BassSynthSvg } from '../../../../assets/icons/BassSynth.svg';
 import WaveformKnob from '../../../Ui/Knobs/WaveformKnob.tsx';
 import { useAppSelector } from '../../../../store/hooks/useAppSelector.ts';
-import { selectSong } from '../../../../store/slices/songSlice.ts';
 import {
   setToneBassFilterFrequency,
   setToneBassSynthAttack,
@@ -15,9 +14,11 @@ import useBassSynthStoreChange from '../../../../hooks/useBassSynthStoreChange.t
 import FrequencyKnob from '../../../Ui/Knobs/FrequencyKnob.tsx';
 import Knob from '../../../Ui/Knobs/Knob.tsx';
 import MainKnob from '../../../Ui/Knobs/MainKnob.tsx';
+import SaveButton from '../../../Ui/Buttons/SaveButton.tsx';
+import useSavePresetHandlers from '../../../../hooks/useSavePresetHandlers.ts';
 
 export default function BassSynthCard() {
-  const { currentSong } = useAppSelector(selectSong);
+  const bassSynth = useAppSelector((store) => store.song.currentSong.bassSynth);
   const {
     setStoreBassSynthWaveform,
     setStoreBassSynthFilterFrequency,
@@ -26,19 +27,23 @@ export default function BassSynthCard() {
     setStoreBassSynthSustainChange,
     setStoreBassSynthReleaseChange,
   } = useBassSynthStoreChange();
+  const { saveBassSynthHandler } = useSavePresetHandlers();
 
   return (
     <div className="flex flex-col items-center rounded-2xl ">
-      <div className="text-xl font-caps flex mb-4 gap-2  w-full">
-        <BassSynthSvg className="h-6 w-6 fill-white mb-1 stroke-2 stroke-white" />
-        <h2>Bass Synth</h2>
+      <div className="flex items-center justify-between  w-full">
+        <div className="text-xl font-caps flex mb-4 gap-2 w-full">
+          <BassSynthSvg className="h-6 w-6 fill-white mb-1 stroke-2 stroke-white" />
+          <h2>Bass Synth</h2>
+        </div>
+        <SaveButton onClick={() => saveBassSynthHandler(bassSynth)} />
       </div>
       <div className="grid grid-cols-2 grid-rows-3 gap-x-4 gap-y-8">
         {/* Row One */}
         <Knob title={'Waveform'}>
           <WaveformKnob
             color={'#F59E0B'}
-            level={toneWaveFormToInput(currentSong.bassSynth.waveform)}
+            level={toneWaveFormToInput(bassSynth.waveform)}
             storeSetter={setStoreBassSynthWaveform}
             toneSetter={setToneBassSynthWaveform}
           />
@@ -46,7 +51,7 @@ export default function BassSynthCard() {
         <Knob title={'Filter Frequency'}>
           <FrequencyKnob
             color={'#F59E0B'}
-            level={currentSong.bassSynth.filterFrequency}
+            level={bassSynth.filterFrequency}
             storeSetter={setStoreBassSynthFilterFrequency}
             toneSetter={setToneBassFilterFrequency}
           />
@@ -55,14 +60,14 @@ export default function BassSynthCard() {
         <Knob title={'Attack'}>
           <MainKnob
             color={'#F59E0B'}
-            level={currentSong.bassSynth.attack}
+            level={bassSynth.attack}
             storeSetter={setStoreBassSynthAttackChange}
             toneSetter={setToneBassSynthAttack}
           />
         </Knob>
         <Knob title={'Decay'}>
           <MainKnob
-            level={currentSong.bassSynth.decay}
+            level={bassSynth.decay}
             color={'#F59E0B'}
             storeSetter={setStoreBassSynthDecayChange}
             toneSetter={setToneBassSynthDecay}
@@ -71,7 +76,7 @@ export default function BassSynthCard() {
         <Knob title="Sustain">
           <MainKnob
             color={'#F59E0B'}
-            level={currentSong.bassSynth.sustain}
+            level={bassSynth.sustain}
             storeSetter={setStoreBassSynthSustainChange}
             toneSetter={setToneBassSynthSustain}
           />
@@ -79,7 +84,7 @@ export default function BassSynthCard() {
         <Knob title="Release">
           <MainKnob
             color={'#F59E0B'}
-            level={currentSong.bassSynth.release}
+            level={bassSynth.release}
             storeSetter={setStoreBassSynthReleaseChange}
             toneSetter={setToneBassSynthRelease}
           />

@@ -62,11 +62,12 @@ public abstract class UpdateEffect
                     if (oldDistortion is null)
                         return new UpdateResult { Result = false, UpdatedPreset = null };
 
+                    var updatedDistortion = _mapper.Map<EffectQueryDto, DistortionQueryDto>(effectQueryDto);
 
-                    oldDistortion.PresetName = effectQueryDto.PresetName;
-                    oldDistortion.Mix = effectQueryDto.Mix;
-                    oldDistortion.Amount = effectQueryDto.Amount ?? oldDistortion.Amount;
-                    oldDistortion.FilterFrequency = effectQueryDto.FilterFrequency ?? oldDistortion.FilterFrequency;
+                    oldDistortion.PresetName = updatedDistortion.PresetName;
+                    oldDistortion.Mix = updatedDistortion.Mix;
+                    oldDistortion.Amount = updatedDistortion.Amount;
+                    oldDistortion.FilterFrequency = updatedDistortion.FilterFrequency; 
 
                     var distortionResult = await _context.SaveChangesAsync(cancellationToken) > 0;
 
@@ -83,20 +84,20 @@ public abstract class UpdateEffect
                     if (oldReverb is null)
                         return new UpdateResult { Result = false, UpdatedPreset = null };
 
-                    _context.ChangeTracker.Clear();
+                    var updatedReverb = _mapper.Map<EffectQueryDto, ReverbQueryDto>(effectQueryDto);
 
-                    oldReverb.PresetName = effectQueryDto.PresetName;
-                    oldReverb.Mix = effectQueryDto.Mix;
-                    oldReverb.Decay = effectQueryDto.Decay ?? oldReverb.Decay;
-                    oldReverb.PreDelay = effectQueryDto.PreDelay ?? oldReverb.PreDelay;
+                    oldReverb.PresetName = updatedReverb.PresetName;
+                    oldReverb.Mix = updatedReverb.Mix;
+                    oldReverb.Decay = updatedReverb.Decay;
+                    oldReverb.PreDelay = updatedReverb.PreDelay; 
 
                     var reverbResult = await _context.SaveChangesAsync(cancellationToken) > 0;
 
-                    var createdReverb = await _context.ReverbPresets.Where(p => p.AppUserId == user.Id)
+                    var updated = await _context.ReverbPresets.Where(p => p.AppUserId == user.Id)
                         .ProjectTo<EffectQueryDto>(_mapper.ConfigurationProvider)
                         .FirstOrDefaultAsync(p => p.Id == id, cancellationToken: cancellationToken);
 
-                    return new UpdateResult { Result = reverbResult, UpdatedPreset = createdReverb };
+                    return new UpdateResult { Result = reverbResult, UpdatedPreset = updated };
                 case "delay":
                     var oldDelay = await _context.DelayPresets.Where(p => p.AppUserId == user.Id)
                         .FirstOrDefaultAsync(p => p.Id == id, cancellationToken: cancellationToken);
@@ -104,12 +105,12 @@ public abstract class UpdateEffect
                     if (oldDelay is null)
                         return new UpdateResult { Result = false, UpdatedPreset = null };
 
-                    _context.ChangeTracker.Clear();
+                    var updatedDelay = _mapper.Map<EffectQueryDto, DelayQueryDto>(effectQueryDto);
 
-                    oldDelay.PresetName = effectQueryDto.PresetName;
-                    oldDelay.Mix = effectQueryDto.Mix;
-                    oldDelay.Time = effectQueryDto.Time ?? oldDelay.Time;
-                    oldDelay.Feedback = effectQueryDto.Feedback ?? oldDelay.Feedback;
+                    oldDelay.PresetName = updatedDelay.PresetName;
+                    oldDelay.Mix = updatedDelay.Mix;
+                    oldDelay.Time = updatedDelay.Time;
+                    oldDelay.Feedback = updatedDelay.Feedback; 
 
                     var delayResult = await _context.SaveChangesAsync(cancellationToken) > 0;
 
