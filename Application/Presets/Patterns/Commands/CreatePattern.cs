@@ -65,7 +65,7 @@ public class CreatePattern
                     var melodicPatternResult = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                     var createdMelodicPattern = await _context.MelodicPatternPresets.Where(p => p.AppUserId == user.Id)
-                        .ProjectTo<PatternQueryDto>(_mapper.ConfigurationProvider)
+                        .ProjectTo<MelodicPatternPresetDto>(_mapper.ConfigurationProvider)
                         .FirstOrDefaultAsync(p => p.Id == melodicPattern.Id, cancellationToken: cancellationToken);
 
                     return new CreateResult { Result = melodicPatternResult, CreatedPreset = createdMelodicPattern };
@@ -80,7 +80,7 @@ public class CreatePattern
                     var kitResult = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                     var createdKitPattern = await _context.KitPatternPresets.Where(p => p.AppUserId == user.Id)
-                        .ProjectTo<PatternQueryDto>(_mapper.ConfigurationProvider)
+                        .ProjectTo<KitPatternPresetDto>(_mapper.ConfigurationProvider)
                         .FirstOrDefaultAsync(p => p.Id == kitPattern.Id, cancellationToken: cancellationToken);
 
                     return new CreateResult { Result = kitResult, CreatedPreset = createdKitPattern };

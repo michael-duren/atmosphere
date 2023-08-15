@@ -109,7 +109,18 @@ const songSlice = createSlice({
       state,
       action: { payload: MelodicSynth; type: string }
     ) => {
-      state.currentSong.melodicSynth = action.payload;
+      state.currentSong.melodicSynth.attack = action.payload.attack;
+      state.currentSong.melodicSynth.decay = action.payload.decay;
+      state.currentSong.melodicSynth.sustain = action.payload.sustain;
+      state.currentSong.melodicSynth.release = action.payload.release;
+      state.currentSong.melodicSynth.filterFrequency =
+        action.payload.filterFrequency;
+      state.currentSong.melodicSynth.filterMod = action.payload.filterMod;
+      state.currentSong.melodicSynth.filterType = action.payload.filterType;
+      state.currentSong.melodicSynth.metal = action.payload.metal;
+      state.currentSong.melodicSynth.chorus = action.payload.chorus;
+      state.currentSong.melodicSynth.lfoFrequency = action.payload.lfoFrequency;
+      state.currentSong.melodicSynth.lfoShape = action.payload.lfoShape;
     },
     setMelodicSynthAttack: (
       state,
@@ -225,7 +236,16 @@ const songSlice = createSlice({
       state,
       action: { payload: MelodicPattern; type: string }
     ) => {
-      state.currentSong.melodicPattern = action.payload;
+      state.currentSong.melodicPattern.key = action.payload.key;
+      state.currentSong.melodicPattern.scale = action.payload.scale;
+      state.currentSong.melodicPattern.sequence = action.payload.sequence;
+      state.currentSong.melodicPattern.patternType = action.payload.patternType;
+      state.currentSong.melodicPattern.transpose = action.payload.transpose;
+      state.currentSong.melodicPattern.timeInterval =
+        action.payload.timeInterval;
+      state.currentSong.melodicPattern.noteDuration =
+        action.payload.noteDuration;
+      state.currentSong.melodicPattern.length = action.payload.length;
     },
     setMelodicPatternKey: (
       state,
@@ -276,7 +296,11 @@ const songSlice = createSlice({
       state.currentSong.melodicPattern.sequence = action.payload;
     },
     setKitPattern: (state, action: { type: string; payload: KitPattern }) => {
-      state.currentSong.kitPattern = action.payload;
+      state.currentSong.kitPattern.patternLength = action.payload.patternLength;
+      state.currentSong.kitPattern.bdSteps = action.payload.bdSteps;
+      state.currentSong.kitPattern.sdSteps = action.payload.sdSteps;
+      state.currentSong.kitPattern.clSteps = action.payload.clSteps;
+      state.currentSong.kitPattern.chSteps = action.payload.chSteps;
     },
     toggleDrumStep: (
       state,
@@ -290,16 +314,29 @@ const songSlice = createSlice({
         !state.currentSong.kitPattern[drumName][step];
     },
     setDistortion: (state, action: { payload: Distortion; type: string }) => {
-      state.currentSong.distortion = action.payload;
+      state.currentSong.distortion.mix = action.payload.mix;
+      state.currentSong.distortion.amount = action.payload.amount;
+      state.currentSong.distortion.filterFrequency =
+        action.payload.filterFrequency;
     },
     setReverb: (state, action: { payload: Reverb; type: string }) => {
-      state.currentSong.reverb = action.payload;
+      state.currentSong.reverb.mix = action.payload.mix;
+      state.currentSong.reverb.decay = action.payload.decay;
+      state.currentSong.reverb.preDelay = action.payload.preDelay;
     },
     setDelay: (state, action: { payload: Delay; type: string }) => {
-      state.currentSong.delay = action.payload;
+      state.currentSong.delay.mix = action.payload.mix;
+      state.currentSong.delay.time = action.payload.time;
+      state.currentSong.delay.feedback = action.payload.feedback;
     },
     setBassSynth: (state, action: { payload: BassSynth; type: string }) => {
-      state.currentSong.bassSynth = action.payload;
+      state.currentSong.bassSynth.attack = action.payload.attack;
+      state.currentSong.bassSynth.decay = action.payload.decay;
+      state.currentSong.bassSynth.sustain = action.payload.sustain;
+      state.currentSong.bassSynth.release = action.payload.release;
+      state.currentSong.bassSynth.waveform = action.payload.waveform;
+      state.currentSong.bassSynth.filterFrequency =
+        action.payload.filterFrequency;
     },
   },
 });

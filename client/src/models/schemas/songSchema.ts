@@ -22,7 +22,7 @@ export const songSchema = Yup.object().shape({
       .max(1)
       .required('Distortion amount is required'),
     filterFrequency: Yup.number()
-      .min(1)
+      .min(0.1)
       .max(22_000)
       .required('Distortion filter frequency is required'),
   }),
@@ -52,7 +52,7 @@ export const songSchema = Yup.object().shape({
     release: Yup.number().min(0).max(1).required('Bass release is required'),
     waveform: Yup.string().required('Bass waveform is required'),
     filterFrequency: Yup.number()
-      .min(1)
+      .min(0.1)
       .max(22_000)
       .required('Bass filter frequency is required'),
   }),
@@ -65,12 +65,12 @@ export const songSchema = Yup.object().shape({
     sustain: Yup.number().min(0).max(1).required('Melodic sustain is required'),
     release: Yup.number().min(0).max(1).required('Melodic release is required'),
     filterFrequency: Yup.number()
-      .min(1)
+      .min(0.1)
       .max(22_000)
       .required('Melodic filter frequency is required'),
     filterMod: Yup.number()
-      .min(0)
-      .max(1)
+      .min(0.1)
+      .max(22_000)
       .required('Melodic filter mod is required'),
     filterType: Yup.string().required('Melodic filter type is required'),
     metal: Yup.number().min(0).max(1).required('Melodic metal is required'),
