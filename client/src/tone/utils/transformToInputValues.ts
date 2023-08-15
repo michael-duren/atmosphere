@@ -17,12 +17,14 @@ export const toneWaveFormToInput = (toneWaveform: WaveType): number => {
   }
 };
 
+// converts frequency from 0-22000 to 0-1
 export const frequencyToInput = (frequency: number): number => {
-  return frequency / 22_000;
+  return Math.min(frequency / 22_000, 1);
 };
 
+// converts inverted frequency from 0-22000 to 0-1
 export const frequencyInvertedToInput = (frequency: number): number => {
-  return (22_000 - frequency) / 21_000;
+  return Math.min((22_000 - frequency) / 21_000, 1);
 };
 
 export const simpleToneWaveFormToInput = (
