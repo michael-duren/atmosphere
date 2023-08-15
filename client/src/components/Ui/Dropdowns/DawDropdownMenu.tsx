@@ -9,13 +9,11 @@ import {
 import { useAppDispatch } from '../../../store/hooks/useAppDispatch.ts';
 import { USER_ACTIONS } from '../../../store/actions/userActions.ts';
 import { setSaveModalOpen } from '../../../store/slices/commonSlice.ts';
-import { useAppSelector } from '../../../store/hooks/useAppSelector.ts';
-import { selectUser } from '../../../store/slices/userSlice.ts';
 import { SONG_ACTIONS } from '../../../store/actions/songActions.ts';
+import { GiHamburgerMenu } from 'react-icons/gi';
 
 export default function DawDropdownMenu() {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector(selectUser);
   const onNewSong = () => dispatch({ type: SONG_ACTIONS.SET_NEW_SONG_ASYNC });
   const onSaveSong = () => dispatch(setSaveModalOpen(true));
   const onSaveSongAs = () => dispatch(setSaveModalOpen(true));
@@ -24,12 +22,8 @@ export default function DawDropdownMenu() {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button
-          className={
-            'rounded-full border-2 shadow-lg shadow-gray-500 transition-all transform duration-400 hover:shadow-gray-400 hover:bg-gray-950 text-white flex items-center justify-center font-caps  h-16 w-16 text-xl bg-black'
-          }
-        >
-          {user?.username[0].toUpperCase()}
+        <Menu.Button className={'text-gray-300 hover:text-white text-4xl '}>
+          <GiHamburgerMenu />
         </Menu.Button>
       </div>
       <Transition
