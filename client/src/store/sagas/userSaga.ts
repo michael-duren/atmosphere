@@ -14,6 +14,8 @@ import { User } from '../../models/user.ts';
 import { call, put, takeEvery } from 'typed-redux-saga';
 import { router } from '../../router/Routes.tsx';
 import { setToken } from '../slices/commonSlice.ts';
+import { setCurrentSong } from '../slices/songSlice.ts';
+import initialSongState from '../slices/initialState/initialSongState.ts';
 
 export function* login({ payload }: LoginAsync) {
   yield put(setIsUserLoading(true)); // set user is loading to true
@@ -35,6 +37,7 @@ export function* login({ payload }: LoginAsync) {
 export function* logout() {
   yield put(setToken(null)); // set token in common store to null
   yield put(setUser(null)); // set user in redux store to null
+  yield put(setCurrentSong(initialSongState.currentSong)); // set current song in redux store to initial state
   yield call(router.navigate, '/'); // navigate to login page
   yield call([localStorage, 'removeItem'], 'jwt'); // remove token from local storage
 }

@@ -5,7 +5,7 @@ const initialSongState: SongState = {
   songList: [],
   currentSong: {
     songName: '',
-    masterVolume: 1,
+    masterVolume: 0.75,
     drumVolume: 0.75,
     bassVolume: 0.75,
     melodicVolume: 0.75,

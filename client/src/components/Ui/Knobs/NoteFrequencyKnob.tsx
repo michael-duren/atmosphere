@@ -32,6 +32,10 @@ export default function NoteFrequencyKnob({
   const stepValue = (val: number) => Math.round(val * 12) / 12;
 
   useEffect(() => {
+    setLocalLevel(noteTypeToInput(level));
+  }, [level]);
+
+  useEffect(() => {
     setNoteFrequency(inputToNoteType(localLevel));
   }, [localLevel]);
 
