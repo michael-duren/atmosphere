@@ -10,6 +10,7 @@ import { MusicalKey } from '../../models/types/musicalKey.ts';
 import { store } from '../../store/store.ts';
 import { setIsPlaying } from '../../store/slices/transportSlice.ts';
 import { setMelodicPatternSequence } from '../../store/slices/songSlice.ts';
+import { MelodicPattern as MelodicPatternModel } from '../../models/song.ts';
 
 class MelodicPattern {
   private _transpose: number;
@@ -63,6 +64,47 @@ class MelodicPattern {
       this._patternType
     );
     this._bassPattern.interval = '1n';
+  }
+
+  loadPattern(pattern: MelodicPatternModel) {
+    const state = store.getState();
+    const { isPlaying } = state.transport;
+    const wasPlaying = isPlaying;
+    if (isPlaying) {
+      store.dispatch(setIsPlaying(false));
+      Tone.Transport.stop();
+      Tone.Transport.position = 0;
+    }
+    // set the params from the given pattern
+    this._transpose = pattern.transpose;
+    this._noteDuration = pattern.noteDuration;
+    this._timeInterval = pattern.timeInterval;
+    this._patternType = pattern.patternType;
+    this._sequence = pattern.sequence;
+    this._key = pattern.key;
+    this._scale = pattern.scale;
+    this._notes = Tonal.Scale.get(`${this._key}4 ${this._scale}`).notes;
+    this._length = pattern.length;
+
+    // update the melody pattern
+    this._melodyPattern.callback = this.createMelodicPatternCallback();
+    this._melodyPattern.values = this._sequence;
+    this._melodyPattern.pattern = this.patternType;
+    this._melodyPattern.interval = this._timeInterval;
+    this._melodyPattern.start();
+
+    // update the bass pattern
+    this._bassPattern.callback = this.createBassPatternCallback();
+    this._bassPattern.values = this._sequence.slice(0, 4);
+    this._bassPattern.pattern = this.patternType;
+    this._bassPattern.interval = '1n';
+    this._bassPattern.start();
+
+    // if was playing, start the transport again
+    if (wasPlaying) {
+      Tone.Transport.start();
+      store.dispatch(setIsPlaying(true));
+    }
   }
 
   generateNewPattern() {

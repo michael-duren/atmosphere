@@ -39,12 +39,10 @@ export default function FrequencyKnob({
     ? frequencyInvertedToInput(level)
     : frequencyToInput(level);
   const [localLevel, setLocalLevel] = useState<number>(initialValue);
-  console.log('initial value', initialValue);
 
   useEffect(() => {
     if (inverted) {
       setLocalLevel(frequencyInvertedToInput(level));
-      console.log('inverted', frequencyInvertedToInput(level));
       return;
     }
 
@@ -61,7 +59,6 @@ export default function FrequencyKnob({
 
   const setLocalAndToneLevel = (v: number) => {
     setLocalLevel(v);
-    console.log('v', v)
     if (inverted) {
       toneSetter(toFrequencyInverted(v));
       return;

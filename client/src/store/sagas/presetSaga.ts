@@ -62,6 +62,7 @@ import {
 } from '../../tone/setters/setToneMixParams.ts';
 import { setToneBassSynth } from '../../tone/setters/setToneBassSynthParams.ts';
 import toast from 'react-hot-toast';
+import setMelodicPatternParams from '../../tone/setters/setMelodicPatternParams.ts';
 
 export function* getAllEffects() {
   const effects: EffectList = yield call(agent.Preset.Effects.list);
@@ -75,7 +76,6 @@ export function* getAllInstruments() {
 
 export function* getAllPatterns() {
   const patterns: PatternList = yield call(agent.Preset.Patterns.list);
-  console.log(patterns);
   yield put(setPatterns(patterns));
 }
 
@@ -95,6 +95,7 @@ export function* loadMelodicPattern({ payload }: LoadMelodicPattern) {
       +payload
     );
     yield put(setMelodicPattern(pattern));
+    yield call(setMelodicPatternParams, pattern);
     toast.success('Pattern loaded');
   } catch (e) {
     toast.error('Error loading pattern');
