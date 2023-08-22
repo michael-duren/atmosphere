@@ -11,12 +11,16 @@ import { USER_ACTIONS } from '../../../store/actions/userActions.ts';
 import { setSaveModalOpen } from '../../../store/slices/commonSlice.ts';
 import { SONG_ACTIONS } from '../../../store/actions/songActions.ts';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { setNewSongToSaveAs } from '../../../store/slices/songSlice.ts';
 
 export default function DawDropdownMenu() {
   const dispatch = useAppDispatch();
   const onNewSong = () => dispatch({ type: SONG_ACTIONS.SET_NEW_SONG_ASYNC });
   const onSaveSong = () => dispatch(setSaveModalOpen(true));
-  const onSaveSongAs = () => dispatch(setSaveModalOpen(true));
+  const onSaveSongAs = () => {
+    dispatch(setNewSongToSaveAs('Untitled'));
+    dispatch(setSaveModalOpen(true));
+  };
   const onLogout = () => dispatch({ type: USER_ACTIONS.LOGOUT_ASYNC });
 
   return (

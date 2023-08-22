@@ -49,7 +49,81 @@ const songSlice = createSlice({
       state.error = action.payload;
     },
     setCurrentSong: (state, action: { payload: Song; type: string }) => {
-      state.currentSong = action.payload;
+      // song
+      state.currentSong.id = action.payload.id;
+      state.currentSong.songName = action.payload.songName;
+      state.currentSong.bpm = action.payload.bpm;
+      state.currentSong.masterVolume = action.payload.masterVolume;
+      state.currentSong.drumVolume = action.payload.drumVolume;
+      state.currentSong.bassVolume = action.payload.bassVolume;
+      state.currentSong.melodicVolume = action.payload.melodicVolume;
+
+      // effects
+      state.currentSong.distortion.mix = action.payload.distortion.mix;
+      state.currentSong.distortion.amount = action.payload.distortion.amount;
+      state.currentSong.distortion.filterFrequency =
+        action.payload.distortion.filterFrequency;
+      state.currentSong.reverb.mix = action.payload.reverb.mix;
+      state.currentSong.reverb.decay = action.payload.reverb.decay;
+      state.currentSong.reverb.preDelay = action.payload.reverb.preDelay;
+      state.currentSong.delay.mix = action.payload.delay.mix;
+      state.currentSong.delay.time = action.payload.delay.time;
+      state.currentSong.delay.feedback = action.payload.delay.feedback;
+
+      // bass synth
+      state.currentSong.bassSynth.attack = action.payload.bassSynth.attack;
+      state.currentSong.bassSynth.decay = action.payload.bassSynth.decay;
+      state.currentSong.bassSynth.sustain = action.payload.bassSynth.sustain;
+      state.currentSong.bassSynth.release = action.payload.bassSynth.release;
+      state.currentSong.bassSynth.filterFrequency =
+        action.payload.bassSynth.filterFrequency;
+      state.currentSong.bassSynth.waveform = action.payload.bassSynth.waveform;
+
+      // melodic synth
+      state.currentSong.melodicSynth.attack =
+        action.payload.melodicSynth.attack;
+      state.currentSong.melodicSynth.decay = action.payload.melodicSynth.decay;
+      state.currentSong.melodicSynth.sustain =
+        action.payload.melodicSynth.sustain;
+      state.currentSong.melodicSynth.release =
+        action.payload.melodicSynth.release;
+      state.currentSong.melodicSynth.filterFrequency =
+        action.payload.melodicSynth.filterFrequency;
+      state.currentSong.melodicSynth.filterMod =
+        action.payload.melodicSynth.filterMod;
+      state.currentSong.melodicSynth.filterType =
+        action.payload.melodicSynth.filterType;
+      state.currentSong.melodicSynth.metal = action.payload.melodicSynth.metal;
+      state.currentSong.melodicSynth.chorus =
+        action.payload.melodicSynth.chorus;
+      state.currentSong.melodicSynth.lfoFrequency =
+        action.payload.melodicSynth.lfoFrequency;
+      state.currentSong.melodicSynth.lfoShape =
+        action.payload.melodicSynth.lfoShape;
+
+      // patterns
+      state.currentSong.melodicPattern.key = action.payload.melodicPattern.key;
+      state.currentSong.melodicPattern.scale =
+        action.payload.melodicPattern.scale;
+      state.currentSong.melodicPattern.sequence =
+        action.payload.melodicPattern.sequence;
+      state.currentSong.melodicPattern.patternType =
+        action.payload.melodicPattern.patternType;
+      state.currentSong.melodicPattern.transpose =
+        action.payload.melodicPattern.transpose;
+      state.currentSong.melodicPattern.timeInterval =
+        action.payload.melodicPattern.timeInterval;
+      state.currentSong.melodicPattern.noteDuration =
+        action.payload.melodicPattern.noteDuration;
+      state.currentSong.melodicPattern.length =
+        action.payload.melodicPattern.length;
+
+      state.currentSong.kitPattern.patternLength =
+        action.payload.kitPattern.patternLength;
+      state.currentSong.kitPattern.bdSteps = action.payload.kitPattern.bdSteps;
+      state.currentSong.kitPattern.sdSteps = action.payload.kitPattern.sdSteps;
+      state.currentSong.kitPattern.clSteps = action.payload.kitPattern.clSteps;
+      state.currentSong.kitPattern.chSteps = action.payload.kitPattern.chSteps;
     },
     setSongList: (state, action: { payload: SongList; type: string }) => {
       state.songList = action.payload;
@@ -109,6 +183,8 @@ const songSlice = createSlice({
       state,
       action: { payload: MelodicSynth; type: string }
     ) => {
+      state.currentSong.melodicSynth.id = action.payload.id;
+      state.currentSong.melodicSynth.presetName = action.payload.presetName;
       state.currentSong.melodicSynth.attack = action.payload.attack;
       state.currentSong.melodicSynth.decay = action.payload.decay;
       state.currentSong.melodicSynth.sustain = action.payload.sustain;
@@ -236,6 +312,8 @@ const songSlice = createSlice({
       state,
       action: { payload: MelodicPattern; type: string }
     ) => {
+      state.currentSong.melodicPattern.id = action.payload.id;
+      state.currentSong.melodicPattern.presetName = action.payload.presetName;
       state.currentSong.melodicPattern.key = action.payload.key;
       state.currentSong.melodicPattern.scale = action.payload.scale;
       state.currentSong.melodicPattern.sequence = action.payload.sequence;
@@ -296,6 +374,8 @@ const songSlice = createSlice({
       state.currentSong.melodicPattern.sequence = action.payload;
     },
     setKitPattern: (state, action: { type: string; payload: KitPattern }) => {
+      state.currentSong.kitPattern.id = action.payload.id;
+      state.currentSong.kitPattern.presetName = action.payload.presetName;
       state.currentSong.kitPattern.patternLength = action.payload.patternLength;
       state.currentSong.kitPattern.bdSteps = action.payload.bdSteps;
       state.currentSong.kitPattern.sdSteps = action.payload.sdSteps;
@@ -314,22 +394,30 @@ const songSlice = createSlice({
         !state.currentSong.kitPattern[drumName][step];
     },
     setDistortion: (state, action: { payload: Distortion; type: string }) => {
+      state.currentSong.distortion.id = action.payload.id;
+      state.currentSong.distortion.presetName = action.payload.presetName;
       state.currentSong.distortion.mix = action.payload.mix;
       state.currentSong.distortion.amount = action.payload.amount;
       state.currentSong.distortion.filterFrequency =
         action.payload.filterFrequency;
     },
     setReverb: (state, action: { payload: Reverb; type: string }) => {
+      state.currentSong.reverb.id = action.payload.id;
+      state.currentSong.reverb.presetName = action.payload.presetName;
       state.currentSong.reverb.mix = action.payload.mix;
       state.currentSong.reverb.decay = action.payload.decay;
       state.currentSong.reverb.preDelay = action.payload.preDelay;
     },
     setDelay: (state, action: { payload: Delay; type: string }) => {
+      state.currentSong.delay.id = action.payload.id;
+      state.currentSong.delay.presetName = action.payload.presetName;
       state.currentSong.delay.mix = action.payload.mix;
       state.currentSong.delay.time = action.payload.time;
       state.currentSong.delay.feedback = action.payload.feedback;
     },
     setBassSynth: (state, action: { payload: BassSynth; type: string }) => {
+      state.currentSong.bassSynth.id = action.payload.id;
+      state.currentSong.bassSynth.presetName = action.payload.presetName;
       state.currentSong.bassSynth.attack = action.payload.attack;
       state.currentSong.bassSynth.decay = action.payload.decay;
       state.currentSong.bassSynth.sustain = action.payload.sustain;
@@ -337,6 +425,17 @@ const songSlice = createSlice({
       state.currentSong.bassSynth.waveform = action.payload.waveform;
       state.currentSong.bassSynth.filterFrequency =
         action.payload.filterFrequency;
+    },
+    setNewSongToSaveAs: (state, action: { payload: string; type: string }) => {
+      state.currentSong.songName = action.payload;
+      state.currentSong.id = 0;
+      state.currentSong.bassSynth.id = 0;
+      state.currentSong.melodicSynth.id = 0;
+      state.currentSong.melodicPattern.id = 0;
+      state.currentSong.kitPattern.id = 0;
+      state.currentSong.distortion.id = 0;
+      state.currentSong.reverb.id = 0;
+      state.currentSong.delay.id = 0;
     },
   },
 });
@@ -396,6 +495,7 @@ export const {
   setReverb,
   setDelay,
   setBassSynth,
+  setNewSongToSaveAs,
 } = songSlice.actions;
 
 export default songSlice.reducer;

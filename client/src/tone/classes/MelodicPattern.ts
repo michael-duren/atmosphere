@@ -49,6 +49,8 @@ class MelodicPattern {
     this._length = length;
 
     this._sequence = this.generateRandomSequence();
+    // set sequence in store
+    store.dispatch(setMelodicPatternSequence(this._sequence));
     this._notes = Tonal.Scale.get(`${this._key}4 ${this._scale}`).notes;
 
     this._melodyPattern = new Tone.Pattern(
@@ -131,6 +133,10 @@ class MelodicPattern {
     this._bassPattern.pattern = this.patternType;
     this._bassPattern.interval = '1n';
     this._bassPattern.start();
+
+    // set sequence in store
+    store.dispatch(setMelodicPatternSequence(this._sequence));
+
     if (wasPlaying) {
       Tone.Transport.start();
       store.dispatch(setIsPlaying(true));

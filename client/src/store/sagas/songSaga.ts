@@ -26,6 +26,7 @@ import {
   setDeleteSongModalOpen,
   setSaveModalOpen,
 } from '../slices/commonSlice.ts';
+import setMelodicPatternParams from '../../tone/setters/setMelodicPatternParams.ts';
 
 /*
  * HTTP Requests & Related Functions
@@ -44,6 +45,7 @@ export function* loadSongToCurrentAsync(action: LoadSongToCurrentAsync) {
     yield songSchema.validate(songToLoad);
     yield put(setCurrentSong(songToLoad));
     yield setToneParamsOnLoad(songToLoad);
+    yield call(setMelodicPatternParams, songToLoad.melodicPattern);
     toast.success(`${action.payload.songName} loaded`);
   } catch (e) {
     console.error(e);

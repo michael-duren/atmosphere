@@ -16,7 +16,10 @@ export default function SongForm() {
   const error = useAppSelector((store) => store.song.error);
   const dispatch = useAppDispatch();
   const currentSong = useAppSelector((store) => store.song.currentSong);
-  const isNewSong = !currentSong.id; // if currentSong.id is undefined, it's a new song
+  const isNewSong =
+    currentSong.songName === 'Untitled' ||
+    !currentSong.songName ||
+    !currentSong.id; // if currentSong.id is undefined, it's a new song
   const songToSaveName = currentSong.songName
     ? currentSong.songName
     : 'Untitled';
