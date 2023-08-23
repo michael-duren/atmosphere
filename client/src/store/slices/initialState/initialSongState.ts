@@ -11,21 +11,25 @@ const initialSongState: SongState = {
     melodicVolume: 0.75,
     bpm: 120,
     distortion: {
+      presetName: 'Untitled',
       mix: 0,
       amount: 0.5,
       filterFrequency: 22_000,
     },
     reverb: {
+      presetName: 'Untitled',
       mix: 0.25,
       decay: 0.5,
       preDelay: 0.2,
     },
     delay: {
+      presetName: 'Untitled',
       mix: 0.1,
       time: 0.5,
       feedback: 0.25,
     },
     bassSynth: {
+      presetName: 'Untitled',
       attack: 0,
       decay: 0.25,
       sustain: 1,
@@ -34,6 +38,7 @@ const initialSongState: SongState = {
       filterFrequency: 22_000,
     },
     melodicSynth: {
+      presetName: 'Untitled',
       waveform: 'fatsawtooth',
       attack: 0,
       decay: 0.25,
@@ -48,6 +53,7 @@ const initialSongState: SongState = {
       lfoShape: 'sine2',
     },
     melodicPattern: {
+      presetName: 'Untitled',
       key: 'C',
       scale: 'major',
       sequence: [],
@@ -58,6 +64,7 @@ const initialSongState: SongState = {
       length: 4,
     },
     kitPattern: {
+      presetName: 'Untitled',
       patternLength: 16,
       bdSteps: new Array(16).fill(false) as boolean[],
       sdSteps: new Array(16).fill(false) as boolean[],

@@ -23,7 +23,8 @@ export default function SavePresetForm<T extends GeneralPreset>({
   const { isPlaying } = useAppSelector((store) => store.transport);
   const error = useAppSelector((store) => store.preset.error);
   const dispatch = useAppDispatch();
-  const isNewPreset = !currentPreset.presetName; // if currentPreset.presetName is undefined, it's a new preset
+  const isNewPreset =
+    !currentPreset.presetName || currentPreset.presetName === 'Untitled'; // if currentPreset.presetName is undefined, it's a new preset
   const presetToSaveName = currentPreset.presetName ?? 'Untitled';
   const [presetToSaveNameInput, setPresetToSaveNameInput] =
     useState(presetToSaveName);

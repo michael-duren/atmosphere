@@ -59,18 +59,28 @@ const songSlice = createSlice({
       state.currentSong.melodicVolume = action.payload.melodicVolume;
 
       // effects
+      state.currentSong.distortion.presetName =
+        action.payload.distortion.presetName ?? 'Untitled';
       state.currentSong.distortion.mix = action.payload.distortion.mix;
       state.currentSong.distortion.amount = action.payload.distortion.amount;
       state.currentSong.distortion.filterFrequency =
         action.payload.distortion.filterFrequency;
+
+      state.currentSong.reverb.presetName =
+        action.payload.reverb.presetName ?? 'Untitled';
       state.currentSong.reverb.mix = action.payload.reverb.mix;
       state.currentSong.reverb.decay = action.payload.reverb.decay;
       state.currentSong.reverb.preDelay = action.payload.reverb.preDelay;
+
+      state.currentSong.delay.presetName =
+        action.payload.delay.presetName ?? 'Untitled';
       state.currentSong.delay.mix = action.payload.delay.mix;
       state.currentSong.delay.time = action.payload.delay.time;
       state.currentSong.delay.feedback = action.payload.delay.feedback;
 
       // bass synth
+      state.currentSong.bassSynth.presetName =
+        action.payload.bassSynth.presetName ?? 'Untitled';
       state.currentSong.bassSynth.attack = action.payload.bassSynth.attack;
       state.currentSong.bassSynth.decay = action.payload.bassSynth.decay;
       state.currentSong.bassSynth.sustain = action.payload.bassSynth.sustain;
@@ -80,6 +90,8 @@ const songSlice = createSlice({
       state.currentSong.bassSynth.waveform = action.payload.bassSynth.waveform;
 
       // melodic synth
+      state.currentSong.melodicSynth.presetName =
+        action.payload.melodicSynth.presetName ?? 'Untitled';
       state.currentSong.melodicSynth.attack =
         action.payload.melodicSynth.attack;
       state.currentSong.melodicSynth.decay = action.payload.melodicSynth.decay;
@@ -102,6 +114,8 @@ const songSlice = createSlice({
         action.payload.melodicSynth.lfoShape;
 
       // patterns
+      state.currentSong.melodicPattern.presetName =
+        action.payload.melodicPattern.presetName ?? 'Untitled';
       state.currentSong.melodicPattern.key = action.payload.melodicPattern.key;
       state.currentSong.melodicPattern.scale =
         action.payload.melodicPattern.scale;
@@ -118,6 +132,8 @@ const songSlice = createSlice({
       state.currentSong.melodicPattern.length =
         action.payload.melodicPattern.length;
 
+      state.currentSong.kitPattern.presetName =
+        action.payload.kitPattern.presetName ?? 'Untitled';
       state.currentSong.kitPattern.patternLength =
         action.payload.kitPattern.patternLength;
       state.currentSong.kitPattern.bdSteps = action.payload.kitPattern.bdSteps;
