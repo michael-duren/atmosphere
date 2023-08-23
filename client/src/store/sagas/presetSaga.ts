@@ -393,7 +393,7 @@ export function* updateDelay({ payload }: UpdateDelayEffect) {
     toast.success('Delay updated');
     yield put({ type: PRESET_ACTIONS.GET_ALL_PRESETS_ASYNC });
   } catch (e) {
-    toast.error('Error updating reverb');
+    toast.error('Error updating delay');
   }
 }
 

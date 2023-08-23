@@ -23,7 +23,7 @@ const useSavePresetHandlers = () => {
   const saveMelodicSynthHandler = (melodicSynth: MelodicSynth) => {
     dispatch(setPresetModalData(melodicSynth));
     dispatch(setPresetModalType('Melodic Synth'));
-    if (melodicSynth.presetName || melodicSynth.id) {
+    if (melodicSynth.presetName !== 'Untitled' || melodicSynth.id) {
       dispatch(
         setPresetModalDispatchType(PRESET_ACTIONS.UPDATE_MELODIC_SYNTH_ASYNC)
       );
@@ -40,7 +40,7 @@ const useSavePresetHandlers = () => {
   const saveBassSynthHandler = (bassSynth: BassSynth) => {
     dispatch(setPresetModalData(bassSynth));
     dispatch(setPresetModalType('Bass Synth'));
-    if (bassSynth.presetName || bassSynth.id) {
+    if (bassSynth.presetName !== 'Untitled' || bassSynth.id) {
       dispatch(
         setPresetModalDispatchType(PRESET_ACTIONS.UPDATE_BASS_SYNTH_ASYNC)
       );
@@ -57,7 +57,7 @@ const useSavePresetHandlers = () => {
   const saveMelodicPatternHandler = (melodicPattern: MelodicPattern) => {
     dispatch(setPresetModalData(melodicPattern));
     dispatch(setPresetModalType('Melodic Pattern'));
-    if (melodicPattern.presetName || melodicPattern.id) {
+    if (melodicPattern.presetName !== 'Untitled' || melodicPattern.id) {
       dispatch(
         setPresetModalDispatchType(PRESET_ACTIONS.UPDATE_MELODIC_PATTERN_ASYNC)
       );
@@ -74,7 +74,7 @@ const useSavePresetHandlers = () => {
   const saveKitPatternHandler = (kitPattern: KitPattern) => {
     dispatch(setPresetModalData(kitPattern));
     dispatch(setPresetModalType('Kit Pattern'));
-    if (kitPattern.presetName || kitPattern.id) {
+    if (kitPattern.presetName !== 'Untitled' || kitPattern.id) {
       dispatch(
         setPresetModalDispatchType(PRESET_ACTIONS.UPDATE_KIT_PATTERN_ASYNC)
       );
@@ -93,7 +93,7 @@ const useSavePresetHandlers = () => {
   const saveDistortionHandler = (distortion: Distortion) => {
     dispatch(setPresetModalData(distortion));
     dispatch(setPresetModalType('Distortion'));
-    if (distortion.presetName || distortion.id) {
+    if (distortion.presetName !== 'Untitled' || distortion.id) {
       dispatch(
         setPresetModalDispatchType(
           PRESET_ACTIONS.UPDATE_DISTORTION_EFFECT_ASYNC
@@ -114,7 +114,7 @@ const useSavePresetHandlers = () => {
   const saveReverbHandler = (reverb: Reverb) => {
     dispatch(setPresetModalData(reverb));
     dispatch(setPresetModalType('Reverb'));
-    if (reverb.presetName || reverb.id) {
+    if (reverb.presetName !== 'Untitled' || reverb.id) {
       dispatch(
         setPresetModalDispatchType(PRESET_ACTIONS.UPDATE_REVERB_EFFECT_ASYNC)
       );
@@ -131,7 +131,7 @@ const useSavePresetHandlers = () => {
   const saveDelayHandler = (delay: Delay) => {
     dispatch(setPresetModalData(delay));
     dispatch(setPresetModalType('Delay'));
-    if (delay.presetName || delay.id) {
+    if (delay.presetName !== 'Untitled' || delay.id) {
       dispatch(
         setPresetModalDispatchType(PRESET_ACTIONS.UPDATE_DELAY_EFFECT_ASYNC)
       );
