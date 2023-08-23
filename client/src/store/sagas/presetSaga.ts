@@ -285,12 +285,17 @@ export function* deleteBassSynth({ payload }: DeleteBassSynth) {
 
 // effects
 export function* loadDistortion({ payload }: LoadDistortionEffect) {
-  const distortion: Distortion = yield call(
-    agent.Preset.Effects.getDistortionById,
-    +payload
-  );
-  yield put(setDistortion(distortion));
-  yield call(setToneDistortion, distortion);
+  try {
+    const distortion: Distortion = yield call(
+      agent.Preset.Effects.getDistortionById,
+      +payload
+    );
+    yield put(setDistortion(distortion));
+    yield call(setToneDistortion, distortion);
+    toast.success('Distortion loaded');
+  } catch (e) {
+    toast.error('Error loading distortion');
+  }
 }
 
 export function* createDistortion({ payload }: CreateDistortionEffect) {
@@ -324,16 +329,22 @@ export function* deleteDistortion({ payload }: DeleteDistortionEffect) {
     yield put({ type: PRESET_ACTIONS.GET_ALL_PRESETS_ASYNC });
   } catch (e) {
     toast.error('Error deleting distortion');
+    console.error(e);
   }
 }
 
 export function* loadReverb({ payload }: LoadReverbEffect) {
-  const reverb: Reverb = yield call(
-    agent.Preset.Effects.getReverbById,
-    +payload
-  );
-  yield put(setReverb(reverb));
-  yield call(setToneReverb, reverb);
+  try {
+    const reverb: Reverb = yield call(
+      agent.Preset.Effects.getReverbById,
+      +payload
+    );
+    yield put(setReverb(reverb));
+    yield call(setToneReverb, reverb);
+  } catch (e) {
+    toast.error('Error loading reverb');
+    console.error(e);
+  }
 }
 
 export function* createReverb({ payload }: CreateReverbEffect) {
@@ -371,9 +382,17 @@ export function* deleteReverb({ payload }: DeleteReverbEffect) {
 }
 
 export function* loadDelay({ payload }: LoadDelayEffect) {
-  const delay: Delay = yield call(agent.Preset.Effects.getDelayById, +payload);
-  yield put(setDelay(delay));
-  yield call(setToneDelay, delay);
+  try {
+    const delay: Delay = yield call(
+      agent.Preset.Effects.getDelayById,
+      +payload
+    );
+    yield put(setDelay(delay));
+    yield call(setToneDelay, delay);
+  } catch (e) {
+    toast.error('Error loading delay');
+    console.error(e);
+  }
 }
 
 export function* createDelay({ payload }: CreateDelayEffect) {
