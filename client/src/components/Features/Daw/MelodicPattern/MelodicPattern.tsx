@@ -24,7 +24,7 @@ export default function MelodicPattern() {
       </div>
       <div className="flex">
         <MelodicPatternGenerator />
-        <div className="flex-1">
+        <div className="flex-1 hidden md:block">
           <Oscilloscopes />
         </div>
       </div>

@@ -26,7 +26,11 @@ export default function DawDropdownMenu() {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className={'text-gray-300 hover:text-white text-4xl '}>
+        <Menu.Button
+          className={
+            'text-gray-300 hover:text-white text-2xl md:text-3xl lg:text-4xl '
+          }
+        >
           <GiHamburgerMenu />
         </Menu.Button>
       </div>
