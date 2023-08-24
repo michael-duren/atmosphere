@@ -43,7 +43,7 @@ export default function Home() {
         >
           <h1
             onAnimationEnd={handleH1AnimationEnd}
-            className="text-white font-title text-9xl animation-up"
+            className="text-white font-title text-5xl md:text-7xl lg:text-9xl animation-up"
           >
             {h1Text.split('').map((char, i) => {
               return (
@@ -71,7 +71,7 @@ export default function Home() {
                     loginAnimationEnd
                       ? 'hover:opacity-100 opacity-75'
                       : 'opacity-0 animation-login-buttons'
-                  } font-caps text-5xl `}
+                  } font-caps text-2xl md:text-3xl lg:text-5xl `}
                 >
                   Login
                 </button>
@@ -82,7 +82,7 @@ export default function Home() {
                     registerAnimationEnd
                       ? 'opacity-75 hover:opacity-100'
                       : 'opacity-0 animation-login-buttons'
-                  } font-caps text-5xl`}
+                  } font-caps text-2xl md:text-3xl lg:text-5xl`}
                 >
                   Register
                 </button>
