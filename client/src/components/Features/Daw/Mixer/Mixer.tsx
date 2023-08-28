@@ -6,7 +6,7 @@ import FadersCard from './FadersCard.tsx';
 
 export default function Mixer() {
   return (
-    <div className=" min-w-[50vw] w-full  items-end flex flex-col">
+    <div className=" min-w-[50vw] 2xl:w-full items-end flex flex-col">
       <h2 className="uppercase flex gap-4 items-center font-caps text-2xl">
         MIX{' '}
         <span>
@@ -14,7 +14,7 @@ export default function Mixer() {
         </span>
       </h2>
 
-      <div className="flex w-full px-8 gap-x-8 items-center justify-between">
+      <div className="flex w-full px-8 2xl:gap-x-8 lg:gap-x-4  items-center justify-between">
         <MelodicSynthCard />
         <BassSynthCard />
         <EffectListCard />

@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { FilterType } from '../../../models/types/filterType.ts';
 import { inputToFilterType } from '../../../tone/utils/transformToToneValues.ts';
 import { filterTypeToInput } from '../../../tone/utils/transformToInputValues.ts';
+import { getKnobWidth } from './knobWidth.ts';
 
 interface Props {
   color: string;
@@ -38,6 +39,19 @@ export default function FilterKnob({
   const [filter, setFilter] = useState<FilterType>(level);
   const stepValue = (val: number) => Math.round(val * 5) / 5;
 
+  const [knobWidth, setKnobWidth] = useState<number>(
+    getKnobWidth(window.innerWidth)
+  );
+
+  useEffect(() => {
+    const setKnobState = () => setKnobWidth(getKnobWidth(window.innerWidth));
+    // Attach the handler
+    window.addEventListener('resize', setKnobState);
+
+    // Cleanup the event listener on component unmount
+    return () => window.removeEventListener('resize', setKnobState);
+  }, []);
+
   useEffect(() => {
     setFilter(inputToFilterType(localLevel)); // convert the number to a filterFrequency type
   }, [localLevel]);
@@ -60,7 +74,7 @@ export default function FilterKnob({
       <Spring to={{ localLevel }}>
         {(props: { localLevel: SpringValue<number> }) => (
           <AnimatedCircleInput
-            radius={24}
+            radius={knobWidth}
             value={props.localLevel}
             onChange={setLocalAndToneLevel}
             onMouseUp={setStoreLevel}

@@ -30,9 +30,28 @@ export default function WaveformKnob({
   storeSetter,
   toneSetter,
 }: Props) {
+  const getKnobWidth = (windowWidth: number): number => {
+    if (windowWidth > 1536) {
+      return 24;
+    }
+    return 20;
+  };
   const [localLevel, setLocalLevel] = useState<number>(level);
   const [wave, setWave] = useState<KnobWaveType>(getWaveFromNumber(level));
   const stepValue = (val: number) => Math.round(val * 4) / 4;
+
+  const [knobWidth, setKnobWidth] = useState<number>(
+    getKnobWidth(window.innerWidth)
+  );
+
+  useEffect(() => {
+    const setKnobState = () => setKnobWidth(getKnobWidth(window.innerWidth));
+    // Attach the handler
+    window.addEventListener('resize', setKnobState);
+
+    // Cleanup the event listener on component unmount
+    return () => window.removeEventListener('resize', setKnobState);
+  }, []);
 
   useEffect(() => {
     setWave(getWaveFromNumber(localLevel));
@@ -57,7 +76,7 @@ export default function WaveformKnob({
       <Spring to={{ localLevel }}>
         {(props: { localLevel: SpringValue<number> }) => (
           <AnimatedCircleInput
-            radius={24}
+            radius={knobWidth}
             value={props.localLevel}
             onChange={setLocalAndToneLevel}
             onMouseUp={setStoreLevel}

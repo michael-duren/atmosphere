@@ -15,6 +15,7 @@ import {
   frequencyInvertedToInput,
   frequencyToInput,
 } from '../../../tone/utils/transformToInputValues.ts';
+import { getKnobWidth } from './knobWidth.ts';
 
 interface Props {
   color: string;
@@ -39,6 +40,18 @@ export default function FrequencyKnob({
     ? frequencyInvertedToInput(level)
     : frequencyToInput(level);
   const [localLevel, setLocalLevel] = useState<number>(initialValue);
+  const [knobWidth, setKnobWidth] = useState<number>(
+    getKnobWidth(window.innerWidth)
+  );
+
+  useEffect(() => {
+    const setKnobState = () => setKnobWidth(getKnobWidth(window.innerWidth));
+    // Attach the handler
+    window.addEventListener('resize', setKnobState);
+
+    // Cleanup the event listener on component unmount
+    return () => window.removeEventListener('resize', setKnobState);
+  }, []);
 
   useEffect(() => {
     if (inverted) {
@@ -71,7 +84,7 @@ export default function FrequencyKnob({
       <Spring to={{ localLevel }}>
         {(props: { localLevel: SpringValue<number> }) => (
           <AnimatedCircleInput
-            radius={24}
+            radius={knobWidth}
             value={props.localLevel}
             onChange={setLocalAndToneLevel}
             onMouseUp={setStoreLevel}

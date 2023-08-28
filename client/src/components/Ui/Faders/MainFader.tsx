@@ -72,7 +72,7 @@ export default function MainFader({
 
   return (
     <div
-      className={`w-10 shadow-xl pb-1 ${shadowColor}  rounded-lg flex flex-col items-center`}
+      className={`2xl:w-10 xl:w-8 shadow-xl pb-1 ${shadowColor}  rounded-lg flex flex-col items-center`}
     >
       <canvas
         className={`${backgroundColor} bg-opacity-90 rounded-lg`}

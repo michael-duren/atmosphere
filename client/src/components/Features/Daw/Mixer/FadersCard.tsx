@@ -18,7 +18,7 @@ export default function FadersCard() {
   const { currentSong } = useAppSelector(selectSong);
 
   return (
-    <div className=" flex justify-between gap-8 border-red-600">
+    <div className=" flex justify-between lg:gap-6 gap-4 2xl:gap-8 border-red-600">
       {/*Drum Volume*/}
       <MainFader
         volume={currentSong.drumVolume}

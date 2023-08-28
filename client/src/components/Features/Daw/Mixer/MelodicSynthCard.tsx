@@ -54,13 +54,13 @@ const MelodicSynthCard = () => {
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center justify-between flex-1">
           <div className="w-full items-end gap-2 font-caps flex mb-4">
-            <MelodicSynthSvg className="h-8 w-8  fill-white stroke-2 stroke-white" />
-            <h2 className="text-xl">Melodic Synth</h2>
+            <MelodicSynthSvg className="2xl:h-8 2xl:w-8 w-6 h-6  fill-white stroke-2 stroke-white" />
+            <h2 className="2xl:text-xl">Melodic Synth</h2>
           </div>
           <SaveButton onClick={() => saveMelodicSynthHandler(melodicSynth)} />
         </div>
       </div>
-      <div className="grid grid-cols-4 grid-rows-3 gap-x-4 gap-y-8">
+      <div className="grid grid-cols-4 grid-rows-3 lg:gap-x-3 gap-x-2 2xl:gap-x-4 gap-y-8">
         {/* Row One */}
         <Knob title="Waveform">
           <WaveformKnob

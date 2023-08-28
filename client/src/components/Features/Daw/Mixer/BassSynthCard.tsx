@@ -31,14 +31,14 @@ export default function BassSynthCard() {
 
   return (
     <div className="flex flex-col items-center rounded-2xl ">
-      <div className="flex items-center justify-between  w-full">
-        <div className="text-xl font-caps flex mb-4 gap-2 w-full">
-          <BassSynthSvg className="h-6 w-6 fill-white mb-1 stroke-2 stroke-white" />
+      <div className="flex items-center justify-between gap-4 2xl:w-full">
+        <div className="2xl:text-xl  font-caps flex mb-4 gap-2 w-full">
+          <BassSynthSvg className="2xl:h-6 2xl:w-6 w-4 h-4 fill-white mt-1 2xl:mb-1 stroke-2 stroke-white" />
           <h2>Bass Synth</h2>
         </div>
         <SaveButton onClick={() => saveBassSynthHandler(bassSynth)} />
       </div>
-      <div className="grid grid-cols-2 grid-rows-3 gap-x-4 gap-y-8">
+      <div className="grid grid-cols-2 grid-rows-3 2xl:gap-x-4 gap-y-8">
         {/* Row One */}
         <Knob title={'Waveform'}>
           <WaveformKnob

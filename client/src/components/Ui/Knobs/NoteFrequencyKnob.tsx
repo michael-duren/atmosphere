@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { NoteType } from '../../../models/types/noteType.ts';
 import { noteTypeToInput } from '../../../tone/utils/transformToInputValues.ts';
 import { inputToNoteType } from '../../../tone/utils/transformToToneValues.ts';
+import { getKnobWidth } from './knobWidth.ts';
 
 interface Props {
   color: string;
@@ -29,6 +30,19 @@ export default function NoteFrequencyKnob({
 }: Props) {
   const [localLevel, setLocalLevel] = useState<number>(noteTypeToInput(level));
   const [noteFrequency, setNoteFrequency] = useState<NoteType>(level);
+
+  const [knobWidth, setKnobWidth] = useState<number>(
+    getKnobWidth(window.innerWidth)
+  );
+
+  useEffect(() => {
+    const setKnobState = () => setKnobWidth(getKnobWidth(window.innerWidth));
+    // Attach the handler
+    window.addEventListener('resize', setKnobState);
+
+    // Cleanup the event listener on component unmount
+    return () => window.removeEventListener('resize', setKnobState);
+  }, []);
   const stepValue = (val: number) => Math.round(val * 12) / 12;
 
   useEffect(() => {
@@ -53,7 +67,7 @@ export default function NoteFrequencyKnob({
       <Spring to={{ localLevel }}>
         {(props: { localLevel: SpringValue<number> }) => (
           <AnimatedCircleInput
-            radius={24}
+            radius={knobWidth}
             value={props.localLevel}
             onChange={setLocalAndToneLevel}
             onMouseUp={setStoreLevel}

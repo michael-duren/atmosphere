@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as Tone from 'tone';
 import { bassSynth, melodicSynth } from '../../../../tone/singleton.ts';
 
@@ -7,6 +7,24 @@ export default function Oscilloscopes() {
   const canvasRefBass = useRef<HTMLCanvasElement | null>(null);
   const melodicWave = useRef<Tone.Waveform>(new Tone.Waveform(256));
   const bassWave = useRef<Tone.Waveform>(new Tone.Waveform(256));
+  const [oscWidth, setOscWidth] = useState<number>(
+    setCanvasWidth(window.innerWidth)
+  );
+
+  function setCanvasWidth(windowWidth: number) {
+    if (windowWidth < 1280) {
+      return windowWidth * 0.5;
+    }
+    return windowWidth * 0.13;
+  }
+  useEffect(() => {
+    // Attach the handler
+    const setWidth = () => setOscWidth(setCanvasWidth(window.innerWidth));
+    window.addEventListener('resize', setWidth);
+
+    // Cleanup the event listener on component unmount
+    return () => window.removeEventListener('resize', setWidth);
+  }, []);
 
   useEffect(() => {
     melodicSynth.synth.connect(melodicWave.current);
@@ -83,20 +101,20 @@ export default function Oscilloscopes() {
   return (
     <div className="flex flex-col gap-6 h-full justify-center items-center">
       <div>
-        <h3 className="text-xl font-caps">Melody</h3>
+        <h3 className="xl:text-lg text-base  font-caps">Melody</h3>
         <canvas
           height="100px"
           className="shadow-md rounded-xl shadow-gray-700"
-          width="250px"
+          width={oscWidth}
           ref={canvasRefMelody}
         ></canvas>
       </div>
       <div>
-        <h3 className="text-xl font-caps">Bass</h3>
+        <h3 className="xl:text-lg text-base  font-caps">Bass</h3>
         <canvas
           className="shadow-md rounded-xl shadow-gray-700"
           height="100px"
-          width="250px"
+          width={oscWidth}
           ref={canvasRefBass}
         ></canvas>
       </div>

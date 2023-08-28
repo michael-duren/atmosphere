@@ -61,7 +61,7 @@ export default function DrumSequencer() {
             const isDivisibleByFour = (step + 1) % 4 === 0 || step + 1 === 16;
             return (
               <label
-                className={`flex max-w-[2.5rem]  w-10 h-10 items-center ${
+                className={`flex max-w-[2.5rem] lg:h-8 lg:w-8 h-6 w-6  2xl:w-10 2xl:h-10 items-center ${
                   isDivisibleByFour && 'mr-4'
                 } justify-center`}
                 key={step}
@@ -77,7 +77,7 @@ export default function DrumSequencer() {
                   }}
                   className={`whitespace-nowrap peer p-0 m-[-1px] h-[1px] w-[1px] absolute `}
                 />
-                <div className="w-6 my-0 mx-2 peer-checked:bg-blue-500  h-6 bg-gray-transparent peer-checked:bg-opacity-70  rounded-full"></div>
+                <div className="2xl:w-6 lg:w-4 w-3 my-0 mx-2 peer-checked:bg-blue-500  2xl:h-6 lg:h-4 h-3 bg-gray-transparent peer-checked:bg-opacity-70  rounded-full"></div>
               </label>
             );
           })}

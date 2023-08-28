@@ -36,7 +36,7 @@ export default function Track({ instrument, drumPattern, drumRef }: Props) {
                 key={index}
               >
                 <input
-                  className="opacity-0 absolute top-0 left-0 cursor-pointer h-10 w-10 peer"
+                  className="opacity-0 absolute top-0 left-0 cursor-pointer lg:h-8 lg:w-8 h-6 w-6 2xl:h-10 2xl:w-10 peer"
                   ref={(elm) => {
                     if (!elm) return;
                     drumRef.current![index] = elm;
@@ -55,7 +55,7 @@ export default function Track({ instrument, drumPattern, drumRef }: Props) {
                 <div
                   className="peer-hover:bg-opacity-60 rounded-md  0 hover:bg-opacity-90 bg-gray-transparent
                 peer-checked:peer-hover:bg-opacity-100
-                       peer-checked:bg-blue-500 peer-checked:bg-opacity-70 w-10 h-10"
+                       peer-checked:bg-blue-500 peer-checked:bg-opacity-70 lg:w-8 lg:h-8 h-6 w-6 2xl:w-10 2xl:h-10"
                 />
               </label>
             );
