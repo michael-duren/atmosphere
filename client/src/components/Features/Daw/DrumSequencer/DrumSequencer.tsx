@@ -44,7 +44,7 @@ export default function DrumSequencer() {
   }, [stepIds]);
 
   return (
-    <div className="flex w-full  items-center flex-col rounded-xl px-8    gap-4 justify-center">
+    <div className="flex w-full items-center flex-col rounded-xl px-8 gap-4 justify-center">
       <div className="flex w-full justify-between">
         <Transport />
         <h2 className="font-caps flex gap-4 items-center text-2xl">
@@ -54,15 +54,15 @@ export default function DrumSequencer() {
           </span>
         </h2>
       </div>
-      <div className="grid grid-rows-4 gap-5">
-        <div className="flex gap-x-4">
-          <div className="w-10"></div>
+      <div className="flex sm-lg:flex-col gap-4 flex-row">
+        <div className="flex flex-col sm-lg:flex-row gap-y-2 sm-lg:gap-y-0 sm-lg:gap-x-4 items-center">
+          <div className="sm-lg:w-10 sm-lg:h-0 h-8"></div>
           {stepIds.map((step) => {
             const isDivisibleByFour = (step + 1) % 4 === 0 || step + 1 === 16;
             return (
               <label
                 className={`flex max-w-[2.5rem] lg:h-8 lg:w-8 h-6 w-6  2xl:w-10 2xl:h-10 items-center ${
-                  isDivisibleByFour && 'mr-4'
+                  isDivisibleByFour && 'sm-lg:mr-4 sm-lg:mb-0 mb-4'
                 } justify-center`}
                 key={step}
               >

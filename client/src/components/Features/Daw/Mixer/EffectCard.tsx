@@ -46,7 +46,7 @@ export default function EffectCard({
         </h3>
         <SaveButton size={14} onClick={() => saveDispatch(effectToSave)} />
       </div>
-      <div className="flex w-full items-center xl:gap-4 2xl:gap-8">
+      <div className="flex w-full items-center gap-4  2xl:gap-8">
         {state.map((param) => {
           const paramTitle = toTitleCase(splitCamelCase(param.name));
           return (

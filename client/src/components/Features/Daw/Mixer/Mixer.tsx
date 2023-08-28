@@ -14,7 +14,7 @@ export default function Mixer() {
         </span>
       </h2>
 
-      <div className="flex w-full px-8 2xl:gap-x-8 lg:gap-x-4  items-center justify-between">
+      <div className="flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap w-full px-8 2xl:gap-x-8 lg:gap-x-4 gap-y-8 lg:gap-y-0  items-center justify-between">
         <MelodicSynthCard />
         <BassSynthCard />
         <EffectListCard />

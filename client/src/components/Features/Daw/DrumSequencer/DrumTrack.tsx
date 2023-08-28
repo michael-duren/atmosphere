@@ -20,9 +20,9 @@ export default function Track({ instrument, drumPattern, drumRef }: Props) {
   } = currentSong;
 
   return (
-    <div className="flex gap-4 items-center">
+    <div className="flex flex-col sm-lg:flex-row gap-4 items-center">
       <div className="w-10">{instrument.name}</div>
-      <div className="flex gap-x-4">
+      <div className="flex flex-col sm-lg:flex-row gap-y-2 sm-lg:gap-y-0 sm-lg:gap-x-4">
         {
           // the length of the array is defined by the patternLength which is set by the user
           // and lives in the songSlice > currentSong > kitPattern > patternLength
@@ -31,7 +31,7 @@ export default function Track({ instrument, drumPattern, drumRef }: Props) {
             return (
               <label
                 className={`relative max-w-[2.5rem] ${
-                  isDivisibleByFour && 'mr-4'
+                  isDivisibleByFour && 'sm-lg:mr-4 sm-lg:mb-0 mb-4'
                 } `}
                 key={index}
               >

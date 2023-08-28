@@ -13,6 +13,9 @@ export default {
         title: ['Megrim', 'cursive'],
         caps: ['Rajdhani', 'sans-serif'],
       },
+      screens: {
+        'sm-lg': '741px',
+      },
     },
   },
   plugins: [require('tailwind-scrollbar')],
