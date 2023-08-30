@@ -24,7 +24,11 @@ export default function DawDropdownMenu() {
   const onLogout = () => dispatch({ type: USER_ACTIONS.LOGOUT_ASYNC });
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu
+      as="div"
+      style={{ zIndex: 60 }}
+      className="relative inline-block text-left"
+    >
       <div>
         <Menu.Button
           className={
