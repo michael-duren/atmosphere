@@ -59,11 +59,42 @@ export default function MainFader({
     const newVolumeFixed = +newVolume.toFixed(2);
 
     setTone(newVolumeFixed);
-
     setVolumeValue(newVolumeFixed);
   };
 
   const handleVolumeFaderDragEnd = () => {
+    setIsDragging(false);
+    dispatch(setStore(volumeValue));
+  };
+
+  const handleVolumeFaderTouchStart = (
+    e: React.TouchEvent<HTMLCanvasElement>
+  ) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  /*
+   * Functions for mobile usage
+   */
+  const handleVolumeFaderTouchMove = (
+    e: React.TouchEvent<HTMLCanvasElement>
+  ) => {
+    if (!isDragging) return;
+    if (!canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const boundingRect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const touchY = touch.clientY - boundingRect.top;
+    const newVolume = Math.min(Math.max(0, 1 - touchY / canvas.height), 1);
+    const newVolumeFixed = +newVolume.toFixed(2);
+
+    setTone(newVolumeFixed);
+    setVolumeValue(newVolumeFixed);
+  };
+
+  const handleVolumeFaderTouchEnd = () => {
     setIsDragging(false);
     dispatch(setStore(volumeValue));
   };
@@ -83,6 +114,9 @@ export default function MainFader({
         onMouseMove={handleVolumeFaderDrag}
         onMouseUp={handleVolumeFaderDragEnd}
         onMouseLeave={handleVolumeFaderDragEnd}
+        onTouchStart={handleVolumeFaderTouchStart}
+        onTouchMove={handleVolumeFaderTouchMove}
+        onTouchEnd={handleVolumeFaderTouchEnd}
       />
       <div className="text-center my-2 text-xs">
         {volumeToDb === -Infinity ? (

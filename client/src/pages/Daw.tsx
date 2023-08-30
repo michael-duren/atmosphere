@@ -72,7 +72,7 @@ export default function Daw() {
           <MelodicPattern />
           <Collections />
         </aside>
-        <main className="grid grid-rows-2 rounded-xl bg-dark-transparent col-span-8 ">
+        <main className="flex-col mb-8 md:mb-0 flex gap-y-16 md:grid md:grid-rows-2 rounded-xl bg-dark-transparent col-span-8 ">
           <Mixer />
           <DrumSequencer />
         </main>
