@@ -1,27 +1,10 @@
 # Atmosphere
 
-## Technologies Used
+atmosphere.fly.dev
 
-<div>
-    <a href="https://www.typescriptlang.org" target="_blank" rel="noreferrer">
-	<img width=40 height=40 src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" />
-	</a>&nbsp;
-    <a href="https://tailwindcss.com" target="_blank" rel="noreferrer">
-	<img width=40 height=40 src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" />
-	</a>&nbsp;
-    <a href="https://react.dev" target="_blank" rel="noreferrer">
-	<img width=40 height=40 src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" />
-	</a>&nbsp;
-    <a href="https://redux.js.org" target="_blank" rel="noreferrer">
-	<img width=40 height=40 src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg" />
-	</a>&nbsp;
-    <a href="https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/" target="_blank" rel="noreferrer">
-	<img width=40 height=40 src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" />
-	</a>&nbsp;
-    <a href="https://dotnet.microsoft.com/en-us/" target="_blank" rel="noreferrer">
-	<img width=40 height=40 src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg" />
-	</a>&nbsp;
-    <a href="https://www.postgresql.org" target="_blank" rel="noreferrer">
-	<img width=40 height=40 src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" />
-	</a>&nbsp;
-</div>
+## About 
+
+An interactive DAW in the browser. There are many limitations but it's a place for beginners to electronic music to play with sounds and generate melodies.
+
+<img width="1645" height="861" alt="Screenshot 2025-10-31 at 6 50 37 AM" src="https://github.com/user-attachments/assets/56bfefc1-02e1-4424-969b-90b332747d4e" />
+<img width="828" height="719" alt="Screenshot 2025-10-31 at 6 49 41 AM" src="https://github.com/user-attachments/assets/006067a7-d4b8-4362-9386-eab96c34c1fd" />
